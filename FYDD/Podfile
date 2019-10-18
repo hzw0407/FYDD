@@ -1,0 +1,39 @@
+platform :ios,'8.0'
+
+use_frameworks!
+inhibit_all_warnings!
+
+target :FYDD do
+    
+pod 'AFNetworking'
+pod 'SVProgressHUD'
+pod 'JPush'
+pod 'YYKit'
+pod 'Masonry'
+pod 'SDWebImage'
+pod 'MJRefresh'
+pod 'MBProgressHUD'
+pod 'Bugly'
+pod 'IQKeyboardManager'
+pod 'LCActionSheet'
+pod 'SDCycleScrollView','~> 1.75'
+pod 'CWLateralSlide'
+pod 'ZLPhotoBrowser'
+pod 'FSCalendar'
+pod 'WechatOpenSDK'
+pod 'ZXingObjC', '~> 3.6.4'
+pod 'BMPlayer'
+pod 'UMCCommon'
+#pod 'UMCSecurityPlugins'
+pod 'UMCAnalytics'
+pod 'UMCPush'
+pod 'UMCShare/UI'
+#pod 'UMCShare'
+pod 'UMCShare/Social/ReducedWeChat'
+pod 'UMCShare/Social/Sina'
+pod 'AlipaySDK-iOS'
+pod 'RNCachingURLProtocol'
+
+pod 'ZFPlayer'
+pod 'FDFullscreenPopGesture'
+end

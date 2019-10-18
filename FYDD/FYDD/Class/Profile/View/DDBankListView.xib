@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="DDBankListView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="270"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选择银行卡" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KTC-8P-MoC">
+                    <rect key="frame" x="20" y="0.0" width="280" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="vKG-gA-RtU"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.098039215690000001" green="0.2156862745" blue="0.31372549020000001" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7rE-11-hvl">
+                    <rect key="frame" x="0.0" y="44" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="RX6-lb-oXn"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9tJ-cH-cMp">
+                    <rect key="frame" x="0.0" y="45" width="320" height="225"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="7rE-11-hvl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="3mL-Si-HaR"/>
+                <constraint firstItem="9tJ-cH-cMp" firstAttribute="top" secondItem="7rE-11-hvl" secondAttribute="bottom" id="488-lY-5s0"/>
+                <constraint firstAttribute="bottom" secondItem="9tJ-cH-cMp" secondAttribute="bottom" id="89S-JU-UBp"/>
+                <constraint firstAttribute="trailing" secondItem="KTC-8P-MoC" secondAttribute="trailing" constant="20" id="MQb-hl-djR"/>
+                <constraint firstItem="KTC-8P-MoC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="ShI-qN-Ido"/>
+                <constraint firstAttribute="trailing" secondItem="7rE-11-hvl" secondAttribute="trailing" id="Vvm-lI-tgx"/>
+                <constraint firstAttribute="trailing" secondItem="9tJ-cH-cMp" secondAttribute="trailing" id="X9Y-X2-P6g"/>
+                <constraint firstItem="KTC-8P-MoC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Y6b-Jw-LFr"/>
+                <constraint firstItem="9tJ-cH-cMp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Yp2-gg-mrg"/>
+                <constraint firstItem="7rE-11-hvl" firstAttribute="top" secondItem="KTC-8P-MoC" secondAttribute="bottom" id="xtk-Ix-Mx7"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="tableView" destination="9tJ-cH-cMp" id="KgR-18-Srk"/>
+            </connections>
+            <point key="canvasLocation" x="37.681159420289859" y="-174.77678571428569"/>
+        </view>
+    </objects>
+</document>

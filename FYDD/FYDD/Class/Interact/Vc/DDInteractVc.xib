@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DDInteractVc">
+            <connections>
+                <outlet property="footPlaceLb" destination="I2u-6T-G24" id="HXR-kV-5gW"/>
+                <outlet property="searchBar" destination="Ika-X0-fIr" id="lSA-QF-2uR"/>
+                <outlet property="tableView" destination="Ors-zh-7GR" id="rnf-nG-mOy"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="输入互助标题" translatesAutoresizingMaskIntoConstraints="NO" id="Ika-X0-fIr">
+                    <rect key="frame" x="15" y="15" width="345" height="56"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="56" id="5e3-zt-fJ0"/>
+                    </constraints>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="5CG-rU-IQl"/>
+                    </connections>
+                </searchBar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ors-zh-7GR">
+                    <rect key="frame" x="0.0" y="71" width="375" height="596"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无互助" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2u-6T-G24">
+                    <rect key="frame" x="0.0" y="70" width="375" height="597"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Ika-X0-fIr" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="3fq-ME-hCe"/>
+                <constraint firstItem="I2u-6T-G24" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="3lg-ng-JVD"/>
+                <constraint firstAttribute="trailing" secondItem="Ika-X0-fIr" secondAttribute="trailing" constant="15" id="9kt-P5-LTP"/>
+                <constraint firstAttribute="trailing" secondItem="I2u-6T-G24" secondAttribute="trailing" id="SFQ-TO-bfi"/>
+                <constraint firstAttribute="trailing" secondItem="Ors-zh-7GR" secondAttribute="trailing" id="TiT-Xh-bSC"/>
+                <constraint firstItem="I2u-6T-G24" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="gkA-je-HCd"/>
+                <constraint firstItem="Ika-X0-fIr" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="15" id="jKk-a9-0nc"/>
+                <constraint firstAttribute="bottom" secondItem="I2u-6T-G24" secondAttribute="bottom" id="pMp-IE-RU0"/>
+                <constraint firstItem="Ors-zh-7GR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="piN-6W-SxN"/>
+                <constraint firstItem="Ors-zh-7GR" firstAttribute="top" secondItem="Ika-X0-fIr" secondAttribute="bottom" id="vDt-GS-jm4"/>
+                <constraint firstAttribute="bottom" secondItem="Ors-zh-7GR" secondAttribute="bottom" id="xgw-8H-sDP"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

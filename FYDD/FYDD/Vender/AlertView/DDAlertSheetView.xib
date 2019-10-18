@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="DDAlertSheetView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="167"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="修改昵称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wNF-cv-PZV">
+                    <rect key="frame" x="12" y="6" width="296" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="kHR-JJ-N1A"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                    <color key="textColor" red="0.098039215690000001" green="0.2156862745" blue="0.31372549020000001" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LzL-NU-2ce">
+                    <rect key="frame" x="0.0" y="50" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="GeU-EH-GaG"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oqb-De-z07">
+                    <rect key="frame" x="0.0" y="105" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="OXv-NY-FOc"/>
+                    </constraints>
+                </view>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入新昵称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mjg-Nn-Lam">
+                    <rect key="frame" x="12" y="57" width="296" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="bdA-41-xcb"/>
+                    </constraints>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dB2-vq-swb">
+                    <rect key="frame" x="0.0" y="117" width="320" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="q6W-MZ-5Mn"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                    <state key="normal" title="确定">
+                        <color key="titleColor" red="0.94901960780000005" green="0.57647058819999997" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="eventButtonDidClick" destination="iN0-l3-epB" eventType="touchUpInside" id="hkt-zN-CXM"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="LzL-NU-2ce" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="5fi-Mq-SWn"/>
+                <constraint firstItem="Mjg-Nn-Lam" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="H6l-wy-bVP"/>
+                <constraint firstItem="wNF-cv-PZV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="HBh-Th-cOD"/>
+                <constraint firstItem="wNF-cv-PZV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="6" id="HSk-pS-0UQ"/>
+                <constraint firstAttribute="bottom" secondItem="dB2-vq-swb" secondAttribute="bottom" id="IpL-o9-2ci"/>
+                <constraint firstAttribute="trailing" secondItem="Oqb-De-z07" secondAttribute="trailing" id="Iv4-wA-l0k"/>
+                <constraint firstItem="dB2-vq-swb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="PaI-me-6vc"/>
+                <constraint firstItem="Oqb-De-z07" firstAttribute="top" secondItem="Mjg-Nn-Lam" secondAttribute="bottom" constant="4" id="UOa-aV-T1Y"/>
+                <constraint firstAttribute="trailing" secondItem="Mjg-Nn-Lam" secondAttribute="trailing" constant="12" id="Uwu-tJ-3fC"/>
+                <constraint firstItem="LzL-NU-2ce" firstAttribute="top" secondItem="wNF-cv-PZV" secondAttribute="bottom" id="XUw-fX-d4G"/>
+                <constraint firstItem="Mjg-Nn-Lam" firstAttribute="top" secondItem="LzL-NU-2ce" secondAttribute="bottom" constant="6" id="exe-SV-bD5"/>
+                <constraint firstAttribute="trailing" secondItem="LzL-NU-2ce" secondAttribute="trailing" id="k2L-8r-iby"/>
+                <constraint firstAttribute="trailing" secondItem="wNF-cv-PZV" secondAttribute="trailing" constant="12" id="k5n-oF-Qeo"/>
+                <constraint firstItem="Oqb-De-z07" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="oHh-78-9c7"/>
+                <constraint firstAttribute="trailing" secondItem="dB2-vq-swb" secondAttribute="trailing" id="tJj-F0-pgP"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="cons" destination="IpL-o9-2ci" id="QzV-zz-PFm"/>
+                <outlet property="textLb" destination="Mjg-Nn-Lam" id="Jng-JE-emT"/>
+                <outlet property="titleLb" destination="wNF-cv-PZV" id="ZNv-97-dyL"/>
+            </connections>
+            <point key="canvasLocation" x="129.59999999999999" y="-145.27736131934034"/>
+        </view>
+    </objects>
+</document>

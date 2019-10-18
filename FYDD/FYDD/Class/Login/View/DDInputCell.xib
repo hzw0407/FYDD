@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="KGk-i7-Jjw" customClass="DDInputCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您昵称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yGg-dz-wqa">
+                        <rect key="frame" x="12" y="0.0" width="296" height="43.5"/>
+                        <color key="textColor" red="0.098039215686274508" green="0.21568627450980393" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dUj-yb-fbF">
+                        <rect key="frame" x="0.0" y="42.5" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="7LU-Xo-eX4"/>
+                        </constraints>
+                    </view>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_updow" translatesAutoresizingMaskIntoConstraints="NO" id="dcp-x8-yrs">
+                        <rect key="frame" x="293" y="14.5" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="vYx-qZ-24H"/>
+                            <constraint firstAttribute="width" constant="15" id="wMm-eS-tZg"/>
+                        </constraints>
+                    </imageView>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Win-aT-8jM">
+                        <rect key="frame" x="198" y="3" width="106" height="37"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                        <state key="normal" title="获取验证码">
+                            <color key="titleColor" red="0.3294117647" green="0.60784313729999995" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="codeBtnDidClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fGY-Dv-gtk"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="yGg-dz-wqa" secondAttribute="trailing" constant="12" id="1uu-Lw-Rya"/>
+                    <constraint firstAttribute="trailing" secondItem="dUj-yb-fbF" secondAttribute="trailing" id="3ev-DL-ap2"/>
+                    <constraint firstAttribute="bottom" secondItem="dUj-yb-fbF" secondAttribute="bottom" id="Jnr-Lf-WXV"/>
+                    <constraint firstItem="dUj-yb-fbF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="PUG-RA-xbM"/>
+                    <constraint firstItem="yGg-dz-wqa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="ZSt-qv-RgD"/>
+                    <constraint firstAttribute="trailing" secondItem="dcp-x8-yrs" secondAttribute="trailing" constant="12" id="gLh-E9-g8X"/>
+                    <constraint firstAttribute="bottom" secondItem="yGg-dz-wqa" secondAttribute="bottom" id="lqM-ch-32y"/>
+                    <constraint firstItem="yGg-dz-wqa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="tIF-G0-cRK"/>
+                    <constraint firstItem="dcp-x8-yrs" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ydG-f3-gvt"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="codeBtn" destination="Win-aT-8jM" id="OVj-cN-Icg"/>
+                <outlet property="textTd" destination="yGg-dz-wqa" id="zSB-cU-RFU"/>
+                <outlet property="upView" destination="dcp-x8-yrs" id="B2X-xK-MWf"/>
+            </connections>
+            <point key="canvasLocation" x="132.80000000000001" y="154.72263868065968"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon_updow" width="100" height="52.5"/>
+    </resources>
+</document>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DDAddTraceVc">
+            <connections>
+                <outlet property="contenTextView" destination="LIa-mR-lS2" id="3cH-jx-caF"/>
+                <outlet property="placeLb" destination="wgE-Q7-Ipg" id="3fY-du-yg1"/>
+                <outlet property="scrollView" destination="ooe-Ou-csD" id="U1P-x6-gQb"/>
+                <outlet property="titlePlaceTd" destination="BRX-fe-eiR" id="Wep-Po-dgB"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="20Z-tw-9HZ">
+                    <rect key="frame" x="0.0" y="10" width="375" height="50"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入足迹标题" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BRX-fe-eiR">
+                            <rect key="frame" x="15" y="0.0" width="344" height="50"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LZO-EM-XVn">
+                            <rect key="frame" x="15" y="49" width="345" height="1"/>
+                            <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="d0P-9k-tMI"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="LZO-EM-XVn" secondAttribute="bottom" id="8Zk-HC-ZdZ"/>
+                        <constraint firstAttribute="trailing" secondItem="LZO-EM-XVn" secondAttribute="trailing" constant="15" id="B4f-5X-We4"/>
+                        <constraint firstItem="LZO-EM-XVn" firstAttribute="leading" secondItem="20Z-tw-9HZ" secondAttribute="leading" constant="15" id="Kfk-sK-9HM"/>
+                        <constraint firstAttribute="height" constant="50" id="WsD-du-YnJ"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d7H-PD-CyQ">
+                    <rect key="frame" x="0.0" y="116" width="375" height="180"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LIa-mR-lS2">
+                            <rect key="frame" x="12" y="8" width="351" height="164"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="输入足迹内容" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wgE-Q7-Ipg">
+                            <rect key="frame" x="15" y="16" width="351" height="17"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.6705882352941176" green="0.68235294117647061" blue="0.69411764705882351" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="LIa-mR-lS2" firstAttribute="top" secondItem="d7H-PD-CyQ" secondAttribute="top" constant="8" id="7ym-m3-tLS"/>
+                        <constraint firstAttribute="bottom" secondItem="LIa-mR-lS2" secondAttribute="bottom" constant="8" id="Fbj-qd-kJT"/>
+                        <constraint firstAttribute="trailing" secondItem="LIa-mR-lS2" secondAttribute="trailing" constant="12" id="SeY-Fx-dmb"/>
+                        <constraint firstItem="LIa-mR-lS2" firstAttribute="leading" secondItem="d7H-PD-CyQ" secondAttribute="leading" constant="12" id="VCo-NA-5GF"/>
+                        <constraint firstAttribute="height" constant="180" id="oQ6-Vo-Q5m"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="只有有图片的足迹才会被选中至首页推送，建议增加至少一张图片哟！" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l6z-kL-b9j">
+                    <rect key="frame" x="15" y="70" width="355" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="34" id="KA9-Xu-ECG"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.93725490196078431" green="0.50980392156862742" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ooe-Ou-csD">
+                    <rect key="frame" x="0.0" y="306" width="375" height="351"/>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="ooe-Ou-csD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="17e-lz-3S5"/>
+                <constraint firstItem="20Z-tw-9HZ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="2Ph-VD-jRJ"/>
+                <constraint firstItem="d7H-PD-CyQ" firstAttribute="top" secondItem="l6z-kL-b9j" secondAttribute="bottom" constant="12" id="5bw-09-nde"/>
+                <constraint firstAttribute="trailing" secondItem="l6z-kL-b9j" secondAttribute="trailing" constant="5" id="D0L-Es-9Jg"/>
+                <constraint firstItem="l6z-kL-b9j" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="ETs-Aj-gjb"/>
+                <constraint firstAttribute="bottom" secondItem="ooe-Ou-csD" secondAttribute="bottom" constant="10" id="Jhf-ai-akX"/>
+                <constraint firstItem="20Z-tw-9HZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QsW-1t-q9l"/>
+                <constraint firstItem="ooe-Ou-csD" firstAttribute="top" secondItem="d7H-PD-CyQ" secondAttribute="bottom" constant="10" id="SX2-Ow-Exu"/>
+                <constraint firstAttribute="trailing" secondItem="ooe-Ou-csD" secondAttribute="trailing" id="lA6-Gc-FMq"/>
+                <constraint firstAttribute="trailing" secondItem="d7H-PD-CyQ" secondAttribute="trailing" id="nwb-bT-d57"/>
+                <constraint firstItem="d7H-PD-CyQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pid-b1-ShJ"/>
+                <constraint firstAttribute="trailing" secondItem="20Z-tw-9HZ" secondAttribute="trailing" id="poo-CK-c9z"/>
+                <constraint firstItem="l6z-kL-b9j" firstAttribute="top" secondItem="20Z-tw-9HZ" secondAttribute="bottom" constant="10" id="wmd-5m-mCI"/>
+            </constraints>
+            <point key="canvasLocation" x="53.600000000000001" y="48.125937031484263"/>
+        </view>
+    </objects>
+</document>

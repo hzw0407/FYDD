@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DDAuthenMoniVc">
+            <connections>
+                <outlet property="bottomBarView" destination="fgp-N5-Q3l" id="DsH-5j-Ue9"/>
+                <outlet property="bottomRightBarButton" destination="Wd4-up-hRN" id="MlN-fd-sKG"/>
+                <outlet property="cons" destination="Do7-XD-zqP" id="544-dk-gij"/>
+                <outlet property="nextButton" destination="rrn-Ue-pqj" id="ryX-aC-1ak"/>
+                <outlet property="tableView" destination="e54-VI-w26" id="fzW-d3-nEk"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fgp-N5-Q3l">
+                    <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rrn-Ue-pqj">
+                            <rect key="frame" x="27" y="4" width="240" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.16078431369999999" green="0.58823529409999997" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="下一题">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="20"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="nextButtonDidClick:" destination="-1" eventType="touchUpInside" id="BEf-P0-gKn"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wd4-up-hRN">
+                            <rect key="frame" x="275" y="4" width="92" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
+                            <state key="normal" title="3/100" image="icon_men_cate">
+                                <color key="titleColor" red="0.33725490200000002" green="0.34509803919999998" blue="0.35294117650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="allQuestionClick:" destination="-1" eventType="touchUpInside" id="CUA-YD-TQ0"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="49" id="Do7-XD-zqP"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e54-VI-w26">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="h7d-AH-y0c"/>
+                        <outlet property="delegate" destination="-1" id="y0w-iA-qkM"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="e54-VI-w26" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="56F-CY-DPW"/>
+                <constraint firstAttribute="trailing" secondItem="fgp-N5-Q3l" secondAttribute="trailing" id="9jj-DP-gUB"/>
+                <constraint firstItem="fgp-N5-Q3l" firstAttribute="top" secondItem="e54-VI-w26" secondAttribute="bottom" id="K6r-3z-R2L"/>
+                <constraint firstItem="e54-VI-w26" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="MXK-jH-xCb"/>
+                <constraint firstAttribute="bottom" secondItem="fgp-N5-Q3l" secondAttribute="bottom" id="Qlf-xs-E2H"/>
+                <constraint firstAttribute="trailing" secondItem="e54-VI-w26" secondAttribute="trailing" id="uoO-f7-tum"/>
+                <constraint firstItem="fgp-N5-Q3l" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ypj-68-1X5"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon_men_cate" width="22" height="22"/>
+    </resources>
+</document>

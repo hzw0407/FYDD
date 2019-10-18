@@ -1,0 +1,6 @@
+framework module RNCachingURLProtocol {
+  umbrella header "RNCachingURLProtocol-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="145" id="KGk-i7-Jjw" customClass="DDReceiptTypeCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="145"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="144.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择发票类型" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FhU-do-z62">
+                        <rect key="frame" x="12" y="8" width="296" height="27"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="27" id="7p0-z4-wbn"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.5490196078431373" green="0.62352941176470589" blue="0.67843137254901964" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tJX-j8-N8d">
+                        <rect key="frame" x="12" y="45" width="138" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="Ems-qT-y9j"/>
+                        </constraints>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" title="     电子发票 最快五分钟开具">
+                            <color key="titleColor" red="0.54901960780000003" green="0.62352941179999999" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <state key="selected">
+                            <color key="titleColor" red="0.32941176470588235" green="0.60784313725490191" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="buttonDidClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Spc-yf-AE5"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mgz-1r-NnR">
+                        <rect key="frame" x="170" y="45" width="138" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="7SH-A5-0IO"/>
+                        </constraints>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" title="    纸质发票 预计20内送达">
+                            <color key="titleColor" red="0.54901960780000003" green="0.62352941179999999" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <state key="selected">
+                            <color key="titleColor" red="0.32941176470588235" green="0.60784313725490191" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="buttonDidClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="SUu-lM-eIE"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="电子发票与纸质发票具有同等法律效力，可支持报销入账" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tGX-vJ-J3l">
+                        <rect key="frame" x="12" y="105" width="296" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="zKl-XN-dSb"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.77647058823529413" green="0.81176470588235294" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="FhU-do-z62" secondAttribute="trailing" constant="12" id="2zB-Qd-qPV"/>
+                    <constraint firstAttribute="trailing" secondItem="tGX-vJ-J3l" secondAttribute="trailing" constant="12" id="Dwj-kS-UwI"/>
+                    <constraint firstItem="mgz-1r-NnR" firstAttribute="top" secondItem="FhU-do-z62" secondAttribute="bottom" constant="10" id="EG8-Cg-HRX"/>
+                    <constraint firstItem="mgz-1r-NnR" firstAttribute="leading" secondItem="tJX-j8-N8d" secondAttribute="trailing" constant="20" id="ELS-Pu-pIg"/>
+                    <constraint firstItem="mgz-1r-NnR" firstAttribute="width" secondItem="tJX-j8-N8d" secondAttribute="width" id="FdR-ga-PSQ"/>
+                    <constraint firstItem="tGX-vJ-J3l" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="HOv-2d-xNB"/>
+                    <constraint firstItem="tJX-j8-N8d" firstAttribute="top" secondItem="FhU-do-z62" secondAttribute="bottom" constant="10" id="LIr-yl-w1R"/>
+                    <constraint firstAttribute="trailing" secondItem="mgz-1r-NnR" secondAttribute="trailing" constant="12" id="Mbx-xi-dhV"/>
+                    <constraint firstItem="tGX-vJ-J3l" firstAttribute="top" secondItem="tJX-j8-N8d" secondAttribute="bottom" constant="10" id="SJO-GO-V9P"/>
+                    <constraint firstItem="FhU-do-z62" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="U8F-cB-1Kq"/>
+                    <constraint firstItem="FhU-do-z62" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="gGM-hq-ceb"/>
+                    <constraint firstItem="tJX-j8-N8d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="jK4-FK-siO"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="button1" destination="tJX-j8-N8d" id="bdf-1B-LMR"/>
+                <outlet property="button2" destination="mgz-1r-NnR" id="eX0-XV-So8"/>
+            </connections>
+            <point key="canvasLocation" x="132.80000000000001" y="200.14992503748127"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -1,0 +1,6 @@
+framework module Pods_FYDD {
+  umbrella header "Pods-FYDD-umbrella.h"
+
+  export *
+  module * { export * }
+}
