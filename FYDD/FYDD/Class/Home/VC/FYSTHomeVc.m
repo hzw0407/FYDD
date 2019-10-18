@@ -89,6 +89,14 @@ UITableViewDataSource> {
     }];
     
     [self getBannerData];
+    
+    //注册手势 滑出左边控制器
+    __weak typeof(self)weakSelf = self;
+    [self cw_registerShowIntractiveWithEdgeGesture:NO transitionDirectionAutoBlock:^(CWDrawerTransitionDirection direction) {
+        if (direction == CWDrawerTransitionFromLeft) {
+            [weakSelf pushUserRightButtonDidClick];
+        }
+    }];
 }
 
 - (void)getBannerData{
@@ -144,7 +152,7 @@ UITableViewDataSource> {
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@""]  forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     [[DDUserManager share] getUserInfo:nil];
-    
+
     self.userIconView.userLb.text = [DDUserManager share].isLogged ?  yyTrimNullText([DDUserManager share].user.nickname) : @"未登录";
     if ([DDUserManager share].isLogged && yyTrimNullText([DDUserManager share].user.userHeadImage).length) {
         [self.userIconView.userView sd_setImageWithURL:[NSURL URLWithString:[DDUserManager share].user.userHeadImage]];

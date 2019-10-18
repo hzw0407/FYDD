@@ -23,7 +23,7 @@ PODS:
     - NVActivityIndicatorView (~> 4.6.1)
     - SnapKit (~> 4.2.0)
   - Bugly (2.5.0)
-  - CWLateralSlide (1.6.4)
+  - CWLateralSlide (1.6.5)
   - FDFullscreenPopGesture (1.1)
   - FSCalendar (2.8.0)
   - IQKeyboardManager (6.4.0)
@@ -84,7 +84,7 @@ DEPENDENCIES:
   - AlipaySDK-iOS
   - BMPlayer
   - Bugly
-  - CWLateralSlide
+  - CWLateralSlide (~> 1.6.5)
   - FDFullscreenPopGesture
   - FSCalendar
   - IQKeyboardManager
@@ -146,7 +146,7 @@ SPEC CHECKSUMS:
   AlipaySDK-iOS: 1c5283b30977a24acecc0114662697f7dc78f618
   BMPlayer: ea12f9d82e37f968dea2078b5e58e356ee4439d8
   Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
-  CWLateralSlide: b7933f4a03d652fbec6789bb45dc567011e892ca
+  CWLateralSlide: 8939c8dea91a24e40d0793553118cb57cd67f64b
   FDFullscreenPopGesture: a8a620179e3d9c40e8e00256dcee1c1a27c6d0f0
   FSCalendar: 3a5ed3636e2ba1b83ebebfcf0c2603105a6f5efe
   IQKeyboardManager: fcef267266379c003181fc3592f6bdb8bf4db839
@@ -172,6 +172,6 @@ SPEC CHECKSUMS:
   ZLPhotoBrowser: 0c70486b4c9b968fa983d5d96480996fd4fc12fd
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: c36c09167e5277d39feefb64f04f2bdabdddf875
+PODFILE CHECKSUM: 3ef45f50d8acc985d148f1ce8d16e572ad95cf4f
 
-COCOAPODS: 1.7.0.rc.1
+COCOAPODS: 1.7.5

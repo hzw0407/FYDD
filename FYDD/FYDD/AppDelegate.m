@@ -115,11 +115,12 @@
 
 - (void)gotoMainVC {
     // 当前的身份
-    if ([DDUserManager share].user.userType == DDUserTypeSystem) {
-        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[FYSTHomeVc new]];
-    }else {
-        self.window.rootViewController = [DDTabBarC new];
-    }
+//    if ([DDUserManager share].user.userType == DDUserTypeSystem) {
+//        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[FYSTHomeVc new]];
+//    }else {
+//        self.window.rootViewController = [DDTabBarC new];
+//    }
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[FYSTHomeVc new]];
     
 }
 

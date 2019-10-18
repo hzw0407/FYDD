@@ -33,20 +33,20 @@
     vc2.title = @"百万计划";
     vc2.tabBarItem.image = [UIImage imageNamed:@"icon_tabBar2"];
     [self addChildViewController:nav2];
-    
+
     DDOpportunityVc * vc3 = [DDOpportunityVc new];
     UINavigationController * nav3 = [[UINavigationController alloc] initWithRootViewController:vc3];
     vc3.title = @"商机";
     vc3.tabBarItem.image = [UIImage imageNamed:@"icon_tabBar3"];
     [self addChildViewController:nav3];
-    
+
     DDTraceVc * vc4 = [DDTraceVc new];
     UINavigationController * nav4 = [[UINavigationController alloc] initWithRootViewController:vc4];
     vc4.title = @"足迹";
     vc4.tabBarItem.image = [UIImage imageNamed:@"icon_tabBar4"];
     [self addChildViewController:nav4];
-    
-    
+
+
     DDInteractVc * vc5 = [DDInteractVc new];
     UINavigationController * nav5 = [[UINavigationController alloc] initWithRootViewController:vc5];
     vc5.title = @"互助";
