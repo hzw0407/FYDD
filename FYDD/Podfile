@@ -33,6 +33,8 @@ pod 'UMCShare/Social/ReducedWeChat'
 pod 'UMCShare/Social/Sina'
 pod 'AlipaySDK-iOS'
 pod 'RNCachingURLProtocol'
+#无限轮播
+pod 'SDCycleScrollView','>= 1.80'
 
 pod 'ZFPlayer'
 pod 'FDFullscreenPopGesture'

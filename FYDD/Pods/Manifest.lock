@@ -94,6 +94,7 @@ DEPENDENCIES:
   - MBProgressHUD
   - MJRefresh
   - RNCachingURLProtocol
+  - SDCycleScrollView (>= 1.80)
   - SDCycleScrollView (~> 1.75)
   - SDWebImage
   - SVProgressHUD
@@ -172,6 +173,6 @@ SPEC CHECKSUMS:
   ZLPhotoBrowser: 0c70486b4c9b968fa983d5d96480996fd4fc12fd
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 3ef45f50d8acc985d148f1ce8d16e572ad95cf4f
+PODFILE CHECKSUM: c82b6a14ceae666b36cc05d70622f7bd6f850c49
 
 COCOAPODS: 1.7.5

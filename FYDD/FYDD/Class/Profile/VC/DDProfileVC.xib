@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DDProfileVC">
             <connections>
-                <outlet property="checkButton" destination="CgO-Hv-QNq" id="XN2-ND-Gfh"/>
-                <outlet property="codeBtn" destination="tLi-G0-oVc" id="Le1-AJ-vNU"/>
                 <outlet property="contentView" destination="efM-um-dVQ" id="HsW-vW-s0y"/>
                 <outlet property="descLb" destination="WH9-iq-523" id="xgl-Xj-pTg"/>
                 <outlet property="iconTipView" destination="Qip-qw-RJF" id="2Cv-kh-F0i"/>
                 <outlet property="iconTipView1" destination="tXn-kN-uKj" id="2my-RO-wrs"/>
                 <outlet property="iconTipView2" destination="aCM-Ud-ofZ" id="XBG-Hf-LyS"/>
                 <outlet property="nameLb" destination="C8M-VS-RbF" id="AMg-lp-QcE"/>
-                <outlet property="onelineBtn" destination="xh0-nf-5ap" id="akk-F7-1m8"/>
-                <outlet property="studyButton" destination="M8P-yr-97I" id="Fki-Ru-0zt"/>
                 <outlet property="userIconView" destination="qma-NE-gna" id="Toj-Xj-FA6"/>
                 <outlet property="verifyCodeButton" destination="g9H-Tm-hvZ" id="NjT-Nw-swX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -83,11 +77,11 @@
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
-                            <state key="normal" title="下线" image="icon_profile4">
+                            <state key="normal" title="认证" image="icon_check">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <connections>
-                                <action selector="buttonDidClick:" destination="-1" eventType="touchUpInside" id="kDr-3M-KPu"/>
+                                <action selector="buttonDidClick:" destination="-1" eventType="touchUpInside" id="q0r-sT-3Gu"/>
                             </connections>
                         </button>
                         <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lr6-OV-vtP">
@@ -152,7 +146,6 @@
                             </state>
                             <connections>
                                 <action selector="buttonDidClick:" destination="-1" eventType="touchUpInside" id="Q6Y-i2-5gi"/>
-                                <action selector="studyButtonDidClick:" destination="-1" eventType="touchUpInside" id="izb-u5-d43"/>
                             </connections>
                         </button>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g9H-Tm-hvZ">
@@ -161,17 +154,6 @@
                             <state key="normal" image="icon_verify_book"/>
                             <connections>
                                 <action selector="verifyCodeButtonDidClick:" destination="-1" eventType="touchUpInside" id="Iua-3g-6TJ"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" tag="6" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tLi-G0-oVc">
-                            <rect key="frame" x="25" y="563" width="282" height="35"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
-                            <state key="normal" title="我的代理码" image="icon_code_sha">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
-                            <connections>
-                                <action selector="buttonDidClick:" destination="-1" eventType="touchUpInside" id="hUs-st-I9b"/>
                             </connections>
                         </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qma-NE-gna">
@@ -185,19 +167,6 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </imageView>
-                        <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CgO-Hv-QNq">
-                            <rect key="frame" x="18" y="505" width="282" height="40"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
-                            <state key="normal" title="切换身份" image="icon_exchange">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
-                            <connections>
-                                <action selector="buttonDidClick:" destination="-1" eventType="touchUpInside" id="dfx-4D-hBf"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
@@ -213,15 +182,13 @@
         </view>
     </objects>
     <resources>
-        <image name="icon_code_sha" width="45" height="45"/>
-        <image name="icon_exchange" width="20" height="20.5"/>
+        <image name="icon_check" width="19" height="22.5"/>
         <image name="icon_order_tip" width="9" height="9"/>
         <image name="icon_profile1" width="19.5" height="21"/>
         <image name="icon_profile2" width="21" height="21"/>
         <image name="icon_profile3" width="22" height="22"/>
-        <image name="icon_profile4" width="22" height="19"/>
         <image name="icon_profile5" width="20.5" height="22"/>
-        <image name="icon_study" width="40" height="40"/>
+        <image name="icon_study" width="20" height="20"/>
         <image name="icon_verify_book" width="23.5" height="25"/>
     </resources>
 </document>

@@ -436,6 +436,7 @@
 		35F3A6842324E20600F8D3AF /* DDProductAgreeServiceVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35F3A6822324E20600F8D3AF /* DDProductAgreeServiceVc.xib */; };
 		35F3A6882325328400F8D3AF /* DDOrderImplementationStepCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F3A6862325328400F8D3AF /* DDOrderImplementationStepCell.m */; };
 		35F3A6892325328400F8D3AF /* DDOrderImplementationStepCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35F3A6872325328400F8D3AF /* DDOrderImplementationStepCell.xib */; };
+		7C0CE3172359C5BA004C3360 /* UIButton+FYCustonButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C0CE3162359C5BA004C3360 /* UIButton+FYCustonButton.m */; };
 		7C9C319E61D95F3BE68525F9 /* Pods_FYDD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C7B11BD770068C2C0C057A /* Pods_FYDD.framework */; };
 /* End PBXBuildFile section */
 
@@ -1157,6 +1158,8 @@
 		35F3A6852325328400F8D3AF /* DDOrderImplementationStepCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDOrderImplementationStepCell.h; sourceTree = "<group>"; };
 		35F3A6862325328400F8D3AF /* DDOrderImplementationStepCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDOrderImplementationStepCell.m; sourceTree = "<group>"; };
 		35F3A6872325328400F8D3AF /* DDOrderImplementationStepCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DDOrderImplementationStepCell.xib; sourceTree = "<group>"; };
+		7C0CE3152359C5BA004C3360 /* UIButton+FYCustonButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+FYCustonButton.h"; sourceTree = "<group>"; };
+		7C0CE3162359C5BA004C3360 /* UIButton+FYCustonButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+FYCustonButton.m"; sourceTree = "<group>"; };
 		91C7B11BD770068C2C0C057A /* Pods_FYDD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FYDD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99E3891E965E005B2CFCAACF /* Pods-FYDD.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYDD.release.xcconfig"; path = "Pods/Target Support Files/Pods-FYDD/Pods-FYDD.release.xcconfig"; sourceTree = "<group>"; };
 		DD112520629D32FAA6294E6C /* Pods-FYDD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYDD.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FYDD/Pods-FYDD.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1773,6 +1776,7 @@
 		04D3F6AE221D601C00A79628 /* TOOL */ = {
 			isa = PBXGroup;
 			children = (
+				7C0CE3132359C591004C3360 /* Category */,
 				04D3F6AF221D603300A79628 /* DDUserManager.h */,
 				04D3F6B0221D603300A79628 /* DDUserManager.m */,
 				04D3F6B7221D60D600A79628 /* DDAppManager.h */,
@@ -2421,6 +2425,23 @@
 			path = "New Group";
 			sourceTree = "<group>";
 		};
+		7C0CE3132359C591004C3360 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				7C0CE3142359C591004C3360 /* UIButton */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		7C0CE3142359C591004C3360 /* UIButton */ = {
+			isa = PBXGroup;
+			children = (
+				7C0CE3152359C5BA004C3360 /* UIButton+FYCustonButton.h */,
+				7C0CE3162359C5BA004C3360 /* UIButton+FYCustonButton.m */,
+			);
+			path = UIButton;
+			sourceTree = "<group>";
+		};
 		DC53CA86919DA9610BE362EC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2824,6 +2845,7 @@
 				04C7E9A82240C05300EE9796 /* DDRechargeVC.m in Sources */,
 				0410958D228BBDE4009C3A09 /* TYBaseAnimation.m in Sources */,
 				35EB135F233D30D900E17086 /* MDCVideoCell.swift in Sources */,
+				7C0CE3172359C5BA004C3360 /* UIButton+FYCustonButton.m in Sources */,
 				04A7255E2241E29600C6184F /* DDChangeUserTypeVC.m in Sources */,
 				35DECB1F230FE04200D044B9 /* DDOpportunityDetailCell.m in Sources */,
 				04A76B21223CDD2F007976C3 /* DDBaseCell.m in Sources */,

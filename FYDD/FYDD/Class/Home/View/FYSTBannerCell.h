@@ -10,12 +10,17 @@
 #import "DDBannerModel.h"
 
 
-@interface FYSTBannerCell : UITableViewCell  <UIScrollViewDelegate>{
-    UIView * _currentPageView;
-}
-@property (weak, nonatomic) IBOutlet UIScrollView *contentScrolView;
-@property (nonatomic,strong) NSArray * banners;
+@interface FYSTBannerCell : UITableViewCell  <UIScrollViewDelegate>
+//{
+//    UIView * _currentPageView;
+//}
+//@property (weak, nonatomic) IBOutlet UIScrollView *contentScrolView;
+//@property (nonatomic,strong) NSArray * banners;
 @property (nonatomic,copy) void (^bannerDidClick)(NSInteger index);
+
+//刷新数据
+- (void)refreshWithArray:(NSArray *)banners;
+
 @end
 
 

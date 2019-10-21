@@ -27,15 +27,9 @@
 @interface DDProfileVC ()
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cons;
-@property (weak, nonatomic) IBOutlet UIButton *codeBtn;
-@property (weak, nonatomic) IBOutlet UIImageView *codeImg;
-
-
 
 @property (weak, nonatomic) IBOutlet UIButton *nameLb;
 @property (weak, nonatomic) IBOutlet UIButton *descLb;
-
-@property (weak, nonatomic) IBOutlet UIButton *checkButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *onelineBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *userIconView;
@@ -51,6 +45,11 @@
 
 @implementation DDProfileVC
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     _descLb.titleLabel.numberOfLines = 0;
@@ -65,8 +64,8 @@
 }
 
 - (IBAction)buttonDidClick:(UIButton *)sender {
-    // 订单
     if (sender.tag == 0) {
+        // 订单
         DDOrderVC * vc = [DDOrderVC new];
         if ([DDUserManager share].user.userType == DDUserTypeOnline) {
             vc.title = @"实施方";
@@ -77,8 +76,8 @@
         }
         vc.hidesBottomBarWhenPushed = YES;
         [self cw_pushViewController:vc];
-    // 下线/ 认证
     }else if (sender.tag == 1) {
+        // 下线/ 认证
         switch ([DDUserManager share].user.userType) {
             case DDUserTypeOnline:{
                 // 如果个人认证认证
@@ -119,38 +118,43 @@
             default:
                 break;
         }
-
-    // 钱包
     }else if (sender.tag == 2) {
+        // 钱包
         DDWalletVC * vc = [DDWalletVC new];
         vc.hidesBottomBarWhenPushed = YES;
         [self cw_pushViewController:vc];
-    // 客服
     }else if (sender.tag == 3) {
+        // 客服
         DDContactListVC * vc = [DDContactListVC new];
         vc.hidesBottomBarWhenPushed = YES;
         [self cw_pushViewController:vc];
-    // 设置
     }else if (sender.tag == 4) {
+        // 设置
         DDSettingVC * vc = [DDSettingVC new];
         vc.hidesBottomBarWhenPushed = YES;
         [self cw_pushViewController:vc];
-    // 切换身份
     }else if (sender.tag == 5) {
-        DDChangeUserTypeVC * vc = [DDChangeUserTypeVC new];
+        //在线学习
+        DDOnlineStudyVc *vc = [DDOnlineStudyVc new];
         vc.hidesBottomBarWhenPushed = YES;
-        [self cw_pushViewController:vc];
-    // 二维码
-    }else if (sender.tag == 6) {
-        DDShareVC * vc = [DDShareVC new];
-        vc.hidesBottomBarWhenPushed = YES;
-        [self cw_pushViewController:vc];
-    // 个人信息
-    }else {
-        DDUserInfoVC * vc = [DDUserInfoVC new];
-        vc.hidesBottomBarWhenPushed = YES;
+        vc.userType = [DDUserManager share].user.userType == DDUserTypePromoter ? DDUserTypeOnline :  DDUserTypePromoter;
         [self cw_pushViewController:vc];
     }
+//    else if (sender.tag == 5) {
+//        DDChangeUserTypeVC * vc = [DDChangeUserTypeVC new];
+//        vc.hidesBottomBarWhenPushed = YES;
+//        [self cw_pushViewController:vc];
+//    // 二维码
+//    }else if (sender.tag == 6) {
+//        DDShareVC * vc = [DDShareVC new];
+//        vc.hidesBottomBarWhenPushed = YES;
+//        [self cw_pushViewController:vc];
+//    // 个人信息
+//    }else {
+//        DDUserInfoVC * vc = [DDUserInfoVC new];
+//        vc.hidesBottomBarWhenPushed = YES;
+//        [self cw_pushViewController:vc];
+//    }
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -180,12 +184,9 @@
 
 - (void)updateUI{
     DDUser * user =[DDUserManager share].user;
-    _checkButton.hidden = NO;
     switch (user.userType) {
             // 实施方
         case DDUserTypeOnline:{
-            _codeBtn.hidden = YES;
-            _codeImg.hidden = YES;
             [_nameLb setTitle:yyTrimNullText(user.nickname) forState:UIControlStateNormal];
             [_descLb setTitle:[NSString stringWithFormat:@"实施方  %.1f分",user.totalScore] forState:UIControlStateNormal];
             [_onelineBtn setTitle:@"认证" forState:UIControlStateNormal];
@@ -196,9 +197,6 @@
         }break;
             // 企业用户
         case DDUserTypeSystem:
-            _codeBtn.hidden = YES;
-            _codeImg.hidden = YES;
-            _checkButton.hidden = YES;
             [_studyButton setTitle:@"切换身份" forState:UIControlStateNormal];
             [_studyButton setImage:[UIImage imageNamed:@"icon_exchange"] forState:UIControlStateNormal];
             [_nameLb setTitle:yyTrimNullText(user.nickname) forState:UIControlStateNormal];
@@ -209,8 +207,6 @@
             break;
             // 代理方
         case DDUserTypePromoter:
-            _codeBtn.hidden = NO;
-            _codeImg.hidden = NO;
             [_nameLb setTitle:yyTrimNullText(user.nickname) forState:UIControlStateNormal];
             [_descLb setTitle:[NSString stringWithFormat:@"代理方  %.1f分",[yyTrimNullText(user.extensionTotalScore) doubleValue]] forState:UIControlStateNormal];
             
@@ -234,14 +230,19 @@
 
 
 - (IBAction)studyButtonDidClick:(UIButton *)sender {
-    if ([DDUserManager share].user.userType == DDUserTypeSystem) {
-        [self buttonDidClick:_checkButton];
-    }else {
-        DDOnlineStudyVc *vc = [DDOnlineStudyVc new];
-        vc.hidesBottomBarWhenPushed = YES;
-        vc.userType = [DDUserManager share].user.userType == DDUserTypePromoter ? DDUserTypeOnline :  DDUserTypePromoter;
-        [self cw_pushViewController:vc];
-    }
+//    if ([DDUserManager share].user.userType == DDUserTypeSystem) {
+////        [self buttonDidClick:_checkButton];
+//    }else {
+//        DDOnlineStudyVc *vc = [DDOnlineStudyVc new];
+//        vc.hidesBottomBarWhenPushed = YES;
+//        vc.userType = [DDUserManager share].user.userType == DDUserTypePromoter ? DDUserTypeOnline :  DDUserTypePromoter;
+//        [self cw_pushViewController:vc];
+//    }
+    
+    DDOnlineStudyVc *vc = [DDOnlineStudyVc new];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.userType = [DDUserManager share].user.userType == DDUserTypePromoter ? DDUserTypeOnline :  DDUserTypePromoter;
+    [self cw_pushViewController:vc];
 
 }
 
