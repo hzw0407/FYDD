@@ -15,6 +15,8 @@
 
 //点击某个功能
 - (void)clickFunction:(NSInteger)index;
+//点击某个消息
+- (void)clickMessage:(NSInteger)index;
 
 @end
 
@@ -34,6 +36,8 @@
 //@property (nonatomic,strong) NSArray *productObjs;
 //@property (nonatomic,strong) NSArray * messages;
 
+//刷新消息数据
+- (void)refreshMessageWithArray:(NSArray *)messAgeArray;
 //刷新板块数据
 - (void)refreshPlateWithArray:(NSArray *)plateArray;
 

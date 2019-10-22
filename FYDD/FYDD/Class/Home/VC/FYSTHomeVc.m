@@ -33,6 +33,9 @@
 #import "DDContactListVC.h"
 #import "DDBannerModel.h"
 #import "ExampleViewController.h"
+#import "STIdentityDetailVC.h"
+#import "STAdvertorialsCell.h"
+
 @interface FYSTHomeVc ()
 <UITableViewDelegate,
 UITableViewDataSource,
@@ -47,6 +50,7 @@ FYSTNoticeCellDelegate> {
 @property (nonatomic,strong) FYSTRightItemMenuView * rightMenuView;//导航右边按钮
 @property (nonatomic,strong) DDProfileVC * profileVC;//抽屉
 //@property (nonatomic,strong) DDClerkMenuView * menuView;
+
 @end
 
 @implementation FYSTHomeVc
@@ -281,11 +285,18 @@ FYSTNoticeCellDelegate> {
 }
 
 #pragma mark - FYSTNoticeCellDelegate
+//点击功能
 - (void)clickFunction:(NSInteger)index {
     if (index == 100) {
         //代理方
+        STIdentityDetailVC *vc = [[STIdentityDetailVC alloc] init];
+        vc.type = 1;
+        [self.navigationController pushViewController:vc animated:YES];
     }else if (index == 101) {
         //实施方
+        STIdentityDetailVC *vc = [[STIdentityDetailVC alloc] init];
+        vc.type = 2;
+        [self.navigationController pushViewController:vc animated:YES];
     }else if (index == 201) {
         //演示视频
     }else if (index == 204) {
@@ -301,6 +312,13 @@ FYSTNoticeCellDelegate> {
     }
 }
 
+//点击消息
+- (void)clickMessage:(NSInteger)index {
+    DDMessageVC * vc = [DDMessageVC new];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 - (UITableView *)tableView{
     if (!_tableView){
         _tableView = [[UITableView alloc] init];
@@ -312,7 +330,8 @@ FYSTNoticeCellDelegate> {
         [_tableView registerClass:[FYSTBannerCell class] forCellReuseIdentifier:@"FYSTBannerCellId"];
 //        [_tableView registerNib:[UINib nibWithNibName:@"FYSTNoticeCell" bundle:nil] forCellReuseIdentifier:@"FYSTNoticeCellId"];
         [_tableView registerClass:[FYSTNoticeCell class] forCellReuseIdentifier:@"FYSTNoticeCellId"];
-        [_tableView registerNib:[UINib nibWithNibName:@"FYSTFootprintCell" bundle:nil] forCellReuseIdentifier:@"FYSTFootprintCellId"];
+//        [_tableView registerNib:[UINib nibWithNibName:@"FYSTFootprintCell" bundle:nil] forCellReuseIdentifier:@"FYSTFootprintCellId"];
+        [_tableView registerClass:[STAdvertorialsCell class] forCellReuseIdentifier:@"cell"];
         @weakify(self)
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             @strongify(self)
@@ -371,6 +390,7 @@ FYSTNoticeCellDelegate> {
             cell = [[FYSTNoticeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FYSTNoticeCellId"];
         }
         cell.delegate = self;
+        [cell refreshMessageWithArray:_messages];
         [cell refreshPlateWithArray:_products];
         return cell;
         
@@ -416,8 +436,16 @@ FYSTNoticeCellDelegate> {
 //        cell.moduleBlock = extractedExpr;
 //        return cell;
     }else {
-        FYSTFootprintCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FYSTFootprintCellId"];
-        cell.footprintModel = _footPrints[indexPath.row - 2];
+//        FYSTFootprintCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FYSTFootprintCellId"];
+//        cell.footprintModel = _footPrints[indexPath.row - 2];
+//        return cell;
+        STAdvertorialsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        if (cell == nil) {
+            cell = [[STAdvertorialsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+            cell.selectionStyle = UITableViewScrollPositionNone;
+        }
+        DDFootstripObj *model = _footPrints[indexPath.row - 2];
+        [cell refreshWithModel:model];
         return cell;
     }
 }

@@ -438,6 +438,9 @@
 		35F3A6892325328400F8D3AF /* DDOrderImplementationStepCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35F3A6872325328400F8D3AF /* DDOrderImplementationStepCell.xib */; };
 		7C0CE3172359C5BA004C3360 /* UIButton+FYCustonButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C0CE3162359C5BA004C3360 /* UIButton+FYCustonButton.m */; };
 		7C9C319E61D95F3BE68525F9 /* Pods_FYDD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C7B11BD770068C2C0C057A /* Pods_FYDD.framework */; };
+		7CCDC23E235E9CA3009491FB /* STIdentityDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDC23D235E9CA3009491FB /* STIdentityDetailVC.m */; };
+		7CCDC241235EA58A009491FB /* STIdentityDetailFunctionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDC240235EA58A009491FB /* STIdentityDetailFunctionCell.m */; };
+		7CCDC244235ED851009491FB /* STAdvertorialsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDC243235ED851009491FB /* STAdvertorialsCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1160,6 +1163,12 @@
 		35F3A6872325328400F8D3AF /* DDOrderImplementationStepCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DDOrderImplementationStepCell.xib; sourceTree = "<group>"; };
 		7C0CE3152359C5BA004C3360 /* UIButton+FYCustonButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+FYCustonButton.h"; sourceTree = "<group>"; };
 		7C0CE3162359C5BA004C3360 /* UIButton+FYCustonButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+FYCustonButton.m"; sourceTree = "<group>"; };
+		7CCDC23C235E9CA3009491FB /* STIdentityDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STIdentityDetailVC.h; sourceTree = "<group>"; };
+		7CCDC23D235E9CA3009491FB /* STIdentityDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STIdentityDetailVC.m; sourceTree = "<group>"; };
+		7CCDC23F235EA58A009491FB /* STIdentityDetailFunctionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STIdentityDetailFunctionCell.h; sourceTree = "<group>"; };
+		7CCDC240235EA58A009491FB /* STIdentityDetailFunctionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STIdentityDetailFunctionCell.m; sourceTree = "<group>"; };
+		7CCDC242235ED851009491FB /* STAdvertorialsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STAdvertorialsCell.h; sourceTree = "<group>"; };
+		7CCDC243235ED851009491FB /* STAdvertorialsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STAdvertorialsCell.m; sourceTree = "<group>"; };
 		91C7B11BD770068C2C0C057A /* Pods_FYDD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FYDD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99E3891E965E005B2CFCAACF /* Pods-FYDD.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYDD.release.xcconfig"; path = "Pods/Target Support Files/Pods-FYDD/Pods-FYDD.release.xcconfig"; sourceTree = "<group>"; };
 		DD112520629D32FAA6294E6C /* Pods-FYDD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYDD.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FYDD/Pods-FYDD.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2206,6 +2215,10 @@
 				35F3A673232390A900F8D3AF /* DDProductOrderOnlineCell.h */,
 				35F3A674232390A900F8D3AF /* DDProductOrderOnlineCell.m */,
 				35F3A675232390A900F8D3AF /* DDProductOrderOnlineCell.xib */,
+				7CCDC23F235EA58A009491FB /* STIdentityDetailFunctionCell.h */,
+				7CCDC240235EA58A009491FB /* STIdentityDetailFunctionCell.m */,
+				7CCDC242235ED851009491FB /* STAdvertorialsCell.h */,
+				7CCDC243235ED851009491FB /* STAdvertorialsCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2239,6 +2252,8 @@
 				35F3A6802324E20600F8D3AF /* DDProductAgreeServiceVc.h */,
 				35F3A6812324E20600F8D3AF /* DDProductAgreeServiceVc.m */,
 				35F3A6822324E20600F8D3AF /* DDProductAgreeServiceVc.xib */,
+				7CCDC23C235E9CA3009491FB /* STIdentityDetailVC.h */,
+				7CCDC23D235E9CA3009491FB /* STIdentityDetailVC.m */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -2798,6 +2813,7 @@
 				04F9CC882236868F0020B619 /* DDMessageVC.m in Sources */,
 				0422D0E32239119C00545E38 /* OrderDetailVC.m in Sources */,
 				04A9C31922530F23008F859E /* DDAlertInputView.m in Sources */,
+				7CCDC241235EA58A009491FB /* STIdentityDetailFunctionCell.m in Sources */,
 				044E19B72274075700125884 /* DDOrderContactListCell.m in Sources */,
 				04FAE78A223B48CC00B226C9 /* DDInputContentCell.m in Sources */,
 				35DECAC5230E6B3800D044B9 /* FYSTFootprintCell.m in Sources */,
@@ -2822,6 +2838,7 @@
 				044E19B32273FCE900125884 /* YYPhotoGroupView.m in Sources */,
 				35E1364C23229F5000C55A80 /* DDOrderPlanModel.m in Sources */,
 				35DECB29230FE4DA00D044B9 /* DDTraceCell.m in Sources */,
+				7CCDC23E235E9CA3009491FB /* STIdentityDetailVC.m in Sources */,
 				04F9CC4F223636270020B619 /* DDInputCell.m in Sources */,
 				35944FB72333D26500C714DE /* DDBannerModel.m in Sources */,
 				0492F75E2276A349007090CD /* DDVideoListModel.m in Sources */,
@@ -2882,6 +2899,7 @@
 				35F37DEB231E93CE00AB4CA7 /* DDOnlineStudyCell.m in Sources */,
 				3558CF5E23267595005DF15D /* DDApplyRoleVc.m in Sources */,
 				04EE1A47226465C400411BC2 /* DDChatReceveCell.m in Sources */,
+				7CCDC244235ED851009491FB /* STAdvertorialsCell.m in Sources */,
 				04EE1A162261B3C100411BC2 /* DDCityListVC.m in Sources */,
 				04F9CC722236601F0020B619 /* DDMainMenuCell.m in Sources */,
 				3540DD142325F96600BF6B80 /* DDCommitStepVc.m in Sources */,

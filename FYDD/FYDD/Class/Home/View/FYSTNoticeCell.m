@@ -13,6 +13,7 @@
 #import "SDCycleScrollView.h"
 
 @interface FYSTNoticeCell ()
+<SDCycleScrollViewDelegate>
 
 @property (nonatomic, strong) UIView *newsView;//消息view
 @property (nonatomic, strong) UIImageView *hornImageView;//喇叭图片
@@ -180,6 +181,15 @@
     }];
 }
 
+//刷新消息数据
+- (void)refreshMessageWithArray:(NSArray *)messAgeArray {
+    NSMutableArray *array = [NSMutableArray array];
+    for (DDMessageModel *objc in messAgeArray) {
+        [array addObject:objc.messageContent];
+    }
+    self.cycleScrollView.titlesGroup = array;
+}
+
 //刷新模板数据
 - (void)refreshPlateWithArray:(NSArray *)plateArray {
     [self.plateView removeAllSubviews];
@@ -228,6 +238,15 @@
 
 #pragma mark - CustomDelegate
 
+#pragma mark - SDCycleScrollViewDelegate
+//点击滚动文字回调
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickMessage:)]) {
+        [self.delegate clickMessage:index];
+    }
+}
+
+
 #pragma mark - GetterAndSetter
 - (UIView *)newsView {
     if (!_newsView) {
@@ -248,13 +267,13 @@
 - (SDCycleScrollView *)cycleScrollView {
     if (!_cycleScrollView) {
         _cycleScrollView = [[SDCycleScrollView alloc] init];
+        _cycleScrollView.delegate = self;
         //只轮播文字
         _cycleScrollView.onlyDisplayText = YES;
         //轮播文字颜色
         _cycleScrollView.titleLabelTextColor = [UIColor blackColor];
         //轮播文字背景颜色
         _cycleScrollView.titleLabelBackgroundColor = [UIColor clearColor];
-        _cycleScrollView.titlesGroup = @[@"11111",@"22222",@"33333",@"44444"];
     }
     return _cycleScrollView;
 }
