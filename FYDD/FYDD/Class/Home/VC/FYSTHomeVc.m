@@ -39,7 +39,8 @@
 @interface FYSTHomeVc ()
 <UITableViewDelegate,
 UITableViewDataSource,
-FYSTNoticeCellDelegate> {
+FYSTNoticeCellDelegate,
+FYSTBannerCellDelegate> {
     NSArray * _footPrints;
     NSArray * _products;
     NSArray * _messages;
@@ -284,7 +285,7 @@ FYSTNoticeCellDelegate> {
     }];
 }
 
-#pragma mark - FYSTNoticeCellDelegate
+#pragma mark - FYSTBannerCellDelegate
 //点击功能
 - (void)clickFunction:(NSInteger)index {
     if (index == 100) {
@@ -297,12 +298,23 @@ FYSTNoticeCellDelegate> {
         STIdentityDetailVC *vc = [[STIdentityDetailVC alloc] init];
         vc.type = 2;
         [self.navigationController pushViewController:vc animated:YES];
+    }else if (index == 200) {
+        //实施步骤
+        DDWebVC * vc = [DDWebVC new];
+        vc.title = @"实施步骤";
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.url = [NSString stringWithFormat:@"%@:%@%@",DDAPP_URL,DDPort8003,@"/dd-bss/supervisor/manager/onLineFlowDetail"];
+        [self.navigationController pushViewController:vc animated:YES];
     }else if (index == 201) {
         //演示视频
-    }else if (index == 204) {
+        ExampleViewController * vc = [ExampleViewController new];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if (index == 202) {
         //成功案例
-    }else if (index == 207) {
-        //失败案例
+        DDProductExampleVC * vc = [DDProductExampleVC new];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     }else {
         //板块
         DDProductDetailVC * vc = [DDProductDetailVC new];
@@ -326,11 +338,7 @@ FYSTNoticeCellDelegate> {
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//        [_tableView registerNib:[UINib nibWithNibName:@"FYSTBannerCell" bundle:nil] forCellReuseIdentifier:@"FYSTBannerCellId"];
         [_tableView registerClass:[FYSTBannerCell class] forCellReuseIdentifier:@"FYSTBannerCellId"];
-//        [_tableView registerNib:[UINib nibWithNibName:@"FYSTNoticeCell" bundle:nil] forCellReuseIdentifier:@"FYSTNoticeCellId"];
-        [_tableView registerClass:[FYSTNoticeCell class] forCellReuseIdentifier:@"FYSTNoticeCellId"];
-//        [_tableView registerNib:[UINib nibWithNibName:@"FYSTFootprintCell" bundle:nil] forCellReuseIdentifier:@"FYSTFootprintCellId"];
         [_tableView registerClass:[STAdvertorialsCell class] forCellReuseIdentifier:@"cell"];
         @weakify(self)
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
@@ -343,7 +351,7 @@ FYSTNoticeCellDelegate> {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2 + _footPrints.count;
+    return 1 + _footPrints.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -370,7 +378,10 @@ FYSTNoticeCellDelegate> {
         if (cell == nil) {
             cell = [[FYSTBannerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FYSTBannerCellId"];
         }
+        cell.delegate = self;
         [cell refreshWithArray:_banners];
+        [cell refreshPlateWithArray:_products];
+        [cell refreshMessageWithArray:_messages];
         @weakify(self)
         cell.bannerDidClick = ^(NSInteger index) {
             @strongify(self)
@@ -383,58 +394,6 @@ FYSTNoticeCellDelegate> {
             [self.navigationController pushViewController:webvcx animated:YES];
         };
         return cell;
-    }else  if (indexPath.row == 1){
-        
-        FYSTNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FYSTNoticeCellId" forIndexPath:indexPath];
-        if (cell == nil) {
-            cell = [[FYSTNoticeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FYSTNoticeCellId"];
-        }
-        cell.delegate = self;
-        [cell refreshMessageWithArray:_messages];
-        [cell refreshPlateWithArray:_products];
-        return cell;
-        
-//        FYSTNoticeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FYSTNoticeCellId"];
-//        cell.productObjs = _products;
-//        cell.messages = _messages;
-//
-//        @weakify(self)
-//        cell.messageBlock = ^(NSInteger type) {
-//            @strongify(self)
-//            if (!self) return ;
-//            [self commentButtonDidClick];
-//        };
-//
-//        cell.itemBlock = ^(NSInteger type) {
-//            @strongify(self)
-//            if (!self) return ;
-//            DDProductDetailVC * vc = [DDProductDetailVC new];
-//            vc.item = self->_products[type];
-//            vc.hidesBottomBarWhenPushed = YES;
-//            [self.navigationController pushViewController:vc animated:YES];
-//        };
-//        void (^extractedExpr)(NSInteger) = ^(NSInteger type) {
-//            @strongify(self)
-//
-//
-//            if (type == 0) {
-//                DDWebVC * vc = [DDWebVC new];
-//                vc.title = @"上线流程";
-//                vc.hidesBottomBarWhenPushed = YES;
-//                vc.url = [NSString stringWithFormat:@"%@:%@%@",DDAPP_URL,DDPort8003,@"/dd-bss/supervisor/manager/onLineFlowDetail"];
-//                [self.navigationController pushViewController:vc animated:YES];
-//            }else if (type == 1) {
-//                ExampleViewController * vc = [ExampleViewController new];
-//                vc.hidesBottomBarWhenPushed = YES;
-//                [self.navigationController pushViewController:vc animated:YES];
-//            }else if (type == 2) {
-//                DDProductExampleVC * vc = [DDProductExampleVC new];
-//                vc.hidesBottomBarWhenPushed = YES;
-//                [self.navigationController pushViewController:vc animated:YES];
-//            }
-//        };
-//        cell.moduleBlock = extractedExpr;
-//        return cell;
     }else {
 //        FYSTFootprintCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FYSTFootprintCellId"];
 //        cell.footprintModel = _footPrints[indexPath.row - 2];
@@ -444,22 +403,21 @@ FYSTNoticeCellDelegate> {
             cell = [[STAdvertorialsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
             cell.selectionStyle = UITableViewScrollPositionNone;
         }
-        DDFootstripObj *model = _footPrints[indexPath.row - 2];
+        DDFootstripObj *model = _footPrints[indexPath.row - 1];
         [cell refreshWithModel:model];
         return cell;
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) return 210;
-    if (indexPath.row == 1) return 320;
+    if (indexPath.row == 0) return 540;
     return 110;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row > 1) {
+    if (indexPath.row > 0) {
         DDTradeDetailVc * vc = [DDTradeDetailVc new];
-        DDFootstripObj * footprint = _footPrints[indexPath.row - 2];
+        DDFootstripObj * footprint = _footPrints[indexPath.row - 1];
         vc.title = footprint.title;
         vc.footstripObj = footprint;
         vc.hidesBottomBarWhenPushed = YES;

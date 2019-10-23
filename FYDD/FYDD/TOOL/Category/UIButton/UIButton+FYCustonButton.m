@@ -38,7 +38,7 @@
         {
             imageEdgeInsets = UIEdgeInsetsMake(-labelHeight-space/2.0, 0, 0, -labelWidth);
 //            labelEdgeInsets = UIEdgeInsetsMake(0, -imageWith, -imageHeight-space/2.0, 0);
-            labelEdgeInsets = UIEdgeInsetsMake(50, -40, 0, 0);
+            labelEdgeInsets = UIEdgeInsetsMake(76, -66, 0, 0);
         }
             break;
         case MKButtonEdgeInsetsStyleLeft:
