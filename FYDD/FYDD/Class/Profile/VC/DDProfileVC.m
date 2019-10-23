@@ -67,13 +67,15 @@
     if (sender.tag == 0) {
         // 订单
         DDOrderVC * vc = [DDOrderVC new];
-        if ([DDUserManager share].user.userType == DDUserTypeOnline) {
-            vc.title = @"实施方";
-        }else if ([DDUserManager share].user.userType == DDUserTypeSystem) {
-            vc.title = @"订单";
-        }else {
-            vc.title = @"代理方";
-        }
+//        if ([DDUserManager share].user.userType == DDUserTypeOnline) {
+//            vc.title = @"实施方";
+//        }else if ([DDUserManager share].user.userType == DDUserTypeSystem) {
+//            vc.title = @"订单";
+//        }else {
+//            vc.title = @"代理方";
+//        }
+        vc.title = @"订单";
+        vc.type = 1;
         vc.hidesBottomBarWhenPushed = YES;
         [self cw_pushViewController:vc];
     }else if (sender.tag == 1) {

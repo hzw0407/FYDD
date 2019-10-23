@@ -10,8 +10,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol STIdentityDetailFunctionCellDelegate <NSObject>
+
+//点击某个功能
+- (void)clickIndex:(NSInteger)index;
+
+@end
+
 @interface STIdentityDetailFunctionCell : UITableViewCell
 
+@property (nonatomic, weak) id<STIdentityDetailFunctionCellDelegate>delegate;
 //刷新数据
 - (void)refreshDataWithType:(NSInteger)type;
 

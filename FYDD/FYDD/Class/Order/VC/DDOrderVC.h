@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DDOrderVC : UIViewController
 
+//1企业用户 2代理方 3实施方
+@property (nonatomic, assign) NSInteger type;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -39,7 +39,6 @@
 @interface FYSTHomeVc ()
 <UITableViewDelegate,
 UITableViewDataSource,
-FYSTNoticeCellDelegate,
 FYSTBannerCellDelegate> {
     NSArray * _footPrints;
     NSArray * _products;
@@ -378,6 +377,7 @@ FYSTBannerCellDelegate> {
         if (cell == nil) {
             cell = [[FYSTBannerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FYSTBannerCellId"];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
         [cell refreshWithArray:_banners];
         [cell refreshPlateWithArray:_products];
@@ -401,8 +401,8 @@ FYSTBannerCellDelegate> {
         STAdvertorialsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         if (cell == nil) {
             cell = [[STAdvertorialsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-            cell.selectionStyle = UITableViewScrollPositionNone;
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         DDFootstripObj *model = _footPrints[indexPath.row - 1];
         [cell refreshWithModel:model];
         return cell;

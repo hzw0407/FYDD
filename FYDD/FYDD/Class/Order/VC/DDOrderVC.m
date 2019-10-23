@@ -38,14 +38,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
-    if ([DDUserManager share].user.userType == DDUserTypeOnline
-        || [DDUserManager share].user.userType == DDUserTypePromoter) {
+//    if ([DDUserManager share].user.userType == DDUserTypeOnline
+//        || [DDUserManager share].user.userType == DDUserTypePromoter) {
+//        [self.view addSubview:self.carryView];
+//        [self.carryView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.right.top.mas_equalTo(@0);
+//            make.height.mas_equalTo(@230);
+//        }];
+//    }else if ([DDUserManager share].user.userType == DDUserTypeSystem) {
+//        [self.view addSubview:self.companyView];
+//        [self.companyView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.right.top.mas_equalTo(@0);
+//            make.height.mas_equalTo(@230);
+//        }];
+//    }
+    
+    if (self.type == 2 || self.type == 3) {
+        //代理方或者实施方
         [self.view addSubview:self.carryView];
         [self.carryView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.top.mas_equalTo(@0);
             make.height.mas_equalTo(@230);
         }];
-    }else if ([DDUserManager share].user.userType == DDUserTypeSystem) {
+    }else if (self.type == 1) {
+        //企业用户
         [self.view addSubview:self.companyView];
         [self.companyView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.top.mas_equalTo(@0);
@@ -154,7 +170,11 @@
                        if (!self) return ;
                        if (code == 200) {
                            self->_user = [DDOrderCheckUser modelWithJSON:data];
-                           if ([DDUserManager share].user.userType == DDUserTypeOnline) {
+//                           if ([DDUserManager share].user.userType == DDUserTypeOnline) {
+//                               self.carryView.checkUser = self->_user;
+//                           }
+                           if (self.type == 3) {
+                               //实施方
                                self.carryView.checkUser = self->_user;
                            }
                        }

@@ -30,8 +30,8 @@
             filePath = "FYDD/Class/Home/VC/FYSTHomeVc.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
             landmarkName = "-getMessageData"
             landmarkType = "7">
          </BreakpointContent>
