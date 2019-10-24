@@ -171,12 +171,12 @@
     for (NSInteger i = 0; i < plateArray.count; i++) {
         DDProductObj * obj = plateArray[i];
         UIButton *plateButton = [[UIButton alloc] init];
-//        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:obj.backImg] options:SDWebImageDownloaderHighPriority progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-//            UIImage *targetImage = [self originImage:image scaleToSize:CGSizeMake(66, 66)];
-//            [plateButton setImage:targetImage forState:UIControlStateNormal];
-//        }];
+        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:obj.backImg] options:SDWebImageDownloaderHighPriority progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+            UIImage *targetImage = [self originImage:image scaleToSize:CGSizeMake(66, 66)];
+            [plateButton setImage:targetImage forState:UIControlStateNormal];
+        }];
         //先暂时用效果图的 后面要改成上面的
-        [plateButton setImage:[UIImage imageNamed:@"Test"] forState:UIControlStateNormal];
+//        [plateButton setImage:[UIImage imageNamed:@"Test"] forState:UIControlStateNormal];
         [plateButton setTitle:obj.productName forState:UIControlStateNormal];
         [plateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         plateButton.titleLabel.font = [UIFont systemFontOfSize:12];

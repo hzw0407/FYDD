@@ -10,13 +10,6 @@
 
 @implementation FYSTRightItemMenuView
 
-- (IBAction)cityButtonDidClick {
-    if (_fystMenuButtonDidClick){
-        _fystMenuButtonDidClick(0);
-    }
-
-}
-
 - (IBAction)commetButtonDidClick {
     if (_fystMenuButtonDidClick){
         _fystMenuButtonDidClick(1);

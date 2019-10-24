@@ -51,11 +51,15 @@ FYSTBannerCellDelegate> {
 @property (nonatomic,strong) FYSTRightItemMenuView * rightMenuView;//导航右边按钮
 @property (nonatomic,strong) DDProfileVC * profileVC;//抽屉
 //@property (nonatomic,strong) DDClerkMenuView * menuView;
+@property (nonatomic, strong) UIView *guideBackgroundView;//引导view
+@property (nonatomic, strong) UIView *messageguideView;//消息引导view
+@property (nonatomic, strong) UIView *plateGuideView;//板块引导view
+@property (nonatomic, strong) UIView *identityGuideView;//身份引导view
 
 @end
 
 @implementation FYSTHomeVc
-
+#pragma mark - lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
@@ -69,32 +73,15 @@ FYSTBannerCellDelegate> {
 //    if ([DDUserManager share].isLogged) {
 //        [self.view addSubview:self.menuView];
 //    }
-    [self getFootStrpts];
     
 //    [self checkUserInfo:^(BOOL finish) {
 //        [self.menuView reloadView];
 //    }];
     [[DDAppNetwork share] checkAppVersion:nil isShowAll:NO];
     
-    @weakify(self)
-    [[DDAppNetwork share] get:YES path:[NSString stringWithFormat:@"/tss/product/listPutawayProduct?token=%@",[DDUserManager share].user.token] body:nil completion:^(NSInteger code,NSString *message,NSArray * data) {
-        @strongify(self)
-        if (!self) return ;
-        if (code == 200) {
-            if (data && [data isKindOfClass:[NSArray class]]) {
-                NSMutableArray * dataList = @[].mutableCopy;
-                for (NSInteger i = 0; i < data.count ; i++) {
-                    DDProductObj * productObj = [DDProductObj modelWithJSON:data[i]];
-                    [dataList addObject:productObj];
-                }
-                self->_products = dataList;
-            }
-            [self.tableView reloadData];
-        }
-        
-    }];
-    
+    [self getPlateData];
     [self getBannerData];
+    [self getFootStrpts];
     
     //注册手势 滑出左边控制器
     __weak typeof(self)weakSelf = self;
@@ -105,6 +92,50 @@ FYSTBannerCellDelegate> {
     }];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@""]  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+    [[DDUserManager share] getUserInfo:nil];
+
+    self.userIconView.userLb.text = [DDUserManager share].isLogged ?  yyTrimNullText([DDUserManager share].user.nickname) : @"未登录";
+    if ([DDUserManager share].isLogged && yyTrimNullText([DDUserManager share].user.userHeadImage).length) {
+        [self.userIconView.userView sd_setImageWithURL:[NSURL URLWithString:[DDUserManager share].user.userHeadImage]];
+    }else {
+        self.userIconView.userView.image = [UIImage imageNamed:[DDUserManager share].userPlaceImage];
+    }
+//    [self.menuView reloadView];
+    [self getMessageData];
+//    [self getFootStrpts];
+    
+    //重写导航栏颜色
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:41 / 255.0 green:150 / 255.0 blue:235 /255.0 alpha:1.0];
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:41 / 255.0 green:150 / 255.0 blue:235 /255.0 alpha:1.0];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+                                                                      NSForegroundColorAttributeName : UIColorHex(0x193750),
+                                                                      }];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:true];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+   
+//    self.navigationController.navigationBar.shadowImage = nil;
+    //恢复导航栏颜色
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@""]  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor = [DDAppManager share].navigationTintColor;
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+                                                                      NSForegroundColorAttributeName : UIColorHex(0x193750),
+                                                                      }];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:true];
+}
+
+#pragma mark - CustomMethod
+//获取广告数据
 - (void)getBannerData{
     @weakify(self)
     [[DDAppNetwork share] get:YES
@@ -125,6 +156,28 @@ FYSTBannerCellDelegate> {
                            [self.tableView reloadData];
                        }
                    }];
+}
+
+//获取板块数据
+- (void)getPlateData {
+    @weakify(self)
+    [[DDAppNetwork share] get:YES path:[NSString stringWithFormat:@"/tss/product/listPutawayProduct?token=%@",[DDUserManager share].user.token] body:nil completion:^(NSInteger code,NSString *message,NSArray * data) {
+        @strongify(self)
+        if (!self) return ;
+        if (code == 200) {
+            if (data && [data isKindOfClass:[NSArray class]]) {
+                NSMutableArray * dataList = @[].mutableCopy;
+                for (NSInteger i = 0; i < data.count ; i++) {
+                    DDProductObj * productObj = [DDProductObj modelWithJSON:data[i]];
+                    [dataList addObject:productObj];
+                }
+                self->_products = dataList;
+            }
+            [self.tableView reloadData];
+//            [self loadMessageGuide];
+        }
+        
+    }];
 }
 
 // 获取首页消息
@@ -153,30 +206,7 @@ FYSTBannerCellDelegate> {
                    }];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@""]  forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
-    [[DDUserManager share] getUserInfo:nil];
-
-    self.userIconView.userLb.text = [DDUserManager share].isLogged ?  yyTrimNullText([DDUserManager share].user.nickname) : @"未登录";
-    if ([DDUserManager share].isLogged && yyTrimNullText([DDUserManager share].user.userHeadImage).length) {
-        [self.userIconView.userView sd_setImageWithURL:[NSURL URLWithString:[DDUserManager share].user.userHeadImage]];
-    }else {
-        self.userIconView.userView.image = [UIImage imageNamed:[DDUserManager share].userPlaceImage];
-    }
-//    [self.menuView reloadView];
-//    [self getMessageData];
-//    [self getFootStrpts];
-    
-}
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-   
-    self.navigationController.navigationBar.shadowImage = nil;
-}
-
+//获取软文列表
 - (void)getFootStrpts{
     @weakify(self)
     [[DDAppNetwork share] get:YES
@@ -202,75 +232,38 @@ FYSTBannerCellDelegate> {
     }];
 }
 
-- (FYSTRightItemMenuView *)rightMenuView{
-    if (!_rightMenuView) {
-        _rightMenuView = [[[NSBundle mainBundle] loadNibNamed:@"FYSTRightItemMenuView" owner:nil options:nil] lastObject];
-        @weakify(self)
-        _rightMenuView.fystMenuButtonDidClick = ^(NSInteger index) {
-            @strongify(self)
-            if (index == 1) {
-                [self commentButtonDidClick];
-            }else {
-                [self chooseCityButtonDidClick];
-            }
-        };
-    }
-    return _rightMenuView;
+//加载消息引导view
+- (void)loadMessageGuide {
+    [[UIApplication sharedApplication].keyWindow addSubview:self.guideBackgroundView];
+    [self.guideBackgroundView addSubview:self.messageguideView];
+    [self.messageguideView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.bottom.equalTo(self.guideBackgroundView).offset(0);
+    }];
 }
 
-//- (DDClerkMenuView *)menuView {
-//    if (!_menuView) {
-//        _menuView = [[[NSBundle mainBundle] loadNibNamed:@"DDClerkMenuView" owner:nil options:nil] lastObject];
-//        _menuView.size = CGSizeMake(50, 100);
-//        _menuView.left = kScreenSize.width - 65;
-//        _menuView.top = kScreenSize.height - (iPhoneXAfter ? 49 : 49) - 115;
-//        @weakify(self)
-//        _menuView.clertButtonClick = ^(NSInteger index) {
-//            @strongify(self)
-//            if (index == 1) {
-//                DDAuthenVc  * vc = [DDAuthenVc new];
-//                vc.hidesBottomBarWhenPushed = YES;
-//                [self.navigationController pushViewController:vc animated:YES];
-//            }else {
-//                DDOrderVC * vc = [DDOrderVC new];
-//                vc.hidesBottomBarWhenPushed = YES;
-//                vc.title = @"订单";
-//                [self.navigationController pushViewController:vc animated:YES];
-//            }
-//        };
-//    }
-//    return _menuView;
-//}
-
-- (FYSTHomeUserView *)userIconView{
-    if (!_userIconView) {
-        _userIconView = [[[NSBundle mainBundle] loadNibNamed:@"FYSTHomeUserView" owner:nil options:nil] lastObject];
-        @weakify(self)
-        _userIconView.fystMenuButtonDidClick = ^(NSInteger index) {
-            @strongify(self)
-            [self pushUserRightButtonDidClick];
-        };
-    }
-    return _userIconView;
+//修改图片大小
+- (UIImage*)originImage:(UIImage *)image scaleToSize:(CGSize)size{
+    UIGraphicsBeginImageContext(size);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
 }
 
-- (DDProfileVC *)profileVC {
-    if (_profileVC == nil) {
-        _profileVC = [DDProfileVC new];
-    }
-    return _profileVC;
-}
-
+#pragma mark - ClickMethod
+//点击消息中心
 - (void)commentButtonDidClick{
     DDMessageVC * vc = [DDMessageVC new];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+//点击选择城市
 - (void)chooseCityButtonDidClick{
     
 }
 
+//点击左边个人头像
 - (void)pushUserRightButtonDidClick{
     @weakify(self)
     [self checkLoginStatus:^(BOOL isLogged) {
@@ -285,71 +278,32 @@ FYSTBannerCellDelegate> {
     }];
 }
 
-#pragma mark - FYSTBannerCellDelegate
-//点击功能
-- (void)clickFunction:(NSInteger)index {
-    if (index == 100) {
-        //代理方
-        STIdentityDetailVC *vc = [[STIdentityDetailVC alloc] init];
-        vc.type = 1;
-        [self.navigationController pushViewController:vc animated:YES];
-    }else if (index == 101) {
-        //实施方
-        STIdentityDetailVC *vc = [[STIdentityDetailVC alloc] init];
-        vc.type = 2;
-        [self.navigationController pushViewController:vc animated:YES];
-    }else if (index == 200) {
-        //实施步骤
-        DDWebVC * vc = [DDWebVC new];
-        vc.title = @"实施步骤";
-        vc.hidesBottomBarWhenPushed = YES;
-        vc.url = [NSString stringWithFormat:@"%@:%@%@",DDAPP_URL,DDPort8003,@"/dd-bss/supervisor/manager/onLineFlowDetail"];
-        [self.navigationController pushViewController:vc animated:YES];
-    }else if (index == 201) {
-        //演示视频
-        ExampleViewController * vc = [ExampleViewController new];
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
-    }else if (index == 202) {
-        //成功案例
-        DDProductExampleVC * vc = [DDProductExampleVC new];
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
-    }else {
-        //板块
-        DDProductDetailVC * vc = [DDProductDetailVC new];
-        vc.item = _products[index];
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+//点击消息引导
+- (void)messageGuideTap {
+    [self.messageguideView removeFromSuperview];
+    [self.guideBackgroundView addSubview:self.plateGuideView];
+    [self.plateGuideView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.bottom.equalTo(self.guideBackgroundView).offset(0);
+    }];
 }
 
-//点击消息
-- (void)clickMessage:(NSInteger)index {
-    DDMessageVC * vc = [DDMessageVC new];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+//点击板块引导
+- (void)plateGuideTap {
+    [self.plateGuideView removeFromSuperview];
+    [self.guideBackgroundView addSubview:self.identityGuideView];
+    [self.identityGuideView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.bottom.equalTo(self.guideBackgroundView).offset(0);
+    }];
 }
 
-- (UITableView *)tableView{
-    if (!_tableView){
-        _tableView = [[UITableView alloc] init];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        _tableView.showsVerticalScrollIndicator = NO;
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [_tableView registerClass:[FYSTBannerCell class] forCellReuseIdentifier:@"FYSTBannerCellId"];
-        [_tableView registerClass:[STAdvertorialsCell class] forCellReuseIdentifier:@"cell"];
-        @weakify(self)
-        _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-            @strongify(self)
-            if (!self) return ;
-            [self getFootStrpts];
-        }];
-    }
-    return _tableView;
+//点击身份引导
+- (void)identityGuideTap {
+    [self.guideBackgroundView removeFromSuperview];
 }
 
+#pragma mark - SystemDelegate
+
+#pragma mark - UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1 + _footPrints.count;
 }
@@ -429,6 +383,266 @@ FYSTBannerCellDelegate> {
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }
+}
+
+#pragma mark - CustomDelegate
+
+#pragma mark - FYSTBannerCellDelegate
+//点击功能
+- (void)clickFunction:(NSInteger)index {
+    if (index == 100) {
+        //代理方
+        STIdentityDetailVC *vc = [[STIdentityDetailVC alloc] init];
+        vc.type = 1;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if (index == 101) {
+        //实施方
+        STIdentityDetailVC *vc = [[STIdentityDetailVC alloc] init];
+        vc.type = 2;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if (index == 200) {
+        //实施步骤
+        DDWebVC * vc = [DDWebVC new];
+        vc.title = @"实施步骤";
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.url = [NSString stringWithFormat:@"%@:%@%@",DDAPP_URL,DDPort8003,@"/dd-bss/supervisor/manager/onLineFlowDetail"];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if (index == 201) {
+        //演示视频
+        ExampleViewController * vc = [ExampleViewController new];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if (index == 202) {
+        //成功案例
+        DDProductExampleVC * vc = [DDProductExampleVC new];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else {
+        //板块
+        DDProductDetailVC * vc = [DDProductDetailVC new];
+        vc.item = _products[index];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
+//点击公告消息
+- (void)clickMessage:(NSInteger)index {
+    DDMessageVC * vc = [DDMessageVC new];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - GetterAndSetter
+//- (DDClerkMenuView *)menuView {
+//    if (!_menuView) {
+//        _menuView = [[[NSBundle mainBundle] loadNibNamed:@"DDClerkMenuView" owner:nil options:nil] lastObject];
+//        _menuView.size = CGSizeMake(50, 100);
+//        _menuView.left = kScreenSize.width - 65;
+//        _menuView.top = kScreenSize.height - (iPhoneXAfter ? 49 : 49) - 115;
+//        @weakify(self)
+//        _menuView.clertButtonClick = ^(NSInteger index) {
+//            @strongify(self)
+//            if (index == 1) {
+//                DDAuthenVc  * vc = [DDAuthenVc new];
+//                vc.hidesBottomBarWhenPushed = YES;
+//                [self.navigationController pushViewController:vc animated:YES];
+//            }else {
+//                DDOrderVC * vc = [DDOrderVC new];
+//                vc.hidesBottomBarWhenPushed = YES;
+//                vc.title = @"订单";
+//                [self.navigationController pushViewController:vc animated:YES];
+//            }
+//        };
+//    }
+//    return _menuView;
+//}
+
+- (FYSTRightItemMenuView *)rightMenuView{
+    if (!_rightMenuView) {
+        _rightMenuView = [[[NSBundle mainBundle] loadNibNamed:@"FYSTRightItemMenuView" owner:nil options:nil] lastObject];
+        @weakify(self)
+        _rightMenuView.fystMenuButtonDidClick = ^(NSInteger index) {
+            @strongify(self)
+            if (index == 1) {
+                [self commentButtonDidClick];
+            }else {
+                [self chooseCityButtonDidClick];
+            }
+        };
+    }
+    return _rightMenuView;
+}
+
+- (FYSTHomeUserView *)userIconView{
+    if (!_userIconView) {
+        _userIconView = [[[NSBundle mainBundle] loadNibNamed:@"FYSTHomeUserView" owner:nil options:nil] lastObject];
+        @weakify(self)
+        _userIconView.fystMenuButtonDidClick = ^(NSInteger index) {
+            @strongify(self)
+            [self pushUserRightButtonDidClick];
+        };
+    }
+    return _userIconView;
+}
+
+- (DDProfileVC *)profileVC {
+    if (_profileVC == nil) {
+        _profileVC = [DDProfileVC new];
+    }
+    return _profileVC;
+}
+
+- (UITableView *)tableView{
+    if (!_tableView){
+        _tableView = [[UITableView alloc] init];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [_tableView registerClass:[FYSTBannerCell class] forCellReuseIdentifier:@"FYSTBannerCellId"];
+        [_tableView registerClass:[STAdvertorialsCell class] forCellReuseIdentifier:@"cell"];
+        @weakify(self)
+        _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+            @strongify(self)
+            if (!self) return ;
+            [self getFootStrpts];
+        }];
+    }
+    return _tableView;
+}
+
+- (UIView *)guideBackgroundView {
+    if (!_guideBackgroundView) {
+        _guideBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+        _guideBackgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+        _guideBackgroundView.userInteractionEnabled = YES;
+    }
+    return _guideBackgroundView;
+}
+
+- (UIView *)messageguideView {
+    if (!_messageguideView) {
+        _messageguideView = [[UIView alloc] init];
+        _messageguideView.userInteractionEnabled = YES;
+        
+        UIImageView *imageViewOne = [[UIImageView alloc] init];
+        imageViewOne.image = [UIImage imageNamed:@"Home_MessageGuide1"];
+        [_messageguideView addSubview:imageViewOne];
+        [imageViewOne mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.messageguideView).offset(0);
+            make.width.equalTo(@(59));
+            make.top.equalTo(self.messageguideView).offset(26);
+            make.height.equalTo(@(33));
+        }];
+        
+        UIImageView *imageViewTwo = [[UIImageView alloc] init];
+        imageViewTwo.image = [UIImage imageNamed:@"Home_MessageGuide2"];
+        [_messageguideView addSubview:imageViewTwo];
+        [imageViewTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.messageguideView).offset(-30);
+            make.width.equalTo(@(195));
+            make.top.mas_equalTo(imageViewOne.mas_bottom).offset(5);
+            make.height.equalTo(@(162));
+        }];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(messageGuideTap)];
+        [_messageguideView addGestureRecognizer:tap];
+    }
+    return _messageguideView;
+}
+
+- (UIView *)plateGuideView {
+    if (!_plateGuideView) {
+        _plateGuideView = [[UIView alloc] init];
+        _plateGuideView.userInteractionEnabled = YES;
+        
+        UIImageView *imageViewOne = [[UIImageView alloc] init];
+        imageViewOne.image = [UIImage imageNamed:@"Home_PlateGuide1"];
+        [_plateGuideView addSubview:imageViewOne];
+        [imageViewOne mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_plateGuideView).offset(10);
+            make.width.equalTo(@(18));
+            make.top.equalTo(_plateGuideView).offset(NavigationHeight + 210 - 20 + 5);
+            make.height.equalTo(@(17));
+        }];
+        
+        CGFloat buttonWidth = (kScreenWidth - 20) / _products.count;
+        for (NSInteger i = 0; i < _products.count; i++) {
+            DDProductObj * obj = _products[i];
+            UIButton *plateButton = [[UIButton alloc] init];
+            [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:obj.backImg] options:SDWebImageDownloaderHighPriority progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                UIImage *targetImage = [self originImage:image scaleToSize:CGSizeMake(66, 66)];
+                [plateButton setImage:targetImage forState:UIControlStateNormal];
+            }];
+            [plateButton setTitle:obj.productName forState:UIControlStateNormal];
+            [plateButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            plateButton.titleLabel.font = [UIFont systemFontOfSize:12];
+            [plateButton layoutButtonWithEdgeInsetsStyle:MKButtonEdgeInsetsStyleTop imageTitleSpace:2];
+            [_plateGuideView addSubview:plateButton];
+            [plateButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_plateGuideView).offset(10 + (buttonWidth * i));
+                make.width.equalTo(@(buttonWidth));
+                make.top.equalTo(_plateGuideView).offset(NavigationHeight + 210 - 20 + 15);
+                make.height.equalTo(@(85));
+            }];
+        }
+        
+        UIImageView *imageViewTwo = [[UIImageView alloc] init];
+        imageViewTwo.image = [UIImage imageNamed:@"Home_PlateGuide2"];
+        [_plateGuideView addSubview:imageViewTwo];
+        [imageViewTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(_plateGuideView).offset(-10);
+            make.width.equalTo(@(26));
+            make.top.equalTo(_plateGuideView).offset(NavigationHeight + 210 - 20);
+            make.height.equalTo(@(26));
+        }];
+        
+        UIImageView *imageViewThree = [[UIImageView alloc] init];
+        imageViewThree.image = [UIImage imageNamed:@"Home_PlateGuide3"];
+        [_plateGuideView addSubview:imageViewThree];
+        [imageViewThree mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_plateGuideView).offset(10);
+            make.right.equalTo(_plateGuideView).offset(-10);
+            make.top.equalTo(_plateGuideView).offset(NavigationHeight + 210 - 20 + 15 + 85 + 10);
+            make.height.equalTo(@(170));
+        }];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(plateGuideTap)];
+        [_plateGuideView addGestureRecognizer:tap];
+    }
+    return _plateGuideView;
+}
+
+- (UIView *)identityGuideView {
+    if (!_identityGuideView) {
+        _identityGuideView = [[UIView alloc] init];
+        _identityGuideView.userInteractionEnabled = YES;
+        
+        UIImageView *imageViewOne = [[UIImageView alloc] init];
+        imageViewOne.image = [UIImage imageNamed:@"Home_IdentityGuide1"];
+        [_identityGuideView addSubview:imageViewOne];
+        [imageViewOne mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_identityGuideView).offset(10);
+            make.right.equalTo(_identityGuideView).offset(-10);
+            make.top.equalTo(_identityGuideView).offset(NavigationHeight + 210 - 20 + 85 + 20 + 30 + 20 + 20);
+            make.height.equalTo(@(60));
+        }];
+        
+        UIImageView *imageViewTwo = [[UIImageView alloc] init];
+        imageViewTwo.image = [UIImage imageNamed:@"Home_IdentityGuide2"];
+        [_identityGuideView addSubview:imageViewTwo];
+        [imageViewTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(imageViewOne.mas_left);
+            make.right.mas_equalTo(imageViewOne.mas_right);
+            make.top.mas_equalTo(imageViewOne.mas_bottom).offset(10);
+            make.height.equalTo(@(170));
+        }];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(identityGuideTap)];
+        [_identityGuideView addGestureRecognizer:tap];
+    }
+    return _identityGuideView;
 }
 
 @end

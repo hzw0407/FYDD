@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 //点击某个功能
 - (void)clickIndex:(NSInteger)index;
+//点击申请
+- (void)applyClick;
 
 @end
 

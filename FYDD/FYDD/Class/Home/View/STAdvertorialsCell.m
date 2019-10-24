@@ -60,7 +60,7 @@
     
     [self addSubview:self.browseImageView];
     [self.browseImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(self.contentLabel.mas_right).offset(-35);
+        make.right.mas_equalTo(self.contentLabel.mas_right).offset(-22);
         make.width.equalTo(@(21.5));
         make.bottom.mas_equalTo(self.timeLabel.mas_bottom);
         make.height.equalTo(@(13));
@@ -69,7 +69,7 @@
     [self addSubview:self.browseLabel];
     [self.browseLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self.contentLabel.mas_right);
-        make.width.equalTo(@(30));
+        make.width.equalTo(@(17));
         make.bottom.mas_equalTo(self.browseImageView.mas_bottom);
         make.height.mas_equalTo(self.browseImageView.mas_height);
     }];

@@ -118,16 +118,23 @@
         [self.applyButton setTitle:@"申请代理方" forState:UIControlStateNormal];
     }else {
         //实施方
-//        [self.procedureButton setTitle:@"实施流程" forState:UIControlStateNormal];
         procedureLabel.text = @"实施流程";
         [self.applyButton setTitle:@"申请实施方" forState:UIControlStateNormal];
     }
 }
 
 #pragma mark - ClickMethod
+//点击功能
 - (void)click:(UITapGestureRecognizer *)tap {
     if (self.delegate && [self.delegate respondsToSelector:@selector(clickIndex:)]) {
         [self.delegate clickIndex:tap.view.tag];
+    }
+}
+
+//点击申请
+- (void)applyclick {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(applyClick)]) {
+        [self.delegate applyClick];
     }
 }
 
@@ -240,6 +247,8 @@
         _applyButton.backgroundColor = [UIColor colorWithRed:41 / 255.0 green:150 / 255.0 blue:235 / 255.0 alpha:1.0];
         [_applyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _applyButton.titleLabel.font = [UIFont systemFontOfSize:16];
+        _applyButton.tag = 4;
+        [_applyButton addTarget:self action:@selector(applyclick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _applyButton;
 }

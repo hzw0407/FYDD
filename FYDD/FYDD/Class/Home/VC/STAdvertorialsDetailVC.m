@@ -7,6 +7,8 @@
 //  --软文详情
 
 #import "STAdvertorialsDetailVC.h"
+#import <UMShare/UMShare.h>
+#import <UShareUI/UShareUI.h>
 
 @interface STAdvertorialsDetailVC ()
 
@@ -34,7 +36,25 @@
 #pragma mark - ClickMethod
 //点击分享
 - (void)rightClick {
-    
+    @weakify(self)
+        [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine),@(UMSocialPlatformType_Sina)]];
+        [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType,
+                                                                                 NSDictionary *userInfo) {
+            UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+            UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:yyTrimNullText(self.model.title)
+                                                                                     descr:self.model.contents
+                                                                                 thumImage:[UIImage imageNamed:@"index_place"]];
+    //        shareObject.webpageUrl = self->_extensionURL;
+            messageObject.shareObject = shareObject;
+            [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+                @strongify(self)
+                if (error) {
+                    NSLog(@"************Share fail with error %@*********",error);
+                }else{
+                    [DDHub hub:@"分享成功" view:self.view];
+                }
+            }];
+        }];
 }
 
 #pragma mark - SystemDelegate
@@ -44,7 +64,7 @@
 #pragma mark - GetterAndSetter
 - (UIScrollView *)scrollView {
     if (!_scrollView) {
-        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight - 64)];
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight - NavigationHeight)];
         
         //标题
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, kScreenWidth - 20, 0)];

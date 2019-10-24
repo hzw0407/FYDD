@@ -12,6 +12,7 @@
 #import "DDOrderVC.h"
 #import "BWPlanVc.h"
 #import "DDOpportunityVc.h"
+#import "DDApplyRoleVc.h"
 
 @interface STIdentityDetailVC ()
 <UITableViewDelegate,
@@ -19,6 +20,9 @@ UITableViewDataSource,
 STIdentityDetailFunctionCellDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIView *guideBackgroundView;//引导view
+@property (nonatomic, strong) UIView *agentGuideView;//代理方引导view
+@property (nonatomic, strong) UIView *implementerGuideView;//实施方引导view
 
 @end
 
@@ -42,11 +46,34 @@ STIdentityDetailFunctionCellDelegate>
     if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     }
+    
+    //添加引导view
+//    [[UIApplication sharedApplication].keyWindow addSubview:self.guideBackgroundView];
+//    if (self.type == 1) {
+//        [self.guideBackgroundView addSubview:self.agentGuideView];
+//        [self.agentGuideView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.right.top.bottom.equalTo(self.guideBackgroundView).offset(0);
+//        }];
+//    }else {
+//        [self.guideBackgroundView addSubview:self.implementerGuideView];
+//        [self.implementerGuideView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.right.top.bottom.equalTo(self.guideBackgroundView).offset(0);
+//        }];
+//    }
 }
 
 #pragma mark - CustomMethod
 
 #pragma mark - ClickMethod
+//点击代理方引导
+- (void)agentGuidetap {
+    [self.guideBackgroundView removeFromSuperview];
+}
+
+//点击实施方引导
+- (void)implementerGuideTap {
+    [self.guideBackgroundView removeFromSuperview];
+}
 
 #pragma mark - SystemDelegate
 
@@ -164,22 +191,34 @@ STIdentityDetailFunctionCellDelegate>
         vc.hidesBottomBarWhenPushed = YES;
         vc.title = @"订单";
         [self.navigationController pushViewController:vc animated:YES];
-    }else {
+    }else if (index == 3) {
         //我的客户
         if (self.type == 1) {
             //之前的百万计划
             BWPlanVc *vc = [[BWPlanVc alloc] init];
-            vc.title = @"我的客户";
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }else {
             //之前的商机
             DDOpportunityVc *vc = [[DDOpportunityVc alloc] init];
-            vc.title = @"我的客户";
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
+}
+
+//点击申请
+- (void)applyClick {
+    DDApplyRoleVc *vc = [[DDApplyRoleVc alloc] init];
+    if (self.type == 1) {
+        //申请代理方
+        vc.applyType = DDUserTypePromoter;
+    }else {
+        //申请实施方
+        vc.applyType = DDUserTypeOnline;
+    }
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - GetterAndSetter
@@ -192,6 +231,77 @@ STIdentityDetailFunctionCellDelegate>
         _tableView.dataSource = self;
     }
     return _tableView;
+}
+
+- (UIView *)guideBackgroundView {
+    if (!_guideBackgroundView) {
+        _guideBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+        _guideBackgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+        _guideBackgroundView.userInteractionEnabled = YES;
+    }
+    return _guideBackgroundView;
+}
+
+- (UIView *)agentGuideView {
+    if (!_agentGuideView) {
+        _agentGuideView = [[UIView alloc] init];
+        _agentGuideView.userInteractionEnabled = YES;
+        
+        UIImageView *imageViewOne = [[UIImageView alloc] init];
+        imageViewOne.image = [UIImage imageNamed:@"IdentityGuide1"];
+        [_agentGuideView addSubview:imageViewOne];
+        [imageViewOne mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_agentGuideView).offset(0);
+            make.right.equalTo(_agentGuideView).offset(0);
+            make.top.equalTo(_agentGuideView).offset(NavigationHeight + 15);
+            make.height.equalTo(@(119));
+        }];
+        
+        UIImageView *imageViewTwo = [[UIImageView alloc] init];
+        imageViewTwo.image = [UIImage imageNamed:@"IdentityGuide2"];
+        [_agentGuideView addSubview:imageViewTwo];
+        [imageViewTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_agentGuideView).offset(35);
+            make.right.equalTo(_agentGuideView).offset(-35);
+            make.top.mas_equalTo(imageViewOne.mas_bottom).offset(-30);
+            make.height.equalTo(@(280));
+        }];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(agentGuidetap)];
+        [_agentGuideView addGestureRecognizer:tap];
+    }
+    return _agentGuideView;
+}
+
+- (UIView *)implementerGuideView {
+    if (!_implementerGuideView) {
+        _implementerGuideView = [[UIView alloc] init];
+        _implementerGuideView.userInteractionEnabled = YES;
+        
+        UIImageView *imageViewOne = [[UIImageView alloc] init];
+        imageViewOne.image = [UIImage imageNamed:@"IdentityGuide3"];
+        [_implementerGuideView addSubview:imageViewOne];
+        [imageViewOne mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_implementerGuideView).offset(0);
+            make.right.equalTo(_implementerGuideView).offset(0);
+            make.top.equalTo(_implementerGuideView).offset(NavigationHeight + 15);
+            make.height.equalTo(@(119));
+        }];
+        
+        UIImageView *imageViewTwo = [[UIImageView alloc] init];
+        imageViewTwo.image = [UIImage imageNamed:@"IdentityGuide4"];
+        [_implementerGuideView addSubview:imageViewTwo];
+        [imageViewTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_implementerGuideView).offset(35);
+            make.right.equalTo(_implementerGuideView).offset(-35);
+            make.top.mas_equalTo(imageViewOne.mas_bottom).offset(-30);
+            make.height.equalTo(@(280));
+        }];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(implementerGuideTap)];
+        [_implementerGuideView addGestureRecognizer:tap];
+    }
+    return _implementerGuideView;
 }
 
 @end

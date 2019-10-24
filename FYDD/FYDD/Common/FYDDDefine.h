@@ -20,6 +20,8 @@
 #define DD_GOTO_MAIN @"DD_GOTO_MAIN"
 #define iPhoneXAfter (kScreenSize.height > 736)
 #define YYFormat(value1,value2)     ([NSString stringWithFormat:@"%@%@",value1,value2])
+#define isiPhoneX [UIScreen mainScreen].bounds.size.height >= 812 ? YES : NO
+#define NavigationHeight isiPhoneX ? 88 : 64
 
 
 typedef void(^DDInputCellTextChange)(NSString * text, NSIndexPath * indexPath);

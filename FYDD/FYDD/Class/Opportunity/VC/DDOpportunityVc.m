@@ -20,17 +20,20 @@
     NSMutableArray * _dataList;
     NSString * _searchText;
 }
+
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) UIView *guideBackgroundView;//引导view
+
 @end
 
 @implementation DDOpportunityVc
-
+#pragma mark - lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     _opportunityPage = 0;
-    self.navigationItem.title = @"";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[self leftTitleLb]];
+    self.navigationItem.title = @"我的客户";
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[self leftTitleLb]];
     [self.tableView registerNib:[UINib nibWithNibName:@"DDOpportunityCell" bundle:nil] forCellReuseIdentifier:@"DDOpportunityCellId"];
     _dataList = @[].mutableCopy;
     @weakify(self)
@@ -49,13 +52,21 @@
     }];
     self.searchBar.delegate = self;
     [self.tableView.mj_header beginRefreshing];
+    
+    //添加引导view
+//    [[UIApplication sharedApplication].keyWindow addSubview:self.guideBackgroundView];
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    _searchText = searchText;
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@""]  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+    _opportunityPage = 0;
     [self getOpportunityData];
 }
 
+#pragma mark - CustomMethod
+//获取商机数据
 - (void)getOpportunityData{
     NSString * url = [NSString stringWithFormat:@"%@/business/userOnline/list",DDAPP_2T_URL];
     if ([DDUserManager share].user.userType == DDUserTypePromoter) {
@@ -100,62 +111,6 @@
 
 }
 
-- (void)rightButtonDidClick{
-    BWPlanAddVc * vc = [BWPlanAddVc new];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (UILabel * )leftTitleLb{
-    UILabel * lab = [UILabel new];
-    lab.text = @"商机";
-    lab.font = [UIFont systemFontOfSize:24];
-    lab.textColor = UIColorHex(0x131313);
-    lab.bounds = CGRectMake(0, 0, 100, 44);
-    return lab;
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@""]  forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
-    _opportunityPage = 0;
-    [self getOpportunityData];
-}
-
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _dataList.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    DDOpportunityCell * cell = [tableView dequeueReusableCellWithIdentifier:@"DDOpportunityCellId"];
-    cell.model = _dataList[indexPath.row];
-    @weakify(self)
-    cell.renLinBlock = ^{
-      @strongify(self)
-      if (!self) return ;
-        [self renLinButtonDidClick:self->_dataList[indexPath.row]];
-    };
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 260;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    DDOpportunityDetailVc * vc = [DDOpportunityDetailVc new];
-    vc.hidesBottomBarWhenPushed = YES;
-    DDOpportunityModel * oppModel = _dataList[indexPath.row];
-    vc.detailId = oppModel.planId;
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
 // 认领
 - (void)renLinButtonDidClick:(DDOpportunityModel *)opportunity{
     @weakify(self)
@@ -198,5 +153,85 @@
     
 }
 
+#pragma mark - ClickMethod
+//点击引导
+- (void)guideTap {
+    [self.guideBackgroundView removeFromSuperview];
+}
+
+#pragma mark - SystemDelegate
+
+#pragma mark - UISearchBarDelegate
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    _searchText = searchText;
+    [self getOpportunityData];
+}
+
+#pragma mark - UITableViewDelegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return _dataList.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    DDOpportunityCell * cell = [tableView dequeueReusableCellWithIdentifier:@"DDOpportunityCellId"];
+    cell.model = _dataList[indexPath.row];
+    @weakify(self)
+    cell.renLinBlock = ^{
+      @strongify(self)
+      if (!self) return ;
+        [self renLinButtonDidClick:self->_dataList[indexPath.row]];
+    };
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 260;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    DDOpportunityDetailVc * vc = [DDOpportunityDetailVc new];
+    vc.hidesBottomBarWhenPushed = YES;
+    DDOpportunityModel * oppModel = _dataList[indexPath.row];
+    vc.detailId = oppModel.planId;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - CustomDelegate
+
+#pragma mark - GetterAndSetter
+- (UILabel * )leftTitleLb{
+    UILabel * lab = [UILabel new];
+    lab.text = @"商机";
+    lab.font = [UIFont systemFontOfSize:24];
+    lab.textColor = UIColorHex(0x131313);
+    lab.bounds = CGRectMake(0, 0, 100, 44);
+    return lab;
+}
+
+- (UIView *)guideBackgroundView {
+    if (!_guideBackgroundView) {
+        _guideBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+        _guideBackgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+        _guideBackgroundView.userInteractionEnabled = YES;
+        
+        UIImageView *imageViewOne = [[UIImageView alloc] init];
+        imageViewOne.image = [UIImage imageNamed:@"Opportunity_Guide"];
+        [_guideBackgroundView addSubview:imageViewOne];
+        [imageViewOne mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_guideBackgroundView).offset(20);
+            make.right.equalTo(_guideBackgroundView).offset(-20);
+            make.centerY.mas_equalTo(_guideBackgroundView.mas_centerY);
+            make.height.equalTo(@(47));
+        }];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(guideTap)];
+        [_guideBackgroundView addGestureRecognizer:tap];
+    }
+    return _guideBackgroundView;
+}
 
 @end

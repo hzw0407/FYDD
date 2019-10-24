@@ -26,7 +26,8 @@
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.tintColor = [DDAppManager share].navigationTintColor;
+//    self.navigationController.navigationBar.tintColor = [DDAppManager share].navigationTintColor;
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSForegroundColorAttributeName : UIColorHex(0x193750),
                                                                       }];

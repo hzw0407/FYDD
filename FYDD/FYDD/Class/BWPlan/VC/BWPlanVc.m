@@ -20,20 +20,23 @@
     NSMutableDictionary * _dataDicts;
     NSString * _searchText;
 }
+
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIView *statusLineView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *allButton;
 @property (weak, nonatomic)  UIButton *tempButton;
+@property (nonatomic, strong) UIView *guideBackgroundView;//引导view
+
 @end
 
 @implementation BWPlanVc
-
+#pragma mark - lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     _tempButton = _allButton;
-    self.navigationItem.title = @"";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[self leftTitleLb]];
+    self.navigationItem.title = @"我的客户";
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[self leftTitleLb]];
     [self.tableView registerNib:[UINib nibWithNibName:@"BWPlanCell" bundle:nil] forCellReuseIdentifier:@"BWPlanCellId"];
     
     // 推广员
@@ -57,47 +60,24 @@
     }];
     self.searchBar.delegate = self;
     [self.tableView.mj_header beginRefreshing];
+    
+    //添加引导view
+//    [[UIApplication sharedApplication].keyWindow addSubview:self.guideBackgroundView];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if ([DDUserManager share].user.userType == DDUserTypePromoter) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_add_t"] style:UIBarButtonItemStylePlain target:self action:@selector(rightButtonDidClick)];
-    }else {
-        self.navigationItem.rightBarButtonItem = nil;
-    }
+//    if ([DDUserManager share].user.userType == DDUserTypePromoter) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Identity_Add"] style:UIBarButtonItemStylePlain target:self action:@selector(rightButtonDidClick)];
+//    }else {
+//        self.navigationItem.rightBarButtonItem = nil;
+//    }
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@""]  forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 
 }
 
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-    _searchText = searchText;
-    [self updateCurrentPage:0];
-    [self getBWPlanData:0];
-}
-
-- (NSInteger)getCurrentPage{
-    id pageObj = [_pageDict objectForKey:@(_tempButton.tag)];
-    if (!pageObj) return 0;
-    return [pageObj integerValue];
-}
-
-- (void)updateCurrentPage:(NSInteger)page{
-    [_pageDict setObject:@(page) forKey:@(_tempButton.tag)];
-}
-
-- (void)updateDataList:(NSArray *)dataList{
-    [_dataDicts setObject:dataList forKey:@(_tempButton.tag)];
-}
-
-- (NSArray *)getDataList{
-    NSArray * dataList = [_dataDicts objectForKey:@(_tempButton.tag)];
-    if (!dataList) dataList = @[];
-    return dataList;
-}
-
+#pragma mark - CustomMethod
 // 获取百万计划数据
 - (void)getBWPlanData:(NSInteger)page{
     NSString * urlPath = @"/million/plan/userOnline/list";
@@ -145,6 +125,28 @@
     }];
 }
 
+- (NSInteger)getCurrentPage{
+    id pageObj = [_pageDict objectForKey:@(_tempButton.tag)];
+    if (!pageObj) return 0;
+    return [pageObj integerValue];
+}
+
+- (void)updateCurrentPage:(NSInteger)page{
+    [_pageDict setObject:@(page) forKey:@(_tempButton.tag)];
+}
+
+- (void)updateDataList:(NSArray *)dataList{
+    [_dataDicts setObject:dataList forKey:@(_tempButton.tag)];
+}
+
+- (NSArray *)getDataList{
+    NSArray * dataList = [_dataDicts objectForKey:@(_tempButton.tag)];
+    if (!dataList) dataList = @[];
+    return dataList;
+}
+
+#pragma mark - ClickMethod
+//点击导航栏右侧按钮
 - (void)rightButtonDidClick{
     [self checkLoginStatus:^(BOOL isLogged) {
         if (isLogged) {
@@ -164,17 +166,7 @@
     }];
 }
 
-- (UILabel * )leftTitleLb{
-    UILabel * lab = [UILabel new];
-    lab.text = @"百万计划";
-    lab.font = [UIFont systemFontOfSize:24];
-    lab.textColor = UIColorHex(0x131313);
-    lab.bounds = CGRectMake(0, 0, 100, 44);
-    return lab;
-}
-
-
-
+//切换状态
 - (IBAction)statusButtonDidClick:(UIButton *)sender {
     if (_tempButton != sender) {
         _tempButton.selected = NO;
@@ -203,6 +195,21 @@
     [self.tableView.mj_header beginRefreshing];
 }
 
+//点击引导
+- (void)guideTap {
+    [self.guideBackgroundView removeFromSuperview];
+}
+
+#pragma mark - SystemDelegate
+
+#pragma mark - UISearchBarDelegate
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    _searchText = searchText;
+    [self updateCurrentPage:0];
+    [self getBWPlanData:0];
+}
+
+#pragma mark - UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
@@ -227,6 +234,60 @@
     vc.hidesBottomBarWhenPushed = YES;
     vc.planId = planModel.planId;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - CustomDelegate
+
+#pragma mark - GetterAndSetter
+- (UILabel * )leftTitleLb{
+    UILabel * lab = [UILabel new];
+    lab.text = @"百万计划";
+    lab.font = [UIFont systemFontOfSize:24];
+    lab.textColor = UIColorHex(0x131313);
+    lab.bounds = CGRectMake(0, 0, 100, 44);
+    return lab;
+}
+
+- (UIView *)guideBackgroundView {
+    if (!_guideBackgroundView) {
+        _guideBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+        _guideBackgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+        _guideBackgroundView.userInteractionEnabled = YES;
+        
+        UIImageView *imageViewOne = [[UIImageView alloc] init];
+        imageViewOne.image = [UIImage imageNamed:@"BWPlan_Guide1"];
+        [_guideBackgroundView addSubview:imageViewOne];
+        [imageViewOne mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(_guideBackgroundView).offset(-1);
+            make.width.equalTo(@(53));
+            make.top.equalTo(_guideBackgroundView).offset(26);
+            make.height.equalTo(@(31));
+        }];
+        
+        UIImageView *imageViewTwo = [[UIImageView alloc] init];
+        imageViewTwo.image = [UIImage imageNamed:@"BWPlan_Guide2"];
+        [_guideBackgroundView addSubview:imageViewTwo];
+        [imageViewTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(_guideBackgroundView).offset(-23);
+            make.width.equalTo(@(239));
+            make.top.mas_equalTo(imageViewOne.mas_bottom);
+            make.height.equalTo(@(186));
+        }];
+        
+        UIImageView *imageViewThree = [[UIImageView alloc] init];
+        imageViewThree.image = [UIImage imageNamed:@"BWPlan_Guide3"];
+        [_guideBackgroundView addSubview:imageViewThree];
+        [imageViewThree mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_guideBackgroundView).offset(20);
+            make.right.equalTo(_guideBackgroundView).offset(-20);
+            make.top.mas_equalTo(imageViewTwo.mas_bottom).offset(20);
+            make.height.equalTo(@(47));
+        }];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(guideTap)];
+        [_guideBackgroundView addGestureRecognizer:tap];
+    }
+    return _guideBackgroundView;
 }
 
 @end

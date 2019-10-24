@@ -11,7 +11,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FYSTRightItemMenuView : UIView
-@property (weak, nonatomic) IBOutlet UIButton *cityButton;
 
 @property (nonatomic,copy) void (^fystMenuButtonDidClick)(NSInteger index);
 @end
