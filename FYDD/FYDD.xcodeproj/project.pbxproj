@@ -438,6 +438,7 @@
 		35F3A6892325328400F8D3AF /* DDOrderImplementationStepCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35F3A6872325328400F8D3AF /* DDOrderImplementationStepCell.xib */; };
 		7C0CE3172359C5BA004C3360 /* UIButton+FYCustonButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C0CE3162359C5BA004C3360 /* UIButton+FYCustonButton.m */; };
 		7C4F1AA6235FFA6B00D7AB83 /* STTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1AA5235FFA6B00D7AB83 /* STTool.m */; };
+		7C4F1AA92360599900D7AB83 /* STAdvertorialsDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1AA82360599900D7AB83 /* STAdvertorialsDetailVC.m */; };
 		7C9C319E61D95F3BE68525F9 /* Pods_FYDD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C7B11BD770068C2C0C057A /* Pods_FYDD.framework */; };
 		7CCDC23E235E9CA3009491FB /* STIdentityDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDC23D235E9CA3009491FB /* STIdentityDetailVC.m */; };
 		7CCDC241235EA58A009491FB /* STIdentityDetailFunctionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDC240235EA58A009491FB /* STIdentityDetailFunctionCell.m */; };
@@ -1166,6 +1167,8 @@
 		7C0CE3162359C5BA004C3360 /* UIButton+FYCustonButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+FYCustonButton.m"; sourceTree = "<group>"; };
 		7C4F1AA4235FFA6B00D7AB83 /* STTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STTool.h; sourceTree = "<group>"; };
 		7C4F1AA5235FFA6B00D7AB83 /* STTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STTool.m; sourceTree = "<group>"; };
+		7C4F1AA72360599900D7AB83 /* STAdvertorialsDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STAdvertorialsDetailVC.h; sourceTree = "<group>"; };
+		7C4F1AA82360599900D7AB83 /* STAdvertorialsDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STAdvertorialsDetailVC.m; sourceTree = "<group>"; };
 		7CCDC23C235E9CA3009491FB /* STIdentityDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STIdentityDetailVC.h; sourceTree = "<group>"; };
 		7CCDC23D235E9CA3009491FB /* STIdentityDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STIdentityDetailVC.m; sourceTree = "<group>"; };
 		7CCDC23F235EA58A009491FB /* STIdentityDetailFunctionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STIdentityDetailFunctionCell.h; sourceTree = "<group>"; };
@@ -2259,6 +2262,8 @@
 				35F3A6822324E20600F8D3AF /* DDProductAgreeServiceVc.xib */,
 				7CCDC23C235E9CA3009491FB /* STIdentityDetailVC.h */,
 				7CCDC23D235E9CA3009491FB /* STIdentityDetailVC.m */,
+				7C4F1AA72360599900D7AB83 /* STAdvertorialsDetailVC.h */,
+				7C4F1AA82360599900D7AB83 /* STAdvertorialsDetailVC.m */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -2981,6 +2986,7 @@
 				35DECAF4230F7E0000D044B9 /* BWPlanVc.m in Sources */,
 				046A5088223F365C00FDA117 /* BRStringPickerView.m in Sources */,
 				35DECAC9230E722800D044B9 /* FYSTHomeUserView.m in Sources */,
+				7C4F1AA92360599900D7AB83 /* STAdvertorialsDetailVC.m in Sources */,
 				04EE1A0F226180A100411BC2 /* DDCommentCommitCell.m in Sources */,
 				35F3A65E23234FD800F8D3AF /* DDProductItemView.m in Sources */,
 				35F37E0E2320F45000AB4CA7 /* DDOrderDetailVc.m in Sources */,

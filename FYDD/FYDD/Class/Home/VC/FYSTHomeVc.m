@@ -35,6 +35,7 @@
 #import "ExampleViewController.h"
 #import "STIdentityDetailVC.h"
 #import "STAdvertorialsCell.h"
+#import "STAdvertorialsDetailVC.h"
 
 @interface FYSTHomeVc ()
 <UITableViewDelegate,
@@ -416,10 +417,15 @@ FYSTBannerCellDelegate> {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row > 0) {
-        DDTradeDetailVc * vc = [DDTradeDetailVc new];
-        DDFootstripObj * footprint = _footPrints[indexPath.row - 1];
-        vc.title = footprint.title;
-        vc.footstripObj = footprint;
+//        DDTradeDetailVc * vc = [DDTradeDetailVc new];
+//        DDFootstripObj * footprint = _footPrints[indexPath.row - 1];
+//        vc.title = footprint.title;
+//        vc.footstripObj = footprint;
+//        vc.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:vc animated:YES];
+        STAdvertorialsDetailVC *vc = [[STAdvertorialsDetailVC alloc] init];
+        DDFootstripObj *footprint = _footPrints[indexPath.row - 1];
+        vc.model = footprint;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }

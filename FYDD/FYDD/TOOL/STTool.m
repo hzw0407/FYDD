@@ -49,4 +49,33 @@
                            alpha:opacity];
 }
 
+
+/// 动态计算高度
+/// @param string 需要计算的字符串
+/// @param fontSize 字体大小
+/// @param width 宽度
++ (CGFloat)calculateHeight:(NSString *)string fontSize:(NSInteger)fontSize width:(CGFloat)width {
+    
+    NSDictionary *dic = @{NSFontAttributeName:[UIFont systemFontOfSize:fontSize]};
+
+    CGRect rect = [string boundingRectWithSize:CGSizeMake(width, 0) options:NSStringDrawingUsesLineFragmentOrigin |  NSStringDrawingUsesFontLeading attributes:dic context:nil];
+    
+    return ceilf(rect.size.height);;
+    
+}
+
+/// 动态计算宽度
+/// @param string 需要计算的字符串
+/// @param fontSize 字体大小
+/// @param height 宽度
++ (CGFloat)calculateWidth:(NSString *)string fontSize:(NSInteger)fontSize height:(CGFloat)height {
+    
+    NSDictionary *dic = @{NSFontAttributeName:[UIFont systemFontOfSize:fontSize]};
+
+    CGRect rect = [string boundingRectWithSize:CGSizeMake(0, height) options:NSStringDrawingUsesLineFragmentOrigin |  NSStringDrawingUsesFontLeading attributes:dic context:nil];
+    
+    return ceilf(rect.size.height);;
+    
+}
+
 @end
