@@ -173,7 +173,6 @@
                       NSString * message,
                       id data))competion{
     NSString *url = [NSString stringWithFormat:@"%@:%@%@",DDAPP_URL,DDPort7001,path];
-    NSLog(@"%@",url);
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     void (^parseBlock)( NSData * _Nullable data) = ^( NSData * _Nullable data){

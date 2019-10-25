@@ -439,6 +439,7 @@
 		7C0CE3172359C5BA004C3360 /* UIButton+FYCustonButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C0CE3162359C5BA004C3360 /* UIButton+FYCustonButton.m */; };
 		7C4F1AA6235FFA6B00D7AB83 /* STTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1AA5235FFA6B00D7AB83 /* STTool.m */; };
 		7C4F1AA92360599900D7AB83 /* STAdvertorialsDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1AA82360599900D7AB83 /* STAdvertorialsDetailVC.m */; };
+		7C680733236297A4006A30E0 /* STHttpRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C680732236297A4006A30E0 /* STHttpRequestManager.m */; };
 		7C9C319E61D95F3BE68525F9 /* Pods_FYDD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C7B11BD770068C2C0C057A /* Pods_FYDD.framework */; };
 		7CCDC23E235E9CA3009491FB /* STIdentityDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDC23D235E9CA3009491FB /* STIdentityDetailVC.m */; };
 		7CCDC241235EA58A009491FB /* STIdentityDetailFunctionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDC240235EA58A009491FB /* STIdentityDetailFunctionCell.m */; };
@@ -1169,6 +1170,9 @@
 		7C4F1AA5235FFA6B00D7AB83 /* STTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STTool.m; sourceTree = "<group>"; };
 		7C4F1AA72360599900D7AB83 /* STAdvertorialsDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STAdvertorialsDetailVC.h; sourceTree = "<group>"; };
 		7C4F1AA82360599900D7AB83 /* STAdvertorialsDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STAdvertorialsDetailVC.m; sourceTree = "<group>"; };
+		7C680731236297A4006A30E0 /* STHttpRequestManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STHttpRequestManager.h; sourceTree = "<group>"; };
+		7C680732236297A4006A30E0 /* STHttpRequestManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STHttpRequestManager.m; sourceTree = "<group>"; };
+		7C68073423629AA2006A30E0 /* STURLService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STURLService.h; sourceTree = "<group>"; };
 		7CCDC23C235E9CA3009491FB /* STIdentityDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STIdentityDetailVC.h; sourceTree = "<group>"; };
 		7CCDC23D235E9CA3009491FB /* STIdentityDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STIdentityDetailVC.m; sourceTree = "<group>"; };
 		7CCDC23F235EA58A009491FB /* STIdentityDetailFunctionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STIdentityDetailFunctionCell.h; sourceTree = "<group>"; };
@@ -1784,6 +1788,7 @@
 				04A76AC7223BABF1007976C3 /* Bridge-Header.h */,
 				04D3F6AC221D5DD200A79628 /* FYDDDefine.h */,
 				04D3F6AD221D5E1A00A79628 /* FYDD.pch */,
+				7C68073423629AA2006A30E0 /* STURLService.h */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1806,6 +1811,8 @@
 				04B584162265EF1900AC0B18 /* NSString+DDString.m */,
 				7C4F1AA4235FFA6B00D7AB83 /* STTool.h */,
 				7C4F1AA5235FFA6B00D7AB83 /* STTool.m */,
+				7C680731236297A4006A30E0 /* STHttpRequestManager.h */,
+				7C680732236297A4006A30E0 /* STHttpRequestManager.m */,
 			);
 			path = TOOL;
 			sourceTree = "<group>";
@@ -2910,6 +2917,7 @@
 				35F37DEB231E93CE00AB4CA7 /* DDOnlineStudyCell.m in Sources */,
 				3558CF5E23267595005DF15D /* DDApplyRoleVc.m in Sources */,
 				04EE1A47226465C400411BC2 /* DDChatReceveCell.m in Sources */,
+				7C680733236297A4006A30E0 /* STHttpRequestManager.m in Sources */,
 				7CCDC244235ED851009491FB /* STAdvertorialsCell.m in Sources */,
 				04EE1A162261B3C100411BC2 /* DDCityListVC.m in Sources */,
 				04F9CC722236601F0020B619 /* DDMainMenuCell.m in Sources */,
@@ -3222,6 +3230,7 @@
 				CODE_SIGN_ENTITLEMENTS = FYDD/FYDD.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: NIANFANG YUAN (GKNUL9R3Y4)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = SND4T34VUG;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3235,6 +3244,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.stdd.app.cn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = ST_Development;
@@ -3252,6 +3262,7 @@
 				CODE_SIGN_ENTITLEMENTS = FYDD/FYDD.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen 3T Technology Co., Ltd (SND4T34VUG)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = SND4T34VUG;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3265,6 +3276,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.stdd.app.cn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = ST_Adhoc;

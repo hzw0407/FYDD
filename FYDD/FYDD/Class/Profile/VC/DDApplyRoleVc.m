@@ -79,6 +79,27 @@
             [self.navigationController popViewControllerAnimated:YES];
         }];
         return;
+    }else if (_applyType == DDUserTypeOnline) {
+        @weakify(self)
+        [DDAlertInputView showEvent:^(NSString *text) {
+            [DDHub hub:self.view];
+            [[DDAppNetwork share] get:YES
+                                 path:[NSString stringWithFormat:@"/uas/user/online/applyForAsUserOnline?token=%@&extensionCode=%@",[DDUserManager share].user.token,text]
+                                 body:@""
+                           completion:^(NSInteger code, NSString *message, id data) {
+                               @strongify(self)
+                               if (!self) return ;
+                               [DDHub dismiss:self.view];
+                               if (code == 200) {
+                                   [self commitAply];
+                               }else {
+                                   [DDHub hub:message view:self.view];
+                               }
+                           }];
+            
+        } cancelEvent:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
     }
     [self commitAply];
 }

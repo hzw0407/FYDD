@@ -9,6 +9,15 @@
 #ifndef FYDDDefine_h
 #define FYDDDefine_h
 
+//首页新版本引导是否点击了
+#define Home_FirstClick @"Home_FirstClick"
+//身份主页新版本引导是否点击了
+#define Identity_FirstClick @"Identity_FirstClick"
+//百万计划新版本引导是否点击了
+#define BW_FirstClick @"BW_FirstClick"
+//商机新版本引导是否点击了
+#define SJ_FirstClick @"SJ_FirstClick"
+
 // Blugly
 #define BuglyAppId @"bcd5be4ef5"
 #define BuglyAppKey @"80640349-6bec-4d00-a8a7-58cc53a7e1ec"

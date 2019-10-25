@@ -61,8 +61,8 @@
     self.searchBar.delegate = self;
     [self.tableView.mj_header beginRefreshing];
     
-    //添加引导view
-//    [[UIApplication sharedApplication].keyWindow addSubview:self.guideBackgroundView];
+    [self loadGuide];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -78,6 +78,25 @@
 }
 
 #pragma mark - CustomMethod
+//添加引导view
+- (void)loadGuide {
+    [STTool checkVersionWithSuccess:^(NSDictionary * _Nonnull dict) {
+        if (dict && [dict[@"code"] integerValue] == 200) {
+            NSString * version = dict[@"data"][@"vNumber"];
+            NSString * downLoadURL =  dict[@"data"][@"vUrl"];
+            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+            NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+            if ([app_Version isEqualToString:version] && downLoadURL && ![SRUserDefaults boolForKey:BW_FirstClick]) {
+                //和最新的版本一致并且是第一次点击
+                [SRUserDefaults setBool:YES forKey:BW_FirstClick];
+                [[UIApplication sharedApplication].keyWindow addSubview:self.guideBackgroundView];
+            }
+        }
+    } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+        
+    }];
+}
+
 // 获取百万计划数据
 - (void)getBWPlanData:(NSInteger)page{
     NSString * urlPath = @"/million/plan/userOnline/list";

@@ -115,11 +115,23 @@
     if (type == 1) {
         //代理方
         procedureLabel.text = @"代理流程";
-        [self.applyButton setTitle:@"申请代理方" forState:UIControlStateNormal];
+        if ([DDUserManager share].user.isExtensionUser == 0) {
+            //代理方未认证
+            self.applyButton.hidden = NO;
+            [self.applyButton setTitle:@"申请代理方" forState:UIControlStateNormal];
+        }else {
+            self.applyButton.hidden = YES;
+        }
     }else {
         //实施方
         procedureLabel.text = @"实施流程";
-        [self.applyButton setTitle:@"申请实施方" forState:UIControlStateNormal];
+        if ([DDUserManager share].user.isOnlineUser == 0) {
+            //实施方未认证
+            self.applyButton.hidden = NO;
+            [self.applyButton setTitle:@"申请实施方" forState:UIControlStateNormal];
+        }else {
+            self.applyButton.hidden = YES;
+        }
     }
 }
 

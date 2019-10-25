@@ -9,15 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFNetworking.h>
 
-// 1期接口基地址
-//#define DDAPP_URL @"http://app.3tmall.com"
-#define DDAPP_URL @"http://47.107.166.105"
-#define DDPort7001 @"7001"
-#define DDPort8003 @"8003"
-
-// 二期接口地址
-#define DDAPP_2T_URL @"http://47.107.166.105:8004"
-
 @interface DDAppNetwork : NSObject
 
 + (instancetype)share;

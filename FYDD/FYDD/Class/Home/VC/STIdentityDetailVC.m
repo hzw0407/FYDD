@@ -13,6 +13,7 @@
 #import "BWPlanVc.h"
 #import "DDOpportunityVc.h"
 #import "DDApplyRoleVc.h"
+#import "DDFootstripObj.h"
 
 @interface STIdentityDetailVC ()
 <UITableViewDelegate,
@@ -47,22 +48,40 @@ STIdentityDetailFunctionCellDelegate>
         [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     }
     
-    //添加引导view
-//    [[UIApplication sharedApplication].keyWindow addSubview:self.guideBackgroundView];
-//    if (self.type == 1) {
-//        [self.guideBackgroundView addSubview:self.agentGuideView];
-//        [self.agentGuideView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.right.top.bottom.equalTo(self.guideBackgroundView).offset(0);
-//        }];
-//    }else {
-//        [self.guideBackgroundView addSubview:self.implementerGuideView];
-//        [self.implementerGuideView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.right.top.bottom.equalTo(self.guideBackgroundView).offset(0);
-//        }];
-//    }
+    [self loadGuide];
+    
 }
 
 #pragma mark - CustomMethod
+//添加引导view
+- (void)loadGuide {
+    [STTool checkVersionWithSuccess:^(NSDictionary * _Nonnull dict) {
+        if (dict && [dict[@"code"] integerValue] == 200) {
+            NSString * version = dict[@"data"][@"vNumber"];
+            NSString * downLoadURL =  dict[@"data"][@"vUrl"];
+            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+            NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+            if ([app_Version isEqualToString:version] && downLoadURL && ![SRUserDefaults boolForKey:Identity_FirstClick]) {
+                //和最新的版本一致并且是第一次点击
+                [SRUserDefaults setBool:YES forKey:Identity_FirstClick];
+                [[UIApplication sharedApplication].keyWindow addSubview:self.guideBackgroundView];
+                if (self.type == 1) {
+                    [self.guideBackgroundView addSubview:self.agentGuideView];
+                    [self.agentGuideView mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.left.right.top.bottom.equalTo(self.guideBackgroundView).offset(0);
+                    }];
+                }else {
+                    [self.guideBackgroundView addSubview:self.implementerGuideView];
+                    [self.implementerGuideView mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.left.right.top.bottom.equalTo(self.guideBackgroundView).offset(0);
+                    }];
+                }
+            }
+        }
+    } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+        
+    }];
+}
 
 #pragma mark - ClickMethod
 //点击代理方引导
@@ -108,6 +127,8 @@ STIdentityDetailFunctionCellDelegate>
             cell = [[STAdvertorialsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
+        DDFootstripObj *model = [[DDFootstripObj alloc] init];
+        [cell refreshWithModel:model];
         return cell;
     }
     
@@ -123,6 +144,10 @@ STIdentityDetailFunctionCellDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.01;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

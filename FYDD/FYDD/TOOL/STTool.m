@@ -78,4 +78,20 @@
     
 }
 
+/// 检查版本更新
+/// @param successBlock 成功快
+/// @param failBlock 失败快
++ (void)checkVersionWithSuccess:(SuccessRequestBlock)successBlock                withFail:(FailRequestBlock)failBlock {
+    STHttpRequestManager *manager = [STHttpRequestManager shareManager];
+    [manager requestDataWithUrl:[NSString stringWithFormat:@"%@:%@%@",DDAPP_URL,DDPort7001,GETVERSION] withType:RequestGet withSuccess:^(NSDictionary * _Nonnull dict) {
+        
+        successBlock(dict);
+        
+    } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+        
+        failBlock(task,error);
+        
+    }];
+}
+
 @end

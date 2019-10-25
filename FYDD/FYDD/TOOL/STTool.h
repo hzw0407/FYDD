@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "STHttpRequestManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -28,6 +29,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param fontSize 字体大小
 /// @param height 宽度
 + (CGFloat)calculateWidth:(NSString *)string fontSize:(NSInteger)fontSize height:(CGFloat)height;
+
+/// 检查版本更新
+/// @param successBlock 成功快
+/// @param failBlock 失败快
++ (void)checkVersionWithSuccess:(SuccessRequestBlock)successBlock                withFail:(FailRequestBlock)failBlock;
 
 @end
 

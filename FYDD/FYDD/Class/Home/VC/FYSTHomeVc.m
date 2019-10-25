@@ -96,6 +96,7 @@ FYSTBannerCellDelegate> {
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@""]  forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+    //获取用户信息
     [[DDUserManager share] getUserInfo:nil];
 
     self.userIconView.userLb.text = [DDUserManager share].isLogged ?  yyTrimNullText([DDUserManager share].user.nickname) : @"未登录";
@@ -174,7 +175,7 @@ FYSTBannerCellDelegate> {
                 self->_products = dataList;
             }
             [self.tableView reloadData];
-//            [self loadMessageGuide];
+            [self loadMessageGuide];
         }
         
     }];
@@ -234,10 +235,24 @@ FYSTBannerCellDelegate> {
 
 //加载消息引导view
 - (void)loadMessageGuide {
-    [[UIApplication sharedApplication].keyWindow addSubview:self.guideBackgroundView];
-    [self.guideBackgroundView addSubview:self.messageguideView];
-    [self.messageguideView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.top.bottom.equalTo(self.guideBackgroundView).offset(0);
+    [STTool checkVersionWithSuccess:^(NSDictionary * _Nonnull dict) {
+        if (dict && [dict[@"code"] integerValue] == 200) {
+            NSString * version = dict[@"data"][@"vNumber"];
+            NSString * downLoadURL =  dict[@"data"][@"vUrl"];
+            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+            NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+            if ([app_Version isEqualToString:version] && downLoadURL && ![SRUserDefaults boolForKey:Home_FirstClick]) {
+                //和最新的版本一致并且是第一次点击
+                [SRUserDefaults setBool:YES forKey:Home_FirstClick];
+                [[UIApplication sharedApplication].keyWindow addSubview:self.guideBackgroundView];
+                [self.guideBackgroundView addSubview:self.messageguideView];
+                [self.messageguideView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.right.top.bottom.equalTo(self.guideBackgroundView).offset(0);
+                }];
+            }
+        }
+    } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+        
     }];
 }
 

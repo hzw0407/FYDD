@@ -208,8 +208,8 @@
     for (DDMessageModel *objc in messAgeArray) {
         [array addObject:objc.messageContent];
     }
-//    self.textCycleScrollView.titlesGroup = array;
-    self.textCycleScrollView.titlesGroup = @[@"11",@"22",@"33"];
+    self.textCycleScrollView.titlesGroup = array;
+//    self.textCycleScrollView.titlesGroup = @[@"11",@"22",@"33"];
 }
 
 //创建素材按钮
