@@ -415,8 +415,6 @@
 		35F37E31232146BB00AB4CA7 /* DDOrderCompanyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F37E2F232146BB00AB4CA7 /* DDOrderCompanyCell.m */; };
 		35F37E32232146BB00AB4CA7 /* DDOrderCompanyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35F37E30232146BB00AB4CA7 /* DDOrderCompanyCell.xib */; };
 		35F3A65B232348B300F8D3AF /* DDProductObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F3A65A232348B300F8D3AF /* DDProductObj.m */; };
-		35F3A65E23234FD800F8D3AF /* DDProductItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F3A65D23234FD800F8D3AF /* DDProductItemView.m */; };
-		35F3A66023234FEA00F8D3AF /* DDProductItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35F3A65F23234FEA00F8D3AF /* DDProductItemView.xib */; };
 		35F3A6632323878E00F8D3AF /* DDProductCreateOrderVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F3A6622323878E00F8D3AF /* DDProductCreateOrderVc.m */; };
 		35F3A6672323891700F8D3AF /* DDProductOrderInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F3A6652323891700F8D3AF /* DDProductOrderInfoCell.m */; };
 		35F3A6682323891700F8D3AF /* DDProductOrderInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35F3A6662323891700F8D3AF /* DDProductOrderInfoCell.xib */; };
@@ -1129,9 +1127,6 @@
 		35F37E30232146BB00AB4CA7 /* DDOrderCompanyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DDOrderCompanyCell.xib; sourceTree = "<group>"; };
 		35F3A659232348B300F8D3AF /* DDProductObj.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDProductObj.h; sourceTree = "<group>"; };
 		35F3A65A232348B300F8D3AF /* DDProductObj.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDProductObj.m; sourceTree = "<group>"; };
-		35F3A65C23234FD800F8D3AF /* DDProductItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDProductItemView.h; sourceTree = "<group>"; };
-		35F3A65D23234FD800F8D3AF /* DDProductItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDProductItemView.m; sourceTree = "<group>"; };
-		35F3A65F23234FEA00F8D3AF /* DDProductItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DDProductItemView.xib; sourceTree = "<group>"; };
 		35F3A6612323878E00F8D3AF /* DDProductCreateOrderVc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDProductCreateOrderVc.h; sourceTree = "<group>"; };
 		35F3A6622323878E00F8D3AF /* DDProductCreateOrderVc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDProductCreateOrderVc.m; sourceTree = "<group>"; };
 		35F3A6642323891700F8D3AF /* DDProductOrderInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDProductOrderInfoCell.h; sourceTree = "<group>"; };
@@ -2193,9 +2188,6 @@
 				35DECAB8230E507500D044B9 /* FYSTBannerCell.h */,
 				35DECAB9230E507500D044B9 /* FYSTBannerCell.m */,
 				35DECABA230E507500D044B9 /* FYSTBannerCell.xib */,
-				35F3A65C23234FD800F8D3AF /* DDProductItemView.h */,
-				35F3A65D23234FD800F8D3AF /* DDProductItemView.m */,
-				35F3A65F23234FEA00F8D3AF /* DDProductItemView.xib */,
 				35DECAC7230E722800D044B9 /* FYSTHomeUserView.h */,
 				35DECAC8230E722800D044B9 /* FYSTHomeUserView.m */,
 				35DECACA230E723A00D044B9 /* FYSTHomeUserView.xib */,
@@ -2580,7 +2572,6 @@
 				3540DD1A2325FC9F00BF6B80 /* DDOrdeStepImageView.xib in Resources */,
 				041775F12238B165001CF742 /* DDOrderPayTypeCell.xib in Resources */,
 				35F3A6682323891700F8D3AF /* DDProductOrderInfoCell.xib in Resources */,
-				35F3A66023234FEA00F8D3AF /* DDProductItemView.xib in Resources */,
 				04F9CC60223645BD0020B619 /* DDContentCell.xib in Resources */,
 				04A76B07223C8F67007976C3 /* DDPayTypeView.xib in Resources */,
 				35DECB20230FE04200D044B9 /* DDOpportunityDetailCell.xib in Resources */,
@@ -2983,7 +2974,6 @@
 				35DECAC9230E722800D044B9 /* FYSTHomeUserView.m in Sources */,
 				7C4F1AA92360599900D7AB83 /* STAdvertorialsDetailVC.m in Sources */,
 				04EE1A0F226180A100411BC2 /* DDCommentCommitCell.m in Sources */,
-				35F3A65E23234FD800F8D3AF /* DDProductItemView.m in Sources */,
 				35F37E0E2320F45000AB4CA7 /* DDOrderDetailVc.m in Sources */,
 				04B584172265EF1A00AC0B18 /* NSString+DDString.m in Sources */,
 				35DECAEA230F789F00D044B9 /* DDAidVc.m in Sources */,

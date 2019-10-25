@@ -14,7 +14,6 @@
 #import "DDMessageVC.h"
 #import <CWLateralSlide/UIViewController+CWLateralSlide.h>
 #import "DDProfileVC.h"
-#import "DDClerkMenuView.h"
 #import "DDAuthenVc.h"
 #import "DDFootstripObj.h"
 #import "DDProductObj.h"
@@ -49,7 +48,6 @@ FYSTBannerCellDelegate> {
 @property (nonatomic,strong) FYSTHomeUserView * userIconView;//导航左边按钮
 @property (nonatomic,strong) FYSTRightItemMenuView * rightMenuView;//导航右边按钮
 @property (nonatomic,strong) DDProfileVC * profileVC;//抽屉
-//@property (nonatomic,strong) DDClerkMenuView * menuView;
 @property (nonatomic, strong) UIView *guideBackgroundView;//引导view
 @property (nonatomic, strong) UIView *messageguideView;//消息引导view
 @property (nonatomic, strong) UIView *plateGuideView;//板块引导view
@@ -103,7 +101,6 @@ FYSTBannerCellDelegate> {
     }else {
         self.userIconView.userView.image = [UIImage imageNamed:[DDUserManager share].userPlaceImage];
     }
-//    [self.menuView reloadView];
     [self getMessageData];
     [self getAdvertorialsLisy];
     
@@ -421,30 +418,6 @@ FYSTBannerCellDelegate> {
 }
 
 #pragma mark - GetterAndSetter
-//- (DDClerkMenuView *)menuView {
-//    if (!_menuView) {
-//        _menuView = [[[NSBundle mainBundle] loadNibNamed:@"DDClerkMenuView" owner:nil options:nil] lastObject];
-//        _menuView.size = CGSizeMake(50, 100);
-//        _menuView.left = kScreenSize.width - 65;
-//        _menuView.top = kScreenSize.height - (iPhoneXAfter ? 49 : 49) - 115;
-//        @weakify(self)
-//        _menuView.clertButtonClick = ^(NSInteger index) {
-//            @strongify(self)
-//            if (index == 1) {
-//                DDAuthenVc  * vc = [DDAuthenVc new];
-//                vc.hidesBottomBarWhenPushed = YES;
-//                [self.navigationController pushViewController:vc animated:YES];
-//            }else {
-//                DDOrderVC * vc = [DDOrderVC new];
-//                vc.hidesBottomBarWhenPushed = YES;
-//                vc.title = @"订单";
-//                [self.navigationController pushViewController:vc animated:YES];
-//            }
-//        };
-//    }
-//    return _menuView;
-//}
-
 - (FYSTRightItemMenuView *)rightMenuView{
     if (!_rightMenuView) {
         _rightMenuView = [[[NSBundle mainBundle] loadNibNamed:@"FYSTRightItemMenuView" owner:nil options:nil] lastObject];

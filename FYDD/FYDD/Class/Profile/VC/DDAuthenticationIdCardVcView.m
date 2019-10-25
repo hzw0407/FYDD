@@ -157,8 +157,8 @@
 
 - (void)detectIdCardFinish:(id)result image:(UIImage *)image{
     @weakify(self)
-    [self.idCardVC dismissViewControllerAnimated:YES completion:nil];
-    self.idCardVC = nil;
+//    [self.idCardVC dismissViewControllerAnimated:YES completion:nil];
+//    self.idCardVC = nil;
     if ([result isKindOfClass:[NSDictionary class]]) {
         if(self->_currentIdCard == 0) {
             self->_name = [result valueForKeyPath:@"words_result.姓名.words"];
