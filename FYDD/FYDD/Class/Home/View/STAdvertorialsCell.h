@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "DDFootstripObj.h"
+#import "STAdvertorialsModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface STAdvertorialsCell : UITableViewCell
 
 //刷新数据
-- (void)refreshWithModel:(DDFootstripObj *)model;
+- (void)refreshWithModel:(STAdvertorialsModel *)model;
 
 @end
 

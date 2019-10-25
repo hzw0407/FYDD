@@ -30,6 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param height 宽度
 + (CGFloat)calculateWidth:(NSString *)string fontSize:(NSInteger)fontSize height:(CGFloat)height;
 
+/// 时间戳转时间
+/// @param time 时间戳
++ (NSString *)getTimeFromTimestamp:(NSTimeInterval)time;
+
 /// 检查版本更新
 /// @param successBlock 成功快
 /// @param failBlock 失败快

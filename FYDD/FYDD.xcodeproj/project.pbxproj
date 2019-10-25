@@ -334,10 +334,6 @@
 		35DECAB7230E4F7C00D044B9 /* FYSTHomeVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DECAB6230E4F7C00D044B9 /* FYSTHomeVc.m */; };
 		35DECABB230E507500D044B9 /* FYSTBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DECAB9230E507500D044B9 /* FYSTBannerCell.m */; };
 		35DECABC230E507500D044B9 /* FYSTBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35DECABA230E507500D044B9 /* FYSTBannerCell.xib */; };
-		35DECAC0230E5F5800D044B9 /* FYSTNoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DECABE230E5F5800D044B9 /* FYSTNoticeCell.m */; };
-		35DECAC1230E5F5800D044B9 /* FYSTNoticeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35DECABF230E5F5800D044B9 /* FYSTNoticeCell.xib */; };
-		35DECAC5230E6B3800D044B9 /* FYSTFootprintCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DECAC3230E6B3800D044B9 /* FYSTFootprintCell.m */; };
-		35DECAC6230E6B3800D044B9 /* FYSTFootprintCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35DECAC4230E6B3800D044B9 /* FYSTFootprintCell.xib */; };
 		35DECAC9230E722800D044B9 /* FYSTHomeUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DECAC8230E722800D044B9 /* FYSTHomeUserView.m */; };
 		35DECACB230E723A00D044B9 /* FYSTHomeUserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35DECACA230E723A00D044B9 /* FYSTHomeUserView.xib */; };
 		35DECACE230E745800D044B9 /* FYSTRightItemMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DECACD230E745800D044B9 /* FYSTRightItemMenuView.m */; };
@@ -440,6 +436,7 @@
 		7C4F1AA6235FFA6B00D7AB83 /* STTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1AA5235FFA6B00D7AB83 /* STTool.m */; };
 		7C4F1AA92360599900D7AB83 /* STAdvertorialsDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1AA82360599900D7AB83 /* STAdvertorialsDetailVC.m */; };
 		7C680733236297A4006A30E0 /* STHttpRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C680732236297A4006A30E0 /* STHttpRequestManager.m */; };
+		7C6807372362D3B7006A30E0 /* STAdvertorialsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C6807362362D3B7006A30E0 /* STAdvertorialsModel.m */; };
 		7C9C319E61D95F3BE68525F9 /* Pods_FYDD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C7B11BD770068C2C0C057A /* Pods_FYDD.framework */; };
 		7CCDC23E235E9CA3009491FB /* STIdentityDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDC23D235E9CA3009491FB /* STIdentityDetailVC.m */; };
 		7CCDC241235EA58A009491FB /* STIdentityDetailFunctionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDC240235EA58A009491FB /* STIdentityDetailFunctionCell.m */; };
@@ -1005,12 +1002,6 @@
 		35DECAB8230E507500D044B9 /* FYSTBannerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FYSTBannerCell.h; sourceTree = "<group>"; };
 		35DECAB9230E507500D044B9 /* FYSTBannerCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYSTBannerCell.m; sourceTree = "<group>"; };
 		35DECABA230E507500D044B9 /* FYSTBannerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FYSTBannerCell.xib; sourceTree = "<group>"; };
-		35DECABD230E5F5800D044B9 /* FYSTNoticeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FYSTNoticeCell.h; sourceTree = "<group>"; };
-		35DECABE230E5F5800D044B9 /* FYSTNoticeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYSTNoticeCell.m; sourceTree = "<group>"; };
-		35DECABF230E5F5800D044B9 /* FYSTNoticeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FYSTNoticeCell.xib; sourceTree = "<group>"; };
-		35DECAC2230E6B3800D044B9 /* FYSTFootprintCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FYSTFootprintCell.h; sourceTree = "<group>"; };
-		35DECAC3230E6B3800D044B9 /* FYSTFootprintCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYSTFootprintCell.m; sourceTree = "<group>"; };
-		35DECAC4230E6B3800D044B9 /* FYSTFootprintCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FYSTFootprintCell.xib; sourceTree = "<group>"; };
 		35DECAC7230E722800D044B9 /* FYSTHomeUserView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FYSTHomeUserView.h; sourceTree = "<group>"; };
 		35DECAC8230E722800D044B9 /* FYSTHomeUserView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYSTHomeUserView.m; sourceTree = "<group>"; };
 		35DECACA230E723A00D044B9 /* FYSTHomeUserView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FYSTHomeUserView.xib; sourceTree = "<group>"; };
@@ -1173,6 +1164,8 @@
 		7C680731236297A4006A30E0 /* STHttpRequestManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STHttpRequestManager.h; sourceTree = "<group>"; };
 		7C680732236297A4006A30E0 /* STHttpRequestManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STHttpRequestManager.m; sourceTree = "<group>"; };
 		7C68073423629AA2006A30E0 /* STURLService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STURLService.h; sourceTree = "<group>"; };
+		7C6807352362D3B7006A30E0 /* STAdvertorialsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STAdvertorialsModel.h; sourceTree = "<group>"; };
+		7C6807362362D3B7006A30E0 /* STAdvertorialsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STAdvertorialsModel.m; sourceTree = "<group>"; };
 		7CCDC23C235E9CA3009491FB /* STIdentityDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STIdentityDetailVC.h; sourceTree = "<group>"; };
 		7CCDC23D235E9CA3009491FB /* STIdentityDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STIdentityDetailVC.m; sourceTree = "<group>"; };
 		7CCDC23F235EA58A009491FB /* STIdentityDetailFunctionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STIdentityDetailFunctionCell.h; sourceTree = "<group>"; };
@@ -2200,15 +2193,9 @@
 				35DECAB8230E507500D044B9 /* FYSTBannerCell.h */,
 				35DECAB9230E507500D044B9 /* FYSTBannerCell.m */,
 				35DECABA230E507500D044B9 /* FYSTBannerCell.xib */,
-				35DECABD230E5F5800D044B9 /* FYSTNoticeCell.h */,
-				35DECABE230E5F5800D044B9 /* FYSTNoticeCell.m */,
-				35DECABF230E5F5800D044B9 /* FYSTNoticeCell.xib */,
 				35F3A65C23234FD800F8D3AF /* DDProductItemView.h */,
 				35F3A65D23234FD800F8D3AF /* DDProductItemView.m */,
 				35F3A65F23234FEA00F8D3AF /* DDProductItemView.xib */,
-				35DECAC2230E6B3800D044B9 /* FYSTFootprintCell.h */,
-				35DECAC3230E6B3800D044B9 /* FYSTFootprintCell.m */,
-				35DECAC4230E6B3800D044B9 /* FYSTFootprintCell.xib */,
 				35DECAC7230E722800D044B9 /* FYSTHomeUserView.h */,
 				35DECAC8230E722800D044B9 /* FYSTHomeUserView.m */,
 				35DECACA230E723A00D044B9 /* FYSTHomeUserView.xib */,
@@ -2247,6 +2234,8 @@
 				35F3A65A232348B300F8D3AF /* DDProductObj.m */,
 				35944FB52333D26500C714DE /* DDBannerModel.h */,
 				35944FB62333D26500C714DE /* DDBannerModel.m */,
+				7C6807352362D3B7006A30E0 /* STAdvertorialsModel.h */,
+				7C6807362362D3B7006A30E0 /* STAdvertorialsModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2581,7 +2570,6 @@
 				04D3F686221D4A2700A79628 /* LaunchScreen.storyboard in Resources */,
 				354DC6FA23287623004779F7 /* DDAuthenMoniResultVc.xib in Resources */,
 				35E136492322636600C55A80 /* DDOrderCompanyInfoView.xib in Resources */,
-				35DECAC6230E6B3800D044B9 /* FYSTFootprintCell.xib in Resources */,
 				35944FAA2333685900C714DE /* DDInteractAddView.xib in Resources */,
 				04C7E9C52240EC8600EE9796 /* DDAddBankVC.xib in Resources */,
 				04928CDF22715B39003B7408 /* DDBaseInputCell.xib in Resources */,
@@ -2688,7 +2676,6 @@
 				04EE1A432264645900411BC2 /* DDChatSendCell.xib in Resources */,
 				040D58B3225B321800EC8347 /* DDOrderPayTopInfoCell.xib in Resources */,
 				04D3F683221D4A2700A79628 /* Assets.xcassets in Resources */,
-				35DECAC1230E5F5800D044B9 /* FYSTNoticeCell.xib in Resources */,
 				0417761C2238F07F001CF742 /* DDClerkTopCell.xib in Resources */,
 				04A76B22223CDD2F007976C3 /* DDBaseCell.xib in Resources */,
 				04F9CCA4223759930020B619 /* DDOrderProductDateCell.xib in Resources */,
@@ -2834,7 +2821,6 @@
 				7CCDC241235EA58A009491FB /* STIdentityDetailFunctionCell.m in Sources */,
 				044E19B72274075700125884 /* DDOrderContactListCell.m in Sources */,
 				04FAE78A223B48CC00B226C9 /* DDInputContentCell.m in Sources */,
-				35DECAC5230E6B3800D044B9 /* FYSTFootprintCell.m in Sources */,
 				35EB1356233D0CAC00E17086 /* DDAlertCancelDailiView.m in Sources */,
 				04F7EAE5226820490051FDF1 /* DDAuthenticationIdCardVcView.m in Sources */,
 				04643313226AF7D1008AEFF0 /* SRUserDefaults.m in Sources */,
@@ -2919,6 +2905,7 @@
 				04EE1A47226465C400411BC2 /* DDChatReceveCell.m in Sources */,
 				7C680733236297A4006A30E0 /* STHttpRequestManager.m in Sources */,
 				7CCDC244235ED851009491FB /* STAdvertorialsCell.m in Sources */,
+				7C6807372362D3B7006A30E0 /* STAdvertorialsModel.m in Sources */,
 				04EE1A162261B3C100411BC2 /* DDCityListVC.m in Sources */,
 				04F9CC722236601F0020B619 /* DDMainMenuCell.m in Sources */,
 				3540DD142325F96600BF6B80 /* DDCommitStepVc.m in Sources */,
@@ -3012,7 +2999,6 @@
 				35DECB0B230FD7BC00D044B9 /* DDOpportunityVc.m in Sources */,
 				04F9CC5922363ED90020B619 /* DDUserAgreeInfoCell.m in Sources */,
 				0414B4212269A0AB00666728 /* DDBankModelHistoryModel.m in Sources */,
-				35DECAC0230E5F5800D044B9 /* FYSTNoticeCell.m in Sources */,
 				04F9CCA8223762010020B619 /* DDOrderProductInfoCell.m in Sources */,
 				04C7E9B12240C72800EE9796 /* DDGetMoneyPasswordView.m in Sources */,
 				35D89E3A232F4D1800037B0A /* DDInteractCell.m in Sources */,

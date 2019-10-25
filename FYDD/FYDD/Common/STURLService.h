@@ -29,5 +29,9 @@
 
 //获取版本
 #define GETVERSION @"/uas/t/version/getIosVersion"
+//软文列表
+#define ADVERTORIALSLIST @"/t-phase/advertorial/listByType"
+//增加浏览量
+#define ADDBROWSER @"/t-phase/advertorial/addBrowserNum"
 
 #endif /* STURLService_h */

@@ -100,8 +100,9 @@
         } cancelEvent:^{
             [self.navigationController popViewControllerAnimated:YES];
         }];
+        return;
     }
-    [self commitAply];
+//    [self commitAply];
 }
 
 - (void)commitAply{

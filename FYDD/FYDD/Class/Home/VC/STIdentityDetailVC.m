@@ -14,6 +14,8 @@
 #import "DDOpportunityVc.h"
 #import "DDApplyRoleVc.h"
 #import "DDFootstripObj.h"
+#import "STAdvertorialsModel.h"
+#import "STAdvertorialsDetailVC.h"
 
 @interface STIdentityDetailVC ()
 <UITableViewDelegate,
@@ -24,6 +26,7 @@ STIdentityDetailFunctionCellDelegate>
 @property (nonatomic, strong) UIView *guideBackgroundView;//引导view
 @property (nonatomic, strong) UIView *agentGuideView;//代理方引导view
 @property (nonatomic, strong) UIView *implementerGuideView;//实施方引导view
+@property (nonatomic, strong) NSMutableArray *listArray;//软文列表数据
 
 @end
 
@@ -48,11 +51,32 @@ STIdentityDetailFunctionCellDelegate>
         [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     }
     
+    [self getAdvertorialsLisy];
     [self loadGuide];
     
 }
 
 #pragma mark - CustomMethod
+//获取软文列表
+- (void)getAdvertorialsLisy {
+    STHttpRequestManager *manager = [STHttpRequestManager shareManager];
+    [manager addParameterWithKey:@"type" withValue:self.type == 1 ? @"2" : @"3"];
+    [manager requestDataWithUrl:[NSString stringWithFormat:@"%@:%@%@",DDAPP_URL,DDPort7001,ADVERTORIALSLIST] withType:RequestGet withSuccess:^(NSDictionary * _Nonnull dict) {
+        if (dict && [dict[@"code"] integerValue] == 200) {
+            NSArray * lists = dict[@"data"][@"list"];
+            if (lists && [lists isKindOfClass:[NSArray class]]) {
+                for (NSDictionary * dic in lists) {
+                    STAdvertorialsModel * model = [STAdvertorialsModel modelWithJSON:dic];
+                    [self.listArray addObject:model];
+                }
+            }
+            [self.tableView reloadData];
+        }
+    } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+        
+    }];
+}
+
 //添加引导view
 - (void)loadGuide {
     [STTool checkVersionWithSuccess:^(NSDictionary * _Nonnull dict) {
@@ -105,7 +129,7 @@ STIdentityDetailFunctionCellDelegate>
     if (section == 0) {
         return  1;
     }else {
-        return 1;
+        return self.listArray.count;
     }
 }
 
@@ -127,7 +151,7 @@ STIdentityDetailFunctionCellDelegate>
             cell = [[STAdvertorialsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-        DDFootstripObj *model = [[DDFootstripObj alloc] init];
+        STAdvertorialsModel *model = self.listArray[indexPath.row];
         [cell refreshWithModel:model];
         return cell;
     }
@@ -144,10 +168,6 @@ STIdentityDetailFunctionCellDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.01;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -180,6 +200,16 @@ STIdentityDetailFunctionCellDelegate>
         return 205;
     }else {
         return 110;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1) {
+        STAdvertorialsDetailVC *vc = [[STAdvertorialsDetailVC alloc] init];
+        STAdvertorialsModel *model = self.listArray[indexPath.row];
+        vc.model = model;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
@@ -327,6 +357,13 @@ STIdentityDetailFunctionCellDelegate>
         [_implementerGuideView addGestureRecognizer:tap];
     }
     return _implementerGuideView;
+}
+
+- (NSMutableArray *)listArray {
+    if (!_listArray) {
+        _listArray = [NSMutableArray array];
+    }
+    return _listArray;
 }
 
 @end

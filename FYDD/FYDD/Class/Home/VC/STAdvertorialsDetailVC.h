@@ -8,12 +8,13 @@
 
 #import "DDBaseVC.h"
 #import "DDFootstripObj.h"
+#import "STAdvertorialsModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface STAdvertorialsDetailVC : DDBaseVC
 
-@property (nonatomic, strong) DDFootstripObj *model;
+@property (nonatomic, strong) STAdvertorialsModel *model;
 
 @end
 

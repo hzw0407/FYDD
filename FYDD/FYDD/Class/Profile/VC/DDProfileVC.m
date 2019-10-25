@@ -80,46 +80,49 @@
         [self cw_pushViewController:vc];
     }else if (sender.tag == 1) {
         // 下线/ 认证
-        switch ([DDUserManager share].user.userType) {
-            case DDUserTypeOnline:{
-                // 如果个人认证认证
-                if ([DDUserManager share].user.realAuthentication != 1){
-                    DDAuthenticationIdCardVcView * vc = [DDAuthenticationIdCardVcView new];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [DDHub hub:@"未实名认证，请先认证" view:vc.view];
-                    });
-                    [self cw_pushViewController:vc];
-                }else {
-                    if ([DDUserManager share].user.isAuth == 1) {
-                        DDLADetailVc * vc = [DDLADetailVc new];
-                        vc.userType = DDUserTypeOnline;
-                        vc.hidesBottomBarWhenPushed = YES;
-                        [self cw_pushViewController:vc];
-                    }else {
-                        DDAuthenVc * vc = [DDAuthenVc new];
-                        vc.hidesBottomBarWhenPushed = YES;
-                        [self cw_pushViewController:vc];
-                    }
-            
-                }
-                
-            }break;
-                
-            case DDUserTypeSystem:{
-                DDUserComanyInfoVC * vc = [DDUserComanyInfoVC new];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self cw_pushViewController:vc];
-            }break;
-                
-            case DDUserTypePromoter:{
-                DDJuniorVC * vc = [DDJuniorVC new];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self cw_pushViewController:vc];
-            }break;
-            default:
-                break;
-        }
+//        switch ([DDUserManager share].user.userType) {
+//            case DDUserTypeOnline:{
+//                // 如果个人认证认证
+//                if ([DDUserManager share].user.realAuthentication != 1){
+//                    DDAuthenticationIdCardVcView * vc = [DDAuthenticationIdCardVcView new];
+//                    vc.hidesBottomBarWhenPushed = YES;
+//                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                        [DDHub hub:@"未实名认证，请先认证" view:vc.view];
+//                    });
+//                    [self cw_pushViewController:vc];
+//                }else {
+//                    if ([DDUserManager share].user.isAuth == 1) {
+//                        DDLADetailVc * vc = [DDLADetailVc new];
+//                        vc.userType = DDUserTypeOnline;
+//                        vc.hidesBottomBarWhenPushed = YES;
+//                        [self cw_pushViewController:vc];
+//                    }else {
+//                        DDAuthenVc * vc = [DDAuthenVc new];
+//                        vc.hidesBottomBarWhenPushed = YES;
+//                        [self cw_pushViewController:vc];
+//                    }
+//
+//                }
+//
+//            }break;
+//
+//            case DDUserTypeSystem:{
+//                DDUserComanyInfoVC * vc = [DDUserComanyInfoVC new];
+//                vc.hidesBottomBarWhenPushed = YES;
+//                [self cw_pushViewController:vc];
+//            }break;
+//
+//            case DDUserTypePromoter:{
+//                DDJuniorVC * vc = [DDJuniorVC new];
+//                vc.hidesBottomBarWhenPushed = YES;
+//                [self cw_pushViewController:vc];
+//            }break;
+//            default:
+//                break;
+//        }
+        DDUserComanyInfoVC * vc = [DDUserComanyInfoVC new];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self cw_pushViewController:vc];
     }else if (sender.tag == 2) {
         // 钱包
         DDWalletVC * vc = [DDWalletVC new];

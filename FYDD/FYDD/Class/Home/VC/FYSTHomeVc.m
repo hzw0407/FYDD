@@ -9,8 +9,6 @@
 #import "FYSTHomeVc.h"
 #import "FYSTBannerCell.h"
 #import <MJRefresh/MJRefresh.h>
-#import "FYSTNoticeCell.h"
-#import "FYSTFootprintCell.h"
 #import "FYSTHomeUserView.h"
 #import "FYSTRightItemMenuView.h"
 #import "DDMessageVC.h"
@@ -36,15 +34,16 @@
 #import "STIdentityDetailVC.h"
 #import "STAdvertorialsCell.h"
 #import "STAdvertorialsDetailVC.h"
+#import "STAdvertorialsModel.h"
 
 @interface FYSTHomeVc ()
 <UITableViewDelegate,
 UITableViewDataSource,
 FYSTBannerCellDelegate> {
-    NSArray * _footPrints;
-    NSArray * _products;
-    NSArray * _messages;
-    NSArray * _banners;
+    NSArray * _footPrints;//软文数据
+    NSArray * _products;//板块数据
+    NSArray * _messages;//公告数据
+    NSArray * _banners;//广告图数据
 }
 @property (nonatomic,strong) UITableView * tableView;
 @property (nonatomic,strong) FYSTHomeUserView * userIconView;//导航左边按钮
@@ -81,7 +80,6 @@ FYSTBannerCellDelegate> {
     
     [self getPlateData];
     [self getBannerData];
-    [self getFootStrpts];
     
     //注册手势 滑出左边控制器
     __weak typeof(self)weakSelf = self;
@@ -107,7 +105,7 @@ FYSTBannerCellDelegate> {
     }
 //    [self.menuView reloadView];
     [self getMessageData];
-//    [self getFootStrpts];
+    [self getAdvertorialsLisy];
     
     //重写导航栏颜色
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:41 / 255.0 green:150 / 255.0 blue:235 /255.0 alpha:1.0];
@@ -128,7 +126,7 @@ FYSTBannerCellDelegate> {
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.tintColor = [DDAppManager share].navigationTintColor;
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSForegroundColorAttributeName : UIColorHex(0x193750),
                                                                       }];
@@ -208,28 +206,25 @@ FYSTBannerCellDelegate> {
 }
 
 //获取软文列表
-- (void)getFootStrpts{
-    @weakify(self)
-    [[DDAppNetwork share] get:YES
-                          url:@"http://47.107.166.105:8004/footprint/inexPageList"
-                   parameters:@{@"page" : @(1) , @"size" : @(20),@"token":
-                                    yyTrimNullText([DDUserManager share].user.token)}
-                   completion:^(NSInteger code, NSString *message, id data) {
-                       @strongify(self)
-                       if(!self) return ;
-                       if (code == 200 ){
-                           NSArray * lists = data[@"list"];
-                           NSMutableArray * dataList = @[].mutableCopy;
-                           if (lists && [lists isKindOfClass:[NSArray class]]) {
-                               for (NSDictionary * dic in lists) {
-                                   DDFootstripObj * footprintModel = [DDFootstripObj modelWithJSON:dic];
-                                   [dataList addObject:footprintModel];
-                               }
-                           }
-                           self->_footPrints = dataList;
-                           [self.tableView reloadData];
-                           [self.tableView.mj_header endRefreshing];
-                       }
+- (void)getAdvertorialsLisy {
+    STHttpRequestManager *manager = [STHttpRequestManager shareManager];
+    [manager addParameterWithKey:@"type" withValue:@"1"];
+    [manager requestDataWithUrl:[NSString stringWithFormat:@"%@:%@%@",DDAPP_URL,DDPort7001,ADVERTORIALSLIST] withType:RequestGet withSuccess:^(NSDictionary * _Nonnull dict) {
+        if (dict && [dict[@"code"] integerValue] == 200) {
+            NSArray * lists = dict[@"data"][@"list"];
+            NSMutableArray * dataList = @[].mutableCopy;
+            if (lists && [lists isKindOfClass:[NSArray class]]) {
+                for (NSDictionary * dic in lists) {
+                    STAdvertorialsModel * model = [STAdvertorialsModel modelWithJSON:dic];
+                    [dataList addObject:model];
+                }
+            }
+            self->_footPrints = dataList;
+            [self.tableView reloadData];
+            [self.tableView.mj_header endRefreshing];
+        }
+    } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+        
     }];
 }
 
@@ -329,20 +324,6 @@ FYSTBannerCellDelegate> {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
-//        FYSTBannerCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FYSTBannerCellId"];
-//        cell.banners = _banners;
-//        @weakify(self)
-//        cell.bannerDidClick = ^(NSInteger index) {
-//            @strongify(self)
-//            if (!self) return ;
-//            DDBannerModel * bannerModel = self->_banners[index];
-//            DDWebVC  * webvcx = [DDWebVC new];
-//            webvcx.url = bannerModel.url;
-//            webvcx.title = bannerModel.title;
-//            webvcx.hidesBottomBarWhenPushed = YES;
-//            [self.navigationController pushViewController:webvcx animated:YES];
-//        };
-//        return cell;
         FYSTBannerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FYSTBannerCellId" forIndexPath:indexPath];
         if (cell == nil) {
             cell = [[FYSTBannerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FYSTBannerCellId"];
@@ -365,15 +346,12 @@ FYSTBannerCellDelegate> {
         };
         return cell;
     }else {
-//        FYSTFootprintCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FYSTFootprintCellId"];
-//        cell.footprintModel = _footPrints[indexPath.row - 2];
-//        return cell;
         STAdvertorialsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         if (cell == nil) {
             cell = [[STAdvertorialsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        DDFootstripObj *model = _footPrints[indexPath.row - 1];
+        STAdvertorialsModel *model = _footPrints[indexPath.row - 1];
         [cell refreshWithModel:model];
         return cell;
     }
@@ -386,15 +364,9 @@ FYSTBannerCellDelegate> {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row > 0) {
-//        DDTradeDetailVc * vc = [DDTradeDetailVc new];
-//        DDFootstripObj * footprint = _footPrints[indexPath.row - 1];
-//        vc.title = footprint.title;
-//        vc.footstripObj = footprint;
-//        vc.hidesBottomBarWhenPushed = YES;
-//        [self.navigationController pushViewController:vc animated:YES];
         STAdvertorialsDetailVC *vc = [[STAdvertorialsDetailVC alloc] init];
-        DDFootstripObj *footprint = _footPrints[indexPath.row - 1];
-        vc.model = footprint;
+        STAdvertorialsModel *model = _footPrints[indexPath.row - 1];
+        vc.model = model;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -521,7 +493,7 @@ FYSTBannerCellDelegate> {
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             @strongify(self)
             if (!self) return ;
-            [self getFootStrpts];
+            [self getAdvertorialsLisy];
         }];
     }
     return _tableView;

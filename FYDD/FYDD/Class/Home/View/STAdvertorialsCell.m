@@ -83,24 +83,23 @@
     }];
 }
 
-- (void)refreshWithModel:(DDFootstripObj *)model {
-    if (model.title == nil) {
-        self.browseImageView.hidden = YES;
-    }else {
-        self.browseImageView.hidden = NO;
-        self.titleLabel.text = model.title;
-        self.contentLabel.text = model.contents;
-        NSDateFormatter * formater = [NSDateFormatter new];
-        formater.dateFormat = @"yyyy-MM-ddTHH:mm:ss";
-        model.updateTime = [model.updateTime stringByReplacingOccurrencesOfString:@".000+0000" withString:@""];
-        if ([model.updateTime componentsSeparatedByString:@"T"].count > 0) {
-            self.timeLabel.text = [NSString stringWithFormat:@"发布时间:%@",[model.updateTime componentsSeparatedByString:@"T"][0]];
-        }
-        self.browseLabel.text = [NSString stringWithFormat:@"%zd",model.commentNumber];
-        if (model.showImage) {
-        [self.articleImageView sd_setImageWithURL:[NSURL URLWithString:model.showImage] placeholderImage:[UIImage imageNamed:@"index_place"]];
-        }
-    }
+- (void)refreshWithModel:(STAdvertorialsModel *)model {
+    self.browseImageView.hidden = NO;
+            self.titleLabel.text = model.title;
+            if (model.standby1) {
+                self.contentLabel.text = model.standby1;
+            }
+    //        NSDateFormatter * formater = [NSDateFormatter new];
+    //        formater.dateFormat = @"yyyy-MM-ddTHH:mm:ss";
+    //        model.updateTime = [model.updateTime stringByReplacingOccurrencesOfString:@".000+0000" withString:@""];
+    //        if ([model.updateTime componentsSeparatedByString:@"T"].count > 0) {
+    //            self.timeLabel.text = [NSString stringWithFormat:@"发布时间:%@",[model.updateTime componentsSeparatedByString:@"T"][0]];
+    //        }
+            self.timeLabel.text = [NSString stringWithFormat:@"发布时间:%@",[STTool getTimeFromTimestamp:model.createTimeF]];
+            self.browseLabel.text = [NSString stringWithFormat:@"%zd",model.browserNum];
+            if (model.titleImg) {
+            [self.articleImageView sd_setImageWithURL:[NSURL URLWithString:model.titleImg] placeholderImage:[UIImage imageNamed:@"index_place"]];
+            }
 }
 
 #pragma mark - ClickMethod
