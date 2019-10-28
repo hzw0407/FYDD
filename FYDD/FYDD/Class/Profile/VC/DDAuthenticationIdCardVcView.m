@@ -22,94 +22,56 @@
 #import "DDIdCardInfoVC.h"
 #import <Masonry.h>
 
-@interface DDAuthenticationIdCardVcView (){
-    NSInteger _currentIdCard;
-    NSString *_idcardFontURL;// 身份证正面
-    NSString *_idcardBackURL;// 身份背面
-    NSString *_identificationCardNumber;// 身份证号码
-    NSString *_expiryDate; // 有效期
-    NSString *_name;// 名字
-    NSString *_sex;
-    NSString * _address;
-}
+@interface DDAuthenticationIdCardVcView ()<DDIDCardViewDelegate>
+
 @property (nonatomic,strong) DDIDCardView* idCardView;
 @property (nonatomic,strong) UIViewController* idCardVC;
+@property (nonatomic, assign) NSInteger currentIdCard;//0当前识别的是正面 1是背面
+@property (nonatomic, copy) NSString *idcardFontURL;//正面照片
+@property (nonatomic, copy) NSString *idcardBackURL;//背面照片
+@property (nonatomic, copy) NSString *identificationCardNumber;//身份证号码
+@property (nonatomic, copy) NSString *name;//名字
+@property (nonatomic, copy) NSString *expiryDate;//有效期
+@property (nonatomic, copy) NSString *sex;//性别
+@property (nonatomic, copy) NSString *address;//地址
+
 @end
 
 @implementation DDAuthenticationIdCardVcView
-
+#pragma mark - lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.idCardView];
     [self.idCardView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.mas_equalTo(@0);
-        make.top.mas_equalTo(@-49);
-        make.height.mas_equalTo(@410);
+        make.left.right.top.bottom.equalTo(self.view).offset(0);
     }];
-    self.title = @"实名认证";
+    self.title = @"个人认证";
     self.view.backgroundColor = UIColorHex(0xf5f5f5);
 }
-// 身份证认证
-- (DDIDCardView *)idCardView{
-    if (!_idCardView) {
-        _idCardView = [DDIDCardView createViewFromNib];
-        if (iPhoneXAfter) {
-            _idCardView.height = 428;
-        }
-        @weakify(self)
-        _idCardView.event = ^(NSInteger index) {
-            @strongify(self)
-            if (!self) return ;
-            // 认证
-            if (index == 2) {
-                [self applyIdentificationCardVerfiyRequest];
-            }else {
-                self->_currentIdCard = index;
-                // 百度Ai
-                @weakify(self)
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
-                               
-                               dispatch_get_main_queue(), ^{
-                                   @strongify(self)
-                                   if (!self.idCardVC){
-                                       @weakify(self)
-                                       self.idCardVC = [AipCaptureCardVC ViewControllerWithCardType:index == 0 ? CardTypeLocalIdCardFont :CardTypeLocalIdCardBack   andImageHandler:^(UIImage *image) {
-                                           @strongify(self)
-                                           [self detectIdCardFrontFromImage:image];
-                                       }];
-                                   }
-                                   [self presentViewController: self.idCardVC animated:YES completion:^{}];
-                               });
-                
-            }
-        };
-    }
-    return _idCardView;
-}
 
+#pragma mark - CustomMethod
+//申请认证
 - (void)applyIdentificationCardVerfiyRequest{
-    if (_idcardFontURL.length == 0) {
+    if (self.idcardFontURL.length == 0) {
         [DDHub hub:@"请添加身份证正面照" view:self.view];
-        [self.idCardView setIconImage1:nil];
         return;
     }
-    if (_idcardBackURL.length == 0) {
+    if (self.idcardBackURL.length == 0) {
         [DDHub hub:@"请添加身份证反面照" view:self.view];
-        [self.idCardView setIconImage2:nil];
         return;
     }
-    if (_name.length == 0 || _identificationCardNumber.length == 0) {
+    if (self.name.length == 0 || self.identificationCardNumber.length == 0 || self.expiryDate.length == 0) {
         [DDHub hub:@"身份证验证失败，请重新添加认证" view:self.view];
         return;
     }
     NSDateFormatter * formate = [[NSDateFormatter alloc] init];
     formate.dateFormat = @"yyyyMMdd";
-    NSDate * date = [formate dateFromString:_expiryDate];
+    NSDate * date = [formate dateFromString:self.expiryDate];
     
     NSDateFormatter * formate1 = [[NSDateFormatter alloc] init];
     formate1.dateFormat = @"yyyy-MM-dd";
     
-    NSString * body = [NSString stringWithFormat:@"{\"name\" : \"%@\" , \"identificationCardNumber\" : \"%@\" , \"positiveImage\" : \"%@\" , \"sideImage\" : \"%@\", \"expiryDate\" : \"%@\",\"sex\" : \"%@\",\"address\" : \"%@\"}",_name,_identificationCardNumber,_idcardFontURL,_idcardBackURL,[formate1 stringFromDate:date],_sex,_address];
+    NSString * body = [NSString stringWithFormat:@"{\"name\" : \"%@\" , \"identificationCardNumber\" : \"%@\" , \"positiveImage\" : \"%@\" , \"sideImage\" : \"%@\", \"expiryDate\" : \"%@\",\"sex\" : \"%@\",\"address\" : \"%@\"}",self.name,self.identificationCardNumber,self.idcardFontURL,self.idcardBackURL,[formate1 stringFromDate:date],self.sex,self.address];
     
     @weakify(self)
     [[DDAppNetwork share] get:NO
@@ -126,12 +88,11 @@
                            [DDHub hub:@"申请成功" view:self.view];
                            [self.navigationController popViewControllerAnimated:YES];
                        }else {
-                           [DDHub hub:@"申请失败！" view:self.view];
+                           [DDHub hub:message view:self.view];
                        }
                    }];
     
 }
-
 
 - (void)detectIdCardFrontFromImage:(UIImage *)image{
     @weakify(self)
@@ -158,15 +119,16 @@
 - (void)detectIdCardFinish:(id)result image:(UIImage *)image{
     @weakify(self)
 //    [self.idCardVC dismissViewControllerAnimated:YES completion:nil];
-//    self.idCardVC = nil;
+    self.idCardVC = nil;
     if ([result isKindOfClass:[NSDictionary class]]) {
-        if(self->_currentIdCard == 0) {
-            self->_name = [result valueForKeyPath:@"words_result.姓名.words"];
-            self->_identificationCardNumber = [result valueForKeyPath:@"words_result.公民身份号码.words"];
-            self->_sex = [result valueForKeyPath:@"words_result.性别.words"];
-            self->_address = [result valueForKeyPath:@"words_result.地址.words"];
+        if(self.currentIdCard == 0) {
+            self.name = [result valueForKeyPath:@"words_result.姓名.words"];
+            self.identificationCardNumber = [result valueForKeyPath:@"words_result.公民身份号码.words"];
+            self.sex = [result valueForKeyPath:@"words_result.性别.words"];
+            self.address = [result valueForKeyPath:@"words_result.地址.words"];
         }else {
-            self->_expiryDate = [result valueForKeyPath:@"words_result.失效日期.words"];
+//            self->_expiryDate = [result valueForKeyPath:@"words_result.失效日期.words"];
+            self.expiryDate = [result valueForKeyPath:@"words_result.失效日期.words"];
         }
     }
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -175,14 +137,24 @@
         [self uploadImage:image completion:^(bool suc, NSString *url) {
             if (suc) {
                 [DDHub dismiss:self.view];
-                if (self->_currentIdCard == 0){
-                    [self.idCardView setIconImage1:url];
-                    self.idCardView.cardName.text = self->_name;
-                    self.idCardView.cardNoLb.text = self->_identificationCardNumber;
-                    self->_idcardFontURL = url;
+                if (self.currentIdCard == 0){
+                    NSDictionary *infoDic = @{@"name" : self.name,
+                                              @"number" : self.identificationCardNumber,
+                                              @"expiryDate" : self.expiryDate ? self.expiryDate : @"",
+                                              @"url1" : url,
+                                              @"url2" : self.idcardBackURL ? self.idcardBackURL : @"",
+                    };
+                    [self.idCardView refrehsInfoWithDic:infoDic];
+                    self.idcardFontURL = url;
                 }else {
-                    [self->_idCardView setIconImage2:url];
-                    self->_idcardBackURL = url;
+                    NSDictionary *infoDic = @{@"name" : self.name ? self.name : @"",
+                                              @"number" : self.identificationCardNumber ? self.identificationCardNumber : @"",
+                                              @"expiryDate" : self.expiryDate,
+                                              @"url1" : self.idcardFontURL ? self.idcardFontURL : @"",
+                                              @"url2" : url,
+                    };
+                    [self.idCardView refrehsInfoWithDic:infoDic];
+                    self.idcardBackURL = url;
                 }
             }else {
                 [DDHub hub:@"上传图片失败！" view:self.view];
@@ -212,6 +184,51 @@
                         }
                     }];
 }
+
+#pragma mark - ClickMethod
+
+#pragma mark - SystemDelegate
+
+#pragma mark - CustomDelegate
+
+#pragma mark - DDIDCardViewDelegate
+//点击功能
+- (void)clickIndex:(NSInteger)index {
+    if (index == 0 || index == 1) {
+        //扫描人像和国徽
+        self.currentIdCard = index;
+        @weakify(self)
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
+        
+                                       dispatch_get_main_queue(), ^{
+                                           @strongify(self)
+                                           if (!self.idCardVC){
+                                               @weakify(self)
+                                               self.idCardVC = [AipCaptureCardVC ViewControllerWithCardType:index == 0 ? CardTypeLocalIdCardFont :CardTypeLocalIdCardBack   andImageHandler:^(UIImage *image) {
+                                                   @strongify(self)
+                                                   [self detectIdCardFrontFromImage:image];
+                                               }];
+                                           }
+                                           [self presentViewController: self.idCardVC animated:YES completion:^{}];
+                                       });
+    }else {
+        //申请认证
+        [self applyIdentificationCardVerfiyRequest];
+    }
+}
+
+#pragma mark - GetterAndSetter
+- (DDIDCardView *)idCardView {
+    if (!_idCardView) {
+        _idCardView = [[DDIDCardView alloc] initWithFrame:CGRectZero];
+        _idCardView.delegate = self;
+    }
+    return _idCardView;
+}
+
+
+
+
 
 
 @end

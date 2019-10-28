@@ -127,7 +127,6 @@
 		04A76B21223CDD2F007976C3 /* DDBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A76B1F223CDD2F007976C3 /* DDBaseCell.m */; };
 		04A76B22223CDD2F007976C3 /* DDBaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A76B20223CDD2F007976C3 /* DDBaseCell.xib */; };
 		04A76B25223CE9E3007976C3 /* DDIDCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A76B24223CE9E3007976C3 /* DDIDCardView.m */; };
-		04A76B27223CEA0D007976C3 /* DDIDCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A76B26223CEA0D007976C3 /* DDIDCardView.xib */; };
 		04A77E5D224B228800EC4A24 /* BRAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A77E5C224B228800EC4A24 /* BRAddressModel.m */; };
 		04A77E61224B4D2D00EC4A24 /* AipBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A77E5E224B4D2C00EC4A24 /* AipBase.framework */; };
 		04A77E62224B4D2D00EC4A24 /* AipBase.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04A77E5E224B4D2C00EC4A24 /* AipBase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -315,7 +314,6 @@
 		35944FB423336A5900C714DE /* DDMyInteractVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35944FB223336A5900C714DE /* DDMyInteractVc.xib */; };
 		35944FB72333D26500C714DE /* DDBannerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35944FB62333D26500C714DE /* DDBannerModel.m */; };
 		359EC06823137745005D2A9A /* DDAuthenVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 359EC06623137745005D2A9A /* DDAuthenVc.m */; };
-		359EC06923137745005D2A9A /* DDAuthenVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359EC06723137745005D2A9A /* DDAuthenVc.xib */; };
 		35C7B64B233D3C2C000268A6 /* ZFTableData.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C7B64A233D3C2C000268A6 /* ZFTableData.m */; };
 		35C7B661233D3F86000268A6 /* XLVideoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C7B64E233D3F86000268A6 /* XLVideoItem.m */; };
 		35C7B662233D3F86000268A6 /* XLVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C7B651233D3F86000268A6 /* XLVideoPlayer.m */; };
@@ -669,7 +667,6 @@
 		04A76B20223CDD2F007976C3 /* DDBaseCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DDBaseCell.xib; sourceTree = "<group>"; };
 		04A76B23223CE9E3007976C3 /* DDIDCardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDIDCardView.h; sourceTree = "<group>"; };
 		04A76B24223CE9E3007976C3 /* DDIDCardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDIDCardView.m; sourceTree = "<group>"; };
-		04A76B26223CEA0D007976C3 /* DDIDCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DDIDCardView.xib; sourceTree = "<group>"; };
 		04A77E5C224B228800EC4A24 /* BRAddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRAddressModel.m; sourceTree = "<group>"; };
 		04A77E5E224B4D2C00EC4A24 /* AipBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AipBase.framework; sourceTree = "<group>"; };
 		04A77E5F224B4D2C00EC4A24 /* AipOcrSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AipOcrSdk.framework; sourceTree = "<group>"; };
@@ -967,7 +964,6 @@
 		35944FB62333D26500C714DE /* DDBannerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDBannerModel.m; sourceTree = "<group>"; };
 		359EC06523137745005D2A9A /* DDAuthenVc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDAuthenVc.h; sourceTree = "<group>"; };
 		359EC06623137745005D2A9A /* DDAuthenVc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDAuthenVc.m; sourceTree = "<group>"; };
-		359EC06723137745005D2A9A /* DDAuthenVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DDAuthenVc.xib; sourceTree = "<group>"; };
 		35C7B649233D3C2C000268A6 /* ZFTableData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFTableData.h; sourceTree = "<group>"; };
 		35C7B64A233D3C2C000268A6 /* ZFTableData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFTableData.m; sourceTree = "<group>"; };
 		35C7B64E233D3F86000268A6 /* XLVideoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLVideoItem.m; sourceTree = "<group>"; };
@@ -1498,7 +1494,6 @@
 				04A76B20223CDD2F007976C3 /* DDBaseCell.xib */,
 				04A76B23223CE9E3007976C3 /* DDIDCardView.h */,
 				04A76B24223CE9E3007976C3 /* DDIDCardView.m */,
-				04A76B26223CEA0D007976C3 /* DDIDCardView.xib */,
 				045050A0223D003800F0BC99 /* DDWalletTopCell.h */,
 				045050A1223D003800F0BC99 /* DDWalletTopCell.m */,
 				045050A2223D003800F0BC99 /* DDWalletTopCell.xib */,
@@ -2039,7 +2034,6 @@
 			children = (
 				359EC06523137745005D2A9A /* DDAuthenVc.h */,
 				359EC06623137745005D2A9A /* DDAuthenVc.m */,
-				359EC06723137745005D2A9A /* DDAuthenVc.xib */,
 				35F37DE2231E590D00AB4CA7 /* DDOnlineStudyVc.h */,
 				35F37DE3231E590D00AB4CA7 /* DDOnlineStudyVc.m */,
 				35F37DED231E968A00AB4CA7 /* DDWebContentVc.h */,
@@ -2640,7 +2634,6 @@
 				3540DD2723262E3200BF6B80 /* DDCarryUserCell2.xib in Resources */,
 				04F9CC50223636270020B619 /* DDInputCell.xib in Resources */,
 				35DEEFE823255AD9000D92E3 /* DDOrderStepMenuView.xib in Resources */,
-				04A76B27223CEA0D007976C3 /* DDIDCardView.xib in Resources */,
 				35EB135D233D21F200E17086 /* DDTraceSubCommentCell.xib in Resources */,
 				04EE1A10226180A100411BC2 /* DDCommentCommitCell.xib in Resources */,
 				35F3A6892325328400F8D3AF /* DDOrderImplementationStepCell.xib in Resources */,
@@ -2694,7 +2687,6 @@
 				351DC1872329FD0100A8551B /* DDTraceCommentCell.xib in Resources */,
 				0491A21722697964005C1B81 /* DDBankListView.xib in Resources */,
 				04688969224328F8009748F9 /* DDClerkVerifyVC.xib in Resources */,
-				359EC06923137745005D2A9A /* DDAuthenVc.xib in Resources */,
 				04F9CC5B22363EE30020B619 /* DDUserAgreeInfoCell.xib in Resources */,
 				041775EC2238AC80001CF742 /* DDOrderPayInfoCell.xib in Resources */,
 				35E136442322503C00C55A80 /* DDOrderCarryView.xib in Resources */,

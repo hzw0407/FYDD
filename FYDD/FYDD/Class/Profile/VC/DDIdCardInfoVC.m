@@ -13,7 +13,6 @@
 #import "DDBaseCell.h"
 #import "BRStringPickerView.h"
 #import "UIView+TYAlertView.h"
-#import "DDIDCardView.h"
 #import "DDAlertSheetView.h"
 #import "BRAddressPickerView.h"
 #import <UIImage+YYAdd.h>
@@ -28,7 +27,6 @@
     NSString *_sex;
 }
 @property (nonatomic,strong) UITableView * tableView;
-@property (nonatomic,strong) DDIDCardView* idCardView;
 @property (nonatomic,strong) UIViewController* idCardVC;
 @end
 

@@ -8,20 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol DDIDCardViewDelegate <NSObject>
 
+//点击功能
+- (void)clickIndex:(NSInteger)index;
+
+@end
 
 @interface DDIDCardView : UIView
-@property (weak, nonatomic) IBOutlet UILabel *cardName;
-@property (weak, nonatomic) IBOutlet UILabel *cardNoLb;
-@property (copy , nonatomic) DDcommitButtonValueBlock  event;
 
+@property (nonatomic, weak) id<DDIDCardViewDelegate>delegate;
 
-@property (weak, nonatomic) IBOutlet UIButton *iconView1;
-@property (weak, nonatomic) IBOutlet UIButton *iconView2;
-@property (weak, nonatomic) IBOutlet UILabel *iconLb1;
-@property (weak, nonatomic) IBOutlet UILabel *iconLb2;
+//刷新数据
+- (void)refrehsInfoWithDic:(NSDictionary *)dic;
 
-- (void)setIconImage1:(NSString  *)url;
-- (void)setIconImage2:(NSString *)url;
 @end
 
