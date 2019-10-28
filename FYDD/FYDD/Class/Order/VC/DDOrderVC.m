@@ -7,7 +7,6 @@
 //
 
 #import "DDOrderVC.h"
-#import "DDClerkTopCell.h"
 #import "DDClerkOrderCell.h"
 #import "OrderDetailVC.h"
 #import <MJRefresh.h>
@@ -34,7 +33,7 @@
 @end
 
 @implementation DDOrderVC
-
+#pragma mark - lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
@@ -94,6 +93,49 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self setupNavigationBar];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self setupNavigationBar];
+    self->_pageDict[@(self->_currentType)] = @(1);
+    [self getOrderListData];
+//    [self getOnlineUserInfo];
+    if (self.type == 2) {
+        //代理方
+        [self getExtensionInfo];
+    }else if (self.type == 3) {
+        //实施方
+        [self getOnlineInfo];
+    }
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    self.navigationController.navigationBar.shadowImage = nil;
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor = [DDAppManager share].navigationTintColor;
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+                                                                        NSForegroundColorAttributeName : UIColorHex(0x193750),
+                                                                      }];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:true];
+}
+
+#pragma mark - CustomMethod
+- (void)setupNavigationBar{
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.barTintColor = [DDAppManager share].appTintColor;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+                                                                      NSForegroundColorAttributeName : [UIColor whiteColor],
+                                                                      }];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:true];
+}
+
+//获取订单列表数据
 - (void)getOrderListData{
     id pageObject = _pageDict[@(_currentType)];
     if (!pageObject) {
@@ -133,74 +175,80 @@
                    }];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    [self setupNavigationBar];
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self setupNavigationBar];
-    self->_pageDict[@(self->_currentType)] = @(1);
-    [self getOrderListData];
-    [self getOnlineUserInfo];
-    
-}
-
-- (void)setupNavigationBar{
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.barTintColor = [DDAppManager share].appTintColor;
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{
-                                                                      NSForegroundColorAttributeName : [UIColor whiteColor],
-                                                                      }];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:true];
-}
-
-- (void)viewWillDisappear:(BOOL)animated{
-    self.navigationController.navigationBar.shadowImage = nil;
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.tintColor = [DDAppManager share].navigationTintColor;
-    [self.navigationController.navigationBar setTitleTextAttributes:@{
-                                                                        NSForegroundColorAttributeName : UIColorHex(0x193750),
-                                                                      }];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:true];
-}
-
-// 获取实施方信息
-- (void)getOnlineUserInfo{
+//获取代理方头部信息
+- (void)getExtensionInfo {
     @weakify(self)
     [[DDAppNetwork share] get:YES
-                         path:[NSString stringWithFormat:@"/uas/user/online/getonlineInfoInOrder?token=%@", [DDUserManager share].user.token]
-                         body:@""
-                   completion:^(NSInteger code, NSString *message, NSDictionary * data) {
-                       @strongify(self)
-                       if (!self) return ;
-                       if (code == 200) {
-                           self->_user = [DDOrderCheckUser modelWithJSON:data];
-//                           if ([DDUserManager share].user.userType == DDUserTypeOnline) {
-//                               self.carryView.checkUser = self->_user;
-//                           }
-                           if (self.type == 3) {
-                               //实施方
-                               self.carryView.checkUser = self->_user;
-                           }
-                       }
-                   }];
-    
-    [[DDAppNetwork share] get:YES
-                         path:[NSString stringWithFormat:@"/uas/user/extension/getExtensionInOrder?token=%@", [DDUserManager share].user.token]
-                         body:@""
-                   completion:^(NSInteger code, NSString *message, NSDictionary * data) {
-                       @strongify(self)
-                       if (!self) return ;
-                       if (code == 200) {
-                           self->_extensionUser = [DDOrderExtensionUser modelWithJSON:data];
-                           self.carryView.extensionUser = self->_extensionUser;
-                       }
-                   }];
+          path:[NSString stringWithFormat:@"/uas/user/extension/getExtensionInOrder?token=%@", [DDUserManager share].user.token]
+          body:@""
+    completion:^(NSInteger code, NSString *message, NSDictionary * data) {
+        @strongify(self)
+        if (!self) return ;
+        if (code == 200) {
+            self->_extensionUser = [DDOrderExtensionUser modelWithJSON:data];
+            self.carryView.extensionUser = self->_extensionUser;
+        }
+    }];
 }
 
+//获取实施方头部信息
+- (void)getOnlineInfo {
+    @weakify(self)
+        [[DDAppNetwork share] get:YES
+                             path:[NSString stringWithFormat:@"/uas/user/online/getonlineInfoInOrder?token=%@", [DDUserManager share].user.token]
+                             body:@""
+                       completion:^(NSInteger code, NSString *message, NSDictionary * data) {
+                           @strongify(self)
+                           if (!self) return ;
+                           if (code == 200) {
+                               self->_user = [DDOrderCheckUser modelWithJSON:data];
+                               self.carryView.checkUser = self->_user;
+                           }
+                       }];
+}
+
+#pragma mark - ClickMethod
+
+#pragma mark - SystemDelegate
+
+#pragma mark - UITableViewDelegate,UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [self getDataList].count;
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    DDClerkOrderCell * cell = [tableView dequeueReusableCellWithIdentifier:@"DDClerkOrderCellId"];
+    cell.info = [self getDataList][indexPath.row];
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 240;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    DDOrderInfo * info = [self getDataList][indexPath.row];
+    if ([info.orderStatus isEqualToString:@"001"]){
+        DDProductNextOrderVc * vc = [DDProductNextOrderVc new];
+        vc.orderNumber = info.orderNumber;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else {
+        DDOrderDetailVc * vc = [DDOrderDetailVc new];
+        vc.orderId = info.orderNumber;
+        vc.title = @"订单详情";
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+
+}
+
+#pragma mark - CustomDelegate
+
+#pragma mark - GetterAndSetter
 - (UITableView *)tableView{
     if (!_tableView){
         _tableView = [[UITableView alloc] init];
@@ -209,7 +257,6 @@
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.backgroundColor = UIColorHex(0xF3F4F6);
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [_tableView registerNib:[UINib nibWithNibName:@"DDClerkTopCell" bundle:nil] forCellReuseIdentifier:@"DDClerkTopCellId"];
         [_tableView registerNib:[UINib nibWithNibName:@"DDClerkOrderCell" bundle:nil] forCellReuseIdentifier:@"DDClerkOrderCellId"];
         @weakify(self)
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
@@ -268,41 +315,6 @@
     NSArray * cacheList = self->_datas[@(self->_currentType)];
     if (!cacheList) return @[];
     return cacheList;
-}
-
-#pragma mark - UITableViewDelegate,UITableViewDataSource
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self getDataList].count;
-}
-
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    DDClerkOrderCell * cell = [tableView dequeueReusableCellWithIdentifier:@"DDClerkOrderCellId"];
-    cell.info = [self getDataList][indexPath.row];
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 240;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    DDOrderInfo * info = [self getDataList][indexPath.row];
-    if ([info.orderStatus isEqualToString:@"001"]){
-        DDProductNextOrderVc * vc = [DDProductNextOrderVc new];
-        vc.orderNumber = info.orderNumber;
-        [self.navigationController pushViewController:vc animated:YES];
-    }else {
-        DDOrderDetailVc * vc = [DDOrderDetailVc new];
-        vc.orderId = info.orderNumber;
-        vc.title = @"订单详情";
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-
 }
 
 @end

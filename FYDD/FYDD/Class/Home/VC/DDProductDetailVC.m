@@ -137,24 +137,24 @@
     // 是否登录
     if ([DDUserManager share].isLogged) {
         
-        // 是否实名认证
-        if ([DDUserManager share].user.realAuthentication != 1) {
-            DDAuthenticationIdCardVcView * vc = [DDAuthenticationIdCardVcView new];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [DDHub hub:@"未实名认证，请先认证" view:vc.view];
-            });
-            [self.navigationController pushViewController:vc animated:YES];
-            return;
-        }
-        // 企业认证
-        if ([DDUserManager share].user.enterpriseAuthentication != 1) {
-            DDUserComanyInfoVC * vc = [DDUserComanyInfoVC new];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [DDHub hub:@"未认证企业，请先认证" view:vc.view];
-            });
-            [self.navigationController pushViewController:vc animated:YES];
-            return;
-        }
+//        // 是否实名认证
+//        if ([DDUserManager share].user.realAuthentication != 1) {
+//            DDAuthenticationIdCardVcView * vc = [DDAuthenticationIdCardVcView new];
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                [DDHub hub:@"未实名认证，请先认证" view:vc.view];
+//            });
+//            [self.navigationController pushViewController:vc animated:YES];
+//            return;
+//        }
+//        // 企业认证
+//        if ([DDUserManager share].user.enterpriseAuthentication != 1) {
+//            DDUserComanyInfoVC * vc = [DDUserComanyInfoVC new];
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                [DDHub hub:@"未认证企业，请先认证" view:vc.view];
+//            });
+//            [self.navigationController pushViewController:vc animated:YES];
+//            return;
+//        }
         // 如果没有上线，填入上线
         if (_detailObj.extensionName.length == 0) {
             [self bindingRewartCode];

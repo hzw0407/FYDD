@@ -33,5 +33,7 @@
 #define ADVERTORIALSLIST @"/t-phase/advertorial/listByType"
 //增加浏览量
 #define ADDBROWSER @"/t-phase/advertorial/addBrowserNum"
+//获取邀请码
+#define GETINVITATIONCODE @"/uas/user/extension/user/extensionAgent/getUserAgentCode"
 
 #endif /* STURLService_h */

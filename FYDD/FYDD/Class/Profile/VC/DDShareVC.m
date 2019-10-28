@@ -36,24 +36,25 @@
 
     
     // 获取推广码
-    @weakify(self)
-    [DDHub hub:self.view];
-    [[DDAppNetwork share] get:YES
-                         path:YYFormat(@"/uas/user/extension/user/extensionAgent/getUserAgentCode?token=", [DDUserManager share].user.token)
-                         body:@""
-                   completion:^(NSInteger code, NSString *message, NSDictionary * data) {
-                       @strongify(self)
-                       if (!self) return ;
-                       [DDHub dismiss:self.view];
-                       if (code == 200) {
-                           self->_extensionCode = data[@"extensionCode"];
-                           self->_extensionURL = data[@"userExtPath"];
-                           self->_shareContent = data[@"shareContent"];
-                           self->_shareTitle = data[@"shareTitle"];
-                           self->_shareImage = data[@"shareImage"];
-                           [self updateUI];
-                       }
-                   }];
+//    @weakify(self)
+//    [DDHub hub:self.view];
+//    [[DDAppNetwork share] get:YES
+//                         path:YYFormat(@"/uas/user/extension/user/extensionAgent/getUserAgentCode?token=", [DDUserManager share].user.token)
+//                         body:@""
+//                   completion:^(NSInteger code, NSString *message, NSDictionary * data) {
+//                       @strongify(self)
+//                       if (!self) return ;
+//                       [DDHub dismiss:self.view];
+//                       if (code == 200) {
+//                           self->_extensionCode = data[@"extensionCode"];
+//                           self->_extensionURL = data[@"userExtPath"];
+//                           self->_shareContent = data[@"shareContent"];
+//                           self->_shareTitle = data[@"shareTitle"];
+//                           self->_shareImage = data[@"shareImage"];
+//                           [self updateUI];
+//                       }
+//                   }];
+    [self getInvitationCode];
     
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longClick)];
     
@@ -62,6 +63,26 @@
     [self.view addGestureRecognizer:longPress];
 }
 
+//获取邀请码
+- (void)getInvitationCode {
+    [DDHub hub:self.view];
+    STHttpRequestManager *manager = [STHttpRequestManager shareManager];
+    [manager addParameterWithKey:@"token" withValue:[DDUserManager share].user.token];
+    [manager requestDataWithUrl:[NSString stringWithFormat:@"%@:%@%@",DDAPP_URL,DDPort7001,GETINVITATIONCODE] withType:RequestGet withSuccess:^(NSDictionary * _Nonnull dict) {
+        [DDHub dismiss:self.view];
+        if (dict && [dict[@"code"] integerValue] == 200) {
+            self->_extensionCode = dict[@"data"][@"extensionCode"];
+            self->_extensionURL = dict[@"data"][@"userExtPath"];
+            self->_shareContent = dict[@"data"][@"shareContent"];
+            self->_shareTitle = dict[@"data"][@"shareTitle"];
+            self->_shareImage = dict[@"data"][@"shareImage"];
+            [self updateUI];
+        }
+    } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+        [DDHub dismiss:self.view];
+        [DDHub hub:error.domain view:self.view];
+    }];
+}
 
 - (void)longClick{
     if (_isLong) return;

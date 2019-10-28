@@ -7,7 +7,6 @@
 //
 
 #import "DDCommentVC.h"
-#import "DDClerkTopCell.h"
 #import "DDClerkOrderCell.h"
 #import "OrderDetailVC.h"
 #import <MJRefresh.h>

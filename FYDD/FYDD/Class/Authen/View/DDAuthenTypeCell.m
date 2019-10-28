@@ -67,6 +67,7 @@
             _iconView.image = [UIImage imageNamed:@"icon_user_type3"];
             if ([DDUserManager share].user.isAuth == -10){
                 _applyButton.hidden = NO;
+                [_applyButton setTitle:@"申请成为实施方" forState:UIControlStateNormal];
             }else if ([DDUserManager share].user.isAuth == 1) {
                 _examinationView.hidden = NO;
                        [_verifyView setBackgroundImage:[UIImage imageNamed:@"icon_change_user3"] forState:UIControlStateNormal];
@@ -91,6 +92,7 @@
             _iconView.image = [UIImage imageNamed:@"icon_user_type2"];
             if ([DDUserManager share].user.isExtensionUser == 0) {
                 _applyButton.hidden = NO;
+                [_applyButton setTitle:@"申请成为代理方" forState:UIControlStateNormal];
             }else if ([DDUserManager share].user.isExtensionUser == 1) {
                 _examinationView.hidden = NO;
                 _verifyView.hidden = NO;

@@ -59,7 +59,7 @@
 
 // 是否有密码了
 @property (nonatomic,assign) NSInteger isFinishPwd;
-// -1申请中，0:未认证，1:已通过;2:认证不通过,-10待申请
+//实名认证 -1申请中，0:未认证，1:已通过;2:认证不通过,-10待申请
 @property (nonatomic,assign) NSInteger isAuth;
 // 代理方推广码
 @property (nonatomic,copy) NSString * contractImgPath;

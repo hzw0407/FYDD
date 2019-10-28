@@ -36,25 +36,23 @@
     
 }
 
+//设置实施方数据
 - (void)setCheckUser:(DDOrderCheckUser *)checkUser{
     _checkUser = checkUser;
-    if ([DDUserManager share].user.userType == DDUserTypeOnline){
-        self.scoreLb.text = [NSString stringWithFormat:@"%.2f",[checkUser.totlaScore doubleValue]];
-        self.rateView.progress = [checkUser.totlaScore doubleValue];
-        _moneyLb.text = [NSString stringWithFormat:@"¥%@",checkUser.totalIncome];
-        _statusLB.backgroundColor = UIColorHex(0x9A9A9A);
-        if([DDUserManager share].user.isAuth == -1) {
-            _statusLB.text = @"未认证";
-        }else if([DDUserManager share].user.isAuth == 0) {
-            _statusLB.text = @"未认证";
-        }else if([DDUserManager share].user.isAuth == 1) {
-            _statusLB.text = @"已认证";
-            _statusLB.backgroundColor = UIColorHex(0x2996EB);
-        }else if([DDUserManager share].user.isAuth == 2) {
-            _statusLB.text = @"未通过";
-        }
+    self.scoreLb.text = [NSString stringWithFormat:@"%.2f",[checkUser.totlaScore doubleValue]];
+    self.rateView.progress = [checkUser.totlaScore doubleValue];
+    _moneyLb.text = [NSString stringWithFormat:@"¥%@",checkUser.totalIncome];
+    _statusLB.backgroundColor = UIColorHex(0x9A9A9A);
+    if([DDUserManager share].user.isOnlineUser == 0) {
+        _statusLB.text = @"未申请";
+    }else if([DDUserManager share].user.isOnlineUser == 1) {
+        _statusLB.text = @"已认证";
+    }else if([DDUserManager share].user.isOnlineUser == 2) {
+        _statusLB.text = @"未认证";
+        _statusLB.backgroundColor = UIColorHex(0x2996EB);
+    }else if([DDUserManager share].user.isOnlineUser == 3) {
+        _statusLB.text = @"未通过";
     }
-    
     _iconView.image = [UIImage imageNamed:@"icon_user_type2"];
     NSString * iconURL = yyTrimNullText([DDUserManager share].user.userHeadImage);
     if ([iconURL hasPrefix:@"http"]) {
@@ -64,24 +62,23 @@
     }
 }
 
+//设置代理方数据
 - (void)setExtensionUser:(DDOrderExtensionUser *)extensionUser{
     _extensionUser = extensionUser;
-    if ([DDUserManager share].user.userType == DDUserTypePromoter){
-        self.scoreLb.text = [NSString stringWithFormat:@"%.2f",[extensionUser.totalScore doubleValue]];
-        self.rateView.progress = [extensionUser.totalScore doubleValue];
-        _statusLB.backgroundColor = UIColorHex(0x9A9A9A);
-        if([DDUserManager share].user.isExtensionUser == 0) {
-            _statusLB.text = @"未申请";
-        }else if([DDUserManager share].user.isExtensionUser == 1) {
-            _statusLB.text = @"已认证";
-            _statusLB.backgroundColor = UIColorHex(0x2996EB);
-        }else if([DDUserManager share].user.isExtensionUser == 2) {
-            _statusLB.text = @"未认证";
-        }else if([DDUserManager share].user.isExtensionUser == 3) {
-            _statusLB.text = @"未通过";
-        }
-        _moneyLb.text = [NSString stringWithFormat:@"¥%@",extensionUser.totalIncome];
+    self.scoreLb.text = [NSString stringWithFormat:@"%.2f",[extensionUser.totalScore doubleValue]];
+    self.rateView.progress = [extensionUser.totalScore doubleValue];
+    _statusLB.backgroundColor = UIColorHex(0x9A9A9A);
+    if([DDUserManager share].user.isExtensionUser == 0) {
+        _statusLB.text = @"未申请";
+    }else if([DDUserManager share].user.isExtensionUser == 1) {
+        _statusLB.text = @"已认证";
+        _statusLB.backgroundColor = UIColorHex(0x2996EB);
+    }else if([DDUserManager share].user.isExtensionUser == 2) {
+        _statusLB.text = @"未认证";
+    }else if([DDUserManager share].user.isExtensionUser == 3) {
+        _statusLB.text = @"未通过";
     }
+    _moneyLb.text = [NSString stringWithFormat:@"¥%@",extensionUser.totalIncome];
     _iconView.image = [UIImage imageNamed:@"icon_user_type3"];
     NSString * iconURL = yyTrimNullText([DDUserManager share].user.userHeadImage);
     if ([iconURL hasPrefix:@"http"]) {

@@ -78,47 +78,69 @@
         vc.hidesBottomBarWhenPushed = YES;
         [self cw_pushViewController:vc];
     }else if (sender.tag == 1) {
-        // 下线/ 认证
-        switch ([DDUserManager share].user.userType) {
-            case DDUserTypeOnline:{
-                //个人认证没认证
-                if ([DDUserManager share].user.realAuthentication != 1){
-                    DDAuthenticationIdCardVcView * vc = [DDAuthenticationIdCardVcView new];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [DDHub hub:@"未实名认证，请先认证" view:vc.view];
-                    });
-                    [self cw_pushViewController:vc];
-                }else {
-                    if ([DDUserManager share].user.isAuth == 1) {
-                        DDLADetailVc * vc = [DDLADetailVc new];
-                        vc.userType = DDUserTypeOnline;
-                        vc.hidesBottomBarWhenPushed = YES;
-                        [self cw_pushViewController:vc];
-                    }else {
-                        DDAuthenVc * vc = [DDAuthenVc new];
-                        vc.hidesBottomBarWhenPushed = YES;
-                        [self cw_pushViewController:vc];
-                    }
-
-                }
-
-            }break;
-
-            case DDUserTypeSystem:{
-                DDUserComanyInfoVC * vc = [DDUserComanyInfoVC new];
+        //企业
+        if ([DDUserManager share].user.realAuthentication != 1) {
+            //未实名认证
+            DDAuthenticationIdCardVcView * vc = [DDAuthenticationIdCardVcView new];
+            vc.hidesBottomBarWhenPushed = YES;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [DDHub hub:@"未实名认证，请先认证" view:vc.view];
+            });
+            [self cw_pushViewController:vc];
+        }else {
+            if ([DDUserManager share].user.isAuth == 1) {
+                //已企业认证
+                DDLADetailVc * vc = [DDLADetailVc new];
+                vc.userType = DDUserTypeOnline;
                 vc.hidesBottomBarWhenPushed = YES;
                 [self cw_pushViewController:vc];
-            }break;
-
-            case DDUserTypePromoter:{
-                DDJuniorVC * vc = [DDJuniorVC new];
+            }else {
+                //未企业认证
+                DDAuthenVc * vc = [DDAuthenVc new];
                 vc.hidesBottomBarWhenPushed = YES;
                 [self cw_pushViewController:vc];
-            }break;
-            default:
-                break;
+            }
         }
+//        switch ([DDUserManager share].user.userType) {
+//            case DDUserTypeOnline:{
+//                //个人认证没认证
+//                if ([DDUserManager share].user.realAuthentication != 1){
+//                    DDAuthenticationIdCardVcView * vc = [DDAuthenticationIdCardVcView new];
+//                    vc.hidesBottomBarWhenPushed = YES;
+//                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                        [DDHub hub:@"未实名认证，请先认证" view:vc.view];
+//                    });
+//                    [self cw_pushViewController:vc];
+//                }else {
+//                    if ([DDUserManager share].user.isAuth == 1) {
+//                        DDLADetailVc * vc = [DDLADetailVc new];
+//                        vc.userType = DDUserTypeOnline;
+//                        vc.hidesBottomBarWhenPushed = YES;
+//                        [self cw_pushViewController:vc];
+//                    }else {
+//                        DDAuthenVc * vc = [DDAuthenVc new];
+//                        vc.hidesBottomBarWhenPushed = YES;
+//                        [self cw_pushViewController:vc];
+//                    }
+//
+//                }
+//
+//            }break;
+//
+//            case DDUserTypeSystem:{
+//                DDUserComanyInfoVC * vc = [DDUserComanyInfoVC new];
+//                vc.hidesBottomBarWhenPushed = YES;
+//                [self cw_pushViewController:vc];
+//            }break;
+//
+//            case DDUserTypePromoter:{
+//                DDJuniorVC * vc = [DDJuniorVC new];
+//                vc.hidesBottomBarWhenPushed = YES;
+//                [self cw_pushViewController:vc];
+//            }break;
+//            default:
+//                break;
+//        }
     }else if (sender.tag == 2) {
         //报名
         DDAuthenVc *vc = [[DDAuthenVc alloc] init];
@@ -129,12 +151,12 @@
         DDWalletVC * vc = [DDWalletVC new];
         vc.hidesBottomBarWhenPushed = YES;
         [self cw_pushViewController:vc];
-    }else if (sender.tag == 3) {
+    }else if (sender.tag == 4) {
         // 客服
         DDContactListVC * vc = [DDContactListVC new];
         vc.hidesBottomBarWhenPushed = YES;
         [self cw_pushViewController:vc];
-    }else if (sender.tag == 3) {
+    }else if (sender.tag == 5) {
         // 设置
         DDSettingVC * vc = [DDSettingVC new];
         vc.hidesBottomBarWhenPushed = YES;
@@ -200,42 +222,61 @@
 }
 
 - (void)updateUI{
-    DDUser * user =[DDUserManager share].user;
-    switch (user.userType) {
-            // 实施方
-        case DDUserTypeOnline:{
-            [_nameLb setTitle:yyTrimNullText(user.nickname) forState:UIControlStateNormal];
-            [_descLb setTitle:[NSString stringWithFormat:@"实施方  %.1f分",user.totalScore] forState:UIControlStateNormal];
-            [_onelineBtn setTitle:@"认证" forState:UIControlStateNormal];
-            [_onelineBtn setImage:[UIImage imageNamed:@"icon_check"] forState:UIControlStateNormal];
-            _verifyCodeButton.hidden = !user.isAuth;
-            [_studyButton setTitle:@"在线学习" forState:UIControlStateNormal];
-            [_studyButton setImage:[UIImage imageNamed:@"icon_study"] forState:UIControlStateNormal];
-        }break;
-            // 企业用户
-        case DDUserTypeSystem:
-            [_studyButton setTitle:@"切换身份" forState:UIControlStateNormal];
-            [_studyButton setImage:[UIImage imageNamed:@"icon_exchange"] forState:UIControlStateNormal];
-            [_nameLb setTitle:yyTrimNullText(user.nickname) forState:UIControlStateNormal];
-            [_descLb setAttributedTitle:nil forState:UIControlStateNormal];
-            [_descLb setTitle:user.enterpriseAuthentication == 1 ? yyTrimNullText(user.enterpriseName): @"未认证企业" forState:UIControlStateNormal];
-            [_onelineBtn setTitle:@"企业" forState:UIControlStateNormal];
-            [_onelineBtn setImage:[UIImage imageNamed:@"company"] forState:UIControlStateNormal];
-            break;
-            // 代理方
-        case DDUserTypePromoter:
-            [_nameLb setTitle:yyTrimNullText(user.nickname) forState:UIControlStateNormal];
-            [_descLb setTitle:[NSString stringWithFormat:@"代理方  %.1f分",[yyTrimNullText(user.extensionTotalScore) doubleValue]] forState:UIControlStateNormal];
-            
-            [_onelineBtn setTitle:@"下线" forState:UIControlStateNormal];
-            [_onelineBtn setImage:[UIImage imageNamed:@"icon_profile4"] forState:UIControlStateNormal];
-            _verifyCodeButton.hidden = user.isExtensionUser != 1;
-             [_studyButton setTitle:@"在线学习" forState:UIControlStateNormal];
-             [_studyButton setImage:[UIImage imageNamed:@"icon_study"] forState:UIControlStateNormal];
-            break;
-            
-        default:
-            break;
+    DDUser * user = [DDUserManager share].user;
+//    switch (user.userType) {
+//            // 实施方
+//        case DDUserTypeOnline:{
+//            [_nameLb setTitle:yyTrimNullText(user.nickname) forState:UIControlStateNormal];
+//            [_descLb setTitle:[NSString stringWithFormat:@"实施方  %.1f分",user.totalScore] forState:UIControlStateNormal];
+//            [_onelineBtn setTitle:@"认证" forState:UIControlStateNormal];
+//            [_onelineBtn setImage:[UIImage imageNamed:@"icon_check"] forState:UIControlStateNormal];
+//            _verifyCodeButton.hidden = !user.isAuth;
+//            [_studyButton setTitle:@"在线学习" forState:UIControlStateNormal];
+//            [_studyButton setImage:[UIImage imageNamed:@"icon_study"] forState:UIControlStateNormal];
+//        }break;
+//            // 企业用户
+//        case DDUserTypeSystem:
+//            [_studyButton setTitle:@"切换身份" forState:UIControlStateNormal];
+//            [_studyButton setImage:[UIImage imageNamed:@"icon_exchange"] forState:UIControlStateNormal];
+//            [_nameLb setTitle:yyTrimNullText(user.nickname) forState:UIControlStateNormal];
+//            [_descLb setAttributedTitle:nil forState:UIControlStateNormal];
+//            [_descLb setTitle:user.enterpriseAuthentication == 1 ? yyTrimNullText(user.enterpriseName): @"未认证企业" forState:UIControlStateNormal];
+//            [_onelineBtn setTitle:@"企业" forState:UIControlStateNormal];
+//            [_onelineBtn setImage:[UIImage imageNamed:@"company"] forState:UIControlStateNormal];
+//            break;
+//            // 代理方
+//        case DDUserTypePromoter:
+//            [_nameLb setTitle:yyTrimNullText(user.nickname) forState:UIControlStateNormal];
+//            [_descLb setTitle:[NSString stringWithFormat:@"代理方  %.1f分",[yyTrimNullText(user.extensionTotalScore) doubleValue]] forState:UIControlStateNormal];
+//            [_onelineBtn setTitle:@"下线" forState:UIControlStateNormal];
+//            [_onelineBtn setImage:[UIImage imageNamed:@"icon_profile4"] forState:UIControlStateNormal];
+//            _verifyCodeButton.hidden = user.isExtensionUser != 1;
+//             [_studyButton setTitle:@"在线学习" forState:UIControlStateNormal];
+//             [_studyButton setImage:[UIImage imageNamed:@"icon_study"] forState:UIControlStateNormal];
+//            break;
+//
+//        default:
+//            break;
+//    }
+    [_nameLb setTitle:yyTrimNullText(user.nickname) forState:UIControlStateNormal];
+    [_descLb setAttributedTitle:nil forState:UIControlStateNormal];
+    [_descLb setTitle:user.enterpriseAuthentication == 1 ? yyTrimNullText(user.enterpriseName): @"未认证企业" forState:UIControlStateNormal];
+    //证书
+    UIButton *certificatebutton = [self.view viewWithTag:9];
+    if (user.isExtensionUser == 1 || user.isAuth == 1) {
+        //代理方或者实施方认证通过
+        certificatebutton.hidden = NO;
+    }else {
+        certificatebutton.hidden = YES;
+    }
+    //代理码
+    UIButton *delegateCodebutton = [self.view viewWithTag:7];
+    if (user.isExtensionUser == 0) {
+        //未认证代理方
+        delegateCodebutton.hidden = YES;
+    }else {
+        //认证了代理方
+        delegateCodebutton.hidden = NO;
     }
     NSString * iconURL = yyTrimNullText(user.userHeadImage);
     if ([iconURL hasPrefix:@"http"]) {

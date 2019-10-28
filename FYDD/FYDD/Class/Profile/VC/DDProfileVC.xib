@@ -190,7 +190,7 @@
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <connections>
-                                <action selector="buttonDidClick:" destination="-1" eventType="touchUpInside" id="mtR-am-4b9"/>
+                                <action selector="buttonDidClick:" destination="-1" eventType="touchUpInside" id="Vnk-5L-zph"/>
                             </connections>
                         </button>
                     </subviews>
