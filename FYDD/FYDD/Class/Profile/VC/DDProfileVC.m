@@ -74,7 +74,6 @@
 //        }else {
 //            vc.title = @"代理方";
 //        }
-        vc.title = @"订单";
         vc.type = 1;
         vc.hidesBottomBarWhenPushed = YES;
         [self cw_pushViewController:vc];
@@ -86,9 +85,9 @@
                 if ([DDUserManager share].user.realAuthentication != 1){
                     DDAuthenticationIdCardVcView * vc = [DDAuthenticationIdCardVcView new];
                     vc.hidesBottomBarWhenPushed = YES;
-//                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                        [DDHub hub:@"未实名认证，请先认证" view:vc.view];
-//                    });
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [DDHub hub:@"未实名认证，请先认证" view:vc.view];
+                    });
                     [self cw_pushViewController:vc];
                 }else {
                     if ([DDUserManager share].user.isAuth == 1) {
@@ -151,8 +150,14 @@
         DDShareVC * vc = [DDShareVC new];
         vc.hidesBottomBarWhenPushed = YES;
         [self cw_pushViewController:vc];
+    }else if (sender.tag == 8) {
+        //个人信息
+        DDUserInfoVC *vc = [[DDUserInfoVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self cw_pushViewController:vc];
     }
 //    else if (sender.tag == 5) {
+    //切换身份
 //        DDChangeUserTypeVC * vc = [DDChangeUserTypeVC new];
 //        vc.hidesBottomBarWhenPushed = YES;
 //        [self cw_pushViewController:vc];

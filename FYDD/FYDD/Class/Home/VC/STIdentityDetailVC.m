@@ -16,6 +16,7 @@
 #import "DDFootstripObj.h"
 #import "STAdvertorialsModel.h"
 #import "STAdvertorialsDetailVC.h"
+#import "DDWebVC.h"
 
 @interface STIdentityDetailVC ()
 <UITableViewDelegate,
@@ -232,29 +233,58 @@ STIdentityDetailFunctionCellDelegate>
     if (index == 1) {
         if (self.type == 1) {
             //代理流程
+            DDWebVC * vc = [DDWebVC new];
+            vc.title = @"实施步骤";
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.url = [NSString stringWithFormat:@"%@:%@%@",DDAPP_URL,DDPort8003,@"/supervisor/manager/extensionFlowDetail"];
+            [self.navigationController pushViewController:vc animated:YES];
         }else {
             //实施流程
+            DDWebVC * vc = [DDWebVC new];
+            vc.title = @"实施步骤";
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.url = [NSString stringWithFormat:@"%@:%@%@",DDAPP_URL,DDPort8003,@"/dd-bss/supervisor/manager/onLineFlowDetail"];
+            [self.navigationController pushViewController:vc animated:YES];
         }
     }else if (index == 2) {
         //我的订单
         DDOrderVC * vc = [[DDOrderVC alloc] init];
         if (self.type == 1) {
+            if ([DDUserManager share].user.isExtensionUser == 0) {
+                //代理方未认证
+                [DDHub hub:@"请先申请成为代理方" view:self.view];
+                return ;
+            }
             vc.type = 2;
         }else {
+            if ([DDUserManager share].user.isOnlineUser == 0) {
+                //实施方未认证
+                [DDHub hub:@"请先申请成为实施方" view:self.view];
+                return ;
+            }
             vc.type = 3;
         }
         vc.hidesBottomBarWhenPushed = YES;
-        vc.title = @"订单";
         [self.navigationController pushViewController:vc animated:YES];
     }else if (index == 3) {
         //我的客户
         if (self.type == 1) {
             //之前的百万计划
+            if ([DDUserManager share].user.isExtensionUser == 0) {
+                //代理方未认证
+                [DDHub hub:@"请先申请成为代理方" view:self.view];
+                return ;
+            }
             BWPlanVc *vc = [[BWPlanVc alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }else {
             //之前的商机
+            if ([DDUserManager share].user.isOnlineUser == 0) {
+                //实施方未认证
+                [DDHub hub:@"请先申请成为实施方" view:self.view];
+                return ;
+            }
             DDOpportunityVc *vc = [[DDOpportunityVc alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];

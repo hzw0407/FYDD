@@ -18,7 +18,7 @@
 @property (nonatomic,copy) NSString * qualificationNoEx;
 @property (nonatomic,assign) BOOL  isCompanyUser;
 @property (nonatomic,assign) NSInteger isFinishInfo;
-@property (nonatomic,assign) BOOL isOnlineUser;
+@property (nonatomic,assign) NSInteger isOnlineUser;
 @property (nonatomic,copy) NSString * name;
 @property (nonatomic,copy) NSString * nickname;
 @property (nonatomic,copy) NSString * phone;

@@ -80,27 +80,18 @@
         }];
         return;
     }else if (_applyType == DDUserTypeOnline) {
-        @weakify(self)
-        [DDAlertInputView showEvent:^(NSString *text) {
-            [DDHub hub:self.view];
-            [[DDAppNetwork share] get:YES
-                                 path:[NSString stringWithFormat:@"/uas/user/online/applyForAsUserOnline?token=%@&extensionCode=%@",[DDUserManager share].user.token,text]
-                                 body:@""
-                           completion:^(NSInteger code, NSString *message, id data) {
-                               @strongify(self)
-                               if (!self) return ;
-                               [DDHub dismiss:self.view];
-                               if (code == 200) {
-                                   [self commitAply];
-                               }else {
-                                   [DDHub hub:message view:self.view];
-                               }
-                           }];
-            
-        } cancelEvent:^{
-            [self.navigationController popViewControllerAnimated:YES];
+        STHttpRequestManager *manager = [STHttpRequestManager shareManager];
+        [manager requestDataWithUrl:[NSString stringWithFormat:@"%@:%@/uas/user/online/applyForAsUserOnline?token=%@",DDAPP_URL,DDPort7001,[DDUserManager share].user.token] withType:RequestPost withSuccess:^(NSDictionary * _Nonnull dict) {
+            [DDHub dismiss:self.view];
+            if (dict && [dict[@"code"] integerValue] == 200) {
+                [self commitAply];
+            }else {
+                [DDHub hub:dict[@"message"] view:self.view];
+            }
+        } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+            [DDHub dismiss:self.view];
+            [DDHub hub:error.domain view:self.view];
         }];
-        return;
     }
 //    [self commitAply];
 }

@@ -53,6 +53,14 @@
 //        }];
 //    }
     
+    if (self.type == 1) {
+        self.navigationItem.title = @"订单";
+    }else if (self.type == 2) {
+        self.navigationItem.title = @"代理方";
+    }else {
+        self.navigationItem.title = @"实施方";
+    }
+    
     if (self.type == 2 || self.type == 3) {
         //代理方或者实施方
         [self.view addSubview:self.carryView];

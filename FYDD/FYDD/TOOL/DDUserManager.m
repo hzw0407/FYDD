@@ -78,7 +78,7 @@
                            if ( [sex intValue] != -1) {
                               self.user.sex = [sex intValue] == 1 ? @"男" : @"女";
                            }
-                           self.user.isOnlineUser = data[@"isOnlineUser"];
+                           self.user.isOnlineUser = [[NSString stringWithFormat:@"%@",data[@"isOnlineUser"]] integerValue];
                            self.user.area = data[@"area"];
                            self.user.phone = data[@"phone"];
                            self.user.email = data[@"email"];

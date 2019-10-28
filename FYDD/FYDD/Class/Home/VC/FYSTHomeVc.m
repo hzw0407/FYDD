@@ -233,7 +233,8 @@ FYSTBannerCellDelegate> {
             NSString * downLoadURL =  dict[@"data"][@"vUrl"];
             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
             NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-            if ([app_Version isEqualToString:version] && downLoadURL && ![SRUserDefaults boolForKey:Home_FirstClick]) {
+            if ([app_Version isEqualToString:version] && downLoadURL && ![SRUserDefaults boolForKey:Home_FirstClick] && ([DDUserManager share].isLogged ||
+            [DDUserManager share].isVisitorUser)) {
                 //和最新的版本一致并且是第一次点击
                 [SRUserDefaults setBool:YES forKey:Home_FirstClick];
                 [[UIApplication sharedApplication].keyWindow addSubview:self.guideBackgroundView];
