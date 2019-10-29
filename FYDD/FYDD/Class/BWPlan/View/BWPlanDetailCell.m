@@ -21,17 +21,12 @@
     _userNameLb.text = planModel.legalUser;
     
     _companyLb.text = planModel.customerName;
-    if ([planModel.customerStatus isEqualToString:@"030"]) {
-        _shishiLb.text = @"进行中";
-    }else if ([planModel.customerStatus isEqualToString:@"060"]) {
-        _shishiLb.text = @"实施中";
-    }else if ([planModel.customerStatus isEqualToString:@"090"]) {
-        _shishiLb.text = @"已完成";
-    }
+    _shishiLb.text = planModel.customerStatus;
     _userNumberLb.text = [NSString stringWithFormat:@"%zd",_planModel.companyNumber];
     _versionLb.text = _planModel.categoriesName;
-    _moneyLb.text = [NSString stringWithFormat:@"%.2f",planModel.orderAccount];
+    _moneyLb.text = planModel.orderAccount > 0 ? [NSString stringWithFormat:@"%.2f",planModel.orderAccount] : @"";
     _orderLb.text = [NSString stringWithFormat:@"%@",yyTrimNullText(planModel.orderNumber)];
+    _CheckLabel.hidden = yyTrimNullText(planModel.orderNumber).length > 0 ? NO : YES;
     _soialCodeLb.text = [NSString stringWithFormat:@"%@",planModel.customerCreditCode];
     _hanyLb.text = [NSString stringWithFormat:@"%@",planModel.customerIndustry];
     _dateLb1.text = [NSString stringWithFormat:@"%@",[yyTrimNullText(planModel.beginTime) formateServiceDate]];

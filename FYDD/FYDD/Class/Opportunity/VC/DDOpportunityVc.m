@@ -105,6 +105,7 @@
                        if (!self) return ;
                        [self.tableView.mj_header endRefreshing];
                        if (code == 200) {
+                           [self->_dataList removeAllObjects];
                            NSArray *lists = data[@"list"];
                            NSMutableArray * dataLists  = @[].mutableCopy;
                            if (lists && lists.count > 0) {
@@ -215,7 +216,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 260;
+    return 281;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -11,13 +11,15 @@
 #import "BRStringPickerView.h"
 #import "DDIndustryModel.h"
 
-@interface BWPlanAddVc () {
+@interface BWPlanAddVc ()<UITextFieldDelegate>
+{
     NSArray * _industrys;
     NSArray * _industryNames;
     NSString *_currentIndustryname;
     NSString *_currentIndustryId;
 }
 @property (strong, nonatomic) IBOutletCollection(UITextField) NSArray *textFields;
+@property (weak, nonatomic) IBOutlet UITextField *phoneTextfield;
 
 @end
 
@@ -26,6 +28,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"添加我的客户";
+    
+    self.phoneTextfield.keyboardType = UIKeyboardTypeNumberPad;
+    self.phoneTextfield.delegate = self;
+    
     [self getIndustryData];
 }
 
@@ -186,6 +192,15 @@
 - (NSString *)getTextFieldFromText:(NSInteger)start{
     UITextField * td = _textFields[start];
     return td.text;
+}
+
+#pragma mark - UITextFieldDelegate
+- (void)textFieldDidChangeSelection:(UITextField *)textField {
+    if (textField == self.phoneTextfield) {
+        if (textField.text.length >= 11) {
+            textField.text = [textField.text substringToIndex:11];
+        }
+    }
 }
 
 @end

@@ -26,12 +26,12 @@
     _planModel = planModel;
     _companyLb.text = yyTrimNullText(planModel.customerName);
     _statusLb.text = yyTrimNullText(planModel.customerStatus);
-    _orderLb.text = [NSString stringWithFormat:@"订单号: %@",yyTrimNullText(planModel.orderNumber)];
+    _orderLb.text = [NSString stringWithFormat:@"订单号: %@",yyTrimNullText(planModel.orderNumber) ? yyTrimNullText(planModel.orderNumber) : @""];
     _scoialLb.text = [NSString stringWithFormat:@"统一社会信用代码: %@",yyTrimNullText(planModel.customerCreditCode)];
-    _hangyeLb.text = [NSString stringWithFormat:@"版本: %@",yyTrimNullText(planModel.categoriesName)];
-    _industyLb.text = [NSString stringWithFormat:@"行业: %@",yyTrimNullText(planModel.customerIndustry)];
+    _BanBenlabel.text = [NSString stringWithFormat:@"版本: %@",yyTrimNullText(planModel.categoriesName) ? yyTrimNullText(planModel.categoriesName) : @""];
+    _HangYeLabel.text = [NSString stringWithFormat:@"行业: %@",yyTrimNullText(planModel.customerIndustry)];
     _dateLb1.text = [NSString stringWithFormat:@"添加日期: %@   注册日期: %@",[yyTrimNullText(planModel.beginTime) formateServiceDate],[yyTrimNullText(planModel.startTime) formateServiceDate]];
-    _dateLb2.text = [NSString stringWithFormat:@"抛出日期: %@   付款日期: %@",[yyTrimNullText(planModel.castTime) formateServiceDate],[yyTrimNullText(planModel.paymentTime) formateServiceDate]];
+    _dateLb2.text = [NSString stringWithFormat:@"付款日期: %@",[yyTrimNullText(planModel.paymentTime) formateServiceDate]];
     _dayLb.text =  [NSString stringWithFormat:@"保质期: %zd天",_planModel.planExpireDay];
     _dayLb.hidden = NO;
     if (_planModel.planExpireDay == -1) {

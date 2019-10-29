@@ -15,7 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *companyLb;
 @property (weak, nonatomic) IBOutlet UILabel *orderLb;
 @property (weak, nonatomic) IBOutlet UILabel *scoialLb;
-@property (weak, nonatomic) IBOutlet UILabel *hangyeLb;
+@property (weak, nonatomic) IBOutlet UILabel *BanBenLabel;
+@property (weak, nonatomic) IBOutlet UILabel *HangYeLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *dateLb1;
 @property (weak, nonatomic) IBOutlet UILabel *dateLb2;
 

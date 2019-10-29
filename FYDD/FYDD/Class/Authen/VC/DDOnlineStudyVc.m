@@ -74,6 +74,7 @@
 }
 
 - (void)btnClick:(UIButton *)btn {
+    [_onlineDatas removeAllObjects];
     UIView *lineView = [self.selectView viewWithTag:101];
     [lineView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(btn.mas_left).offset(35);

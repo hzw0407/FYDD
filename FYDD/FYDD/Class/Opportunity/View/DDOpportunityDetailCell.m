@@ -23,8 +23,8 @@
     _userNumberLb.text = [NSString stringWithFormat:@"%zd",_appModel.companyNumber];
     _moneyLb.text = [NSString stringWithFormat:@"%.2f",appModel.orderAccount];
     _orderLb.text = [NSString stringWithFormat:@"%@",appModel.orderNumber];
-    _soialCodeLb.text = [NSString stringWithFormat:@"%@",appModel.customerCreditCode];
-    _hanyLb.text = [NSString stringWithFormat:@"%@",appModel.customerIndustry];
+    _soialCodeLb.text = [NSString stringWithFormat:@"%@",appModel.customerCreditCode ? appModel.customerCreditCode : @""];
+    _hanyLb.text = [NSString stringWithFormat:@"%@",appModel.customerIndustry ? appModel.customerIndustry : @""];
     _dateLb1.text = [NSString stringWithFormat:@"%@",[yyTrimNullText(appModel.beginTime) formateServiceDate]];
     _dateLb2.text = [NSString stringWithFormat:@"%@",[yyTrimNullText(appModel.startTime) formateServiceDate]];
     _dateLb3.text = [NSString stringWithFormat:@"%@",[yyTrimNullText(appModel.deliverTime) formateServiceDate]];

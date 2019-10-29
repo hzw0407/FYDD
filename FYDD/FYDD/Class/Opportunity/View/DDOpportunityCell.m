@@ -26,8 +26,9 @@
     _model = model;
     _companyLb.text = model.customerName;
     _orderLb.text = [NSString stringWithFormat:@"订单号: %@",model.orderNumber];
-    _scoialLb.text = [NSString stringWithFormat:@"统一社会信用代码: %@",model.customerCreditCode];
-    _hangyeLb.text = [NSString stringWithFormat:@"版本: %@   行业: %@",yyTrimNullText(model.categoriesName),yyTrimNullText(model.customerIndustry)];
+    _scoialLb.text = [NSString stringWithFormat:@"统一社会信用代码: %@",model.customerCreditCode ? model.customerCreditCode : @""];
+    _BanBenLabel.text = [NSString stringWithFormat:@"版本: %@",yyTrimNullText(model.categoriesName)];
+    _HangYeLabel.text = [NSString stringWithFormat:@"行业: %@",yyTrimNullText(model.customerIndustry)];
     _dateLb1.text = [NSString stringWithFormat:@"开始日期: %@   启动日期: %@",[yyTrimNullText(model.beginTime) formateServiceDate],[yyTrimNullText(model.startTime) formateServiceDate]];
     _dateLb2.text = [NSString stringWithFormat:@"交付日期: %@   付款日期: %@",[yyTrimNullText(model.deliverTime) formateServiceDate],[yyTrimNullText(model.paymentTime) formateServiceDate]];
 }

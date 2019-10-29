@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BWPlanAddVc">
             <connections>
+                <outlet property="phoneTextfield" destination="bDZ-mL-SHm" id="toy-ZY-laU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outletCollection property="textFields" destination="61J-1T-C4L" id="CB0-Xl-aLH"/>
                 <outletCollection property="textFields" destination="aGe-it-q6f" id="bec-Pk-IKg"/>

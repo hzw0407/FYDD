@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *shishiLb;
 @property (weak, nonatomic) IBOutlet UILabel *contactNaneLb;
 @property (weak, nonatomic) IBOutlet UILabel *contactPhoneLb;
+@property (weak, nonatomic) IBOutlet UILabel *CheckLabel;
 
 @property (nonatomic,copy) void (^orderDidClick)(void);
 @end

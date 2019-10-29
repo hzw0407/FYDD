@@ -14,13 +14,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *companyLb;
 @property (weak, nonatomic) IBOutlet UILabel *orderLb;
 @property (weak, nonatomic) IBOutlet UILabel *scoialLb;
-@property (weak, nonatomic) IBOutlet UILabel *hangyeLb;
 @property (weak, nonatomic) IBOutlet UILabel *dateLb1;
 @property (weak, nonatomic) IBOutlet UILabel *dateLb2;
 @property (weak, nonatomic) IBOutlet UILabel *statusLb;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (nonatomic,strong) BWPlanModel * planModel;
-@property (weak, nonatomic) IBOutlet UILabel *industyLb;
+@property (weak, nonatomic) IBOutlet UILabel *BanBenlabel;
+@property (weak, nonatomic) IBOutlet UILabel *HangYeLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *dayLb;
 @end
 
