@@ -1,8 +1,8 @@
 //
-//  DDOnlineStudyVc.h
+//  UIColor+STColor.h
 //  FYDD
 //
-//  Created by wenyang on 2019/9/3.
+//  Created by 何志武 on 2019/10/30.
 //  Copyright © 2019 www.sante.com. All rights reserved.
 //
 
@@ -10,7 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DDOnlineStudyVc : UIViewController
+@interface UIColor (STColor)
+
++ (UIColor *)mainColor;
 
 @end
 

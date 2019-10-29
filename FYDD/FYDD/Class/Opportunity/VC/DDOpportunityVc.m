@@ -88,9 +88,9 @@
 //获取商机数据
 - (void)getOpportunityData{
     NSString * url = [NSString stringWithFormat:@"%@/business/userOnline/list",DDAPP_2T_URL];
-    if ([DDUserManager share].user.userType == DDUserTypePromoter) {
-        url = [NSString stringWithFormat:@"%@/business/userExtension/list",DDAPP_2T_URL];
-    }
+//    if ([DDUserManager share].user.userType == DDUserTypePromoter) {
+//        url = [NSString stringWithFormat:@"%@/business/userExtension/list",DDAPP_2T_URL];
+//    }
     
     @weakify(self)
     [[DDAppNetwork share] get:YES

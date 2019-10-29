@@ -101,10 +101,11 @@
 
 // 获取百万计划数据
 - (void)getBWPlanData:(NSInteger)page{
-    NSString * urlPath = @"/million/plan/userOnline/list";
-    if ([DDUserManager share].user.userType == DDUserTypePromoter) {
-        urlPath = @"/million/plan/userExtension/list";
-    }
+//    NSString * urlPath = @"/million/plan/userOnline/list";
+//    if ([DDUserManager share].user.userType == DDUserTypePromoter) {
+//        urlPath = @"/million/plan/userExtension/list";
+//    }
+    NSString *urlPath = @"/million/plan/userExtension/list";
     NSString * url = [NSString stringWithFormat:@"%@%@",DDAPP_2T_URL,urlPath];
     @weakify(self)
     [[DDAppNetwork share] get:YES

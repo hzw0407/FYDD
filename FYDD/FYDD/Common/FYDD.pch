@@ -30,5 +30,6 @@
 #import "STHttpRequestManager.h"
 #import "STURLService.h"
 #import "SRUserDefaults.h"
+#import "UIColor+STColor.h"
 
 #endif /* FYDD_h */

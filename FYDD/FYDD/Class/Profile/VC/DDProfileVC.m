@@ -163,7 +163,6 @@
         //在线学习
         DDOnlineStudyVc *vc = [DDOnlineStudyVc new];
         vc.hidesBottomBarWhenPushed = YES;
-        vc.userType = [DDUserManager share].user.userType == DDUserTypePromoter ? DDUserTypeOnline :  DDUserTypePromoter;
         [self cw_pushViewController:vc];
     }else if (sender.tag == 7) {
         //我的代理码
@@ -340,24 +339,6 @@
     }else {
         _userIconView.image = [UIImage imageNamed:[DDUserManager share].userPlaceImage];
     }
-}
-
-
-- (IBAction)studyButtonDidClick:(UIButton *)sender {
-//    if ([DDUserManager share].user.userType == DDUserTypeSystem) {
-////        [self buttonDidClick:_checkButton];
-//    }else {
-//        DDOnlineStudyVc *vc = [DDOnlineStudyVc new];
-//        vc.hidesBottomBarWhenPushed = YES;
-//        vc.userType = [DDUserManager share].user.userType == DDUserTypePromoter ? DDUserTypeOnline :  DDUserTypePromoter;
-//        [self cw_pushViewController:vc];
-//    }
-    
-    DDOnlineStudyVc *vc = [DDOnlineStudyVc new];
-    vc.hidesBottomBarWhenPushed = YES;
-    vc.userType = [DDUserManager share].user.userType == DDUserTypePromoter ? DDUserTypeOnline :  DDUserTypePromoter;
-    [self cw_pushViewController:vc];
-
 }
 
 @end

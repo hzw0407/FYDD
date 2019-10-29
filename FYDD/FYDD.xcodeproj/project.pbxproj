@@ -427,6 +427,7 @@
 		35F3A6882325328400F8D3AF /* DDOrderImplementationStepCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F3A6862325328400F8D3AF /* DDOrderImplementationStepCell.m */; };
 		35F3A6892325328400F8D3AF /* DDOrderImplementationStepCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35F3A6872325328400F8D3AF /* DDOrderImplementationStepCell.xib */; };
 		7C0CE3172359C5BA004C3360 /* UIButton+FYCustonButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C0CE3162359C5BA004C3360 /* UIButton+FYCustonButton.m */; };
+		7C4B59E62368A1AD001F363E /* UIColor+STColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C4B59E52368A1AD001F363E /* UIColor+STColor.m */; };
 		7C4F1AA6235FFA6B00D7AB83 /* STTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1AA5235FFA6B00D7AB83 /* STTool.m */; };
 		7C4F1AA92360599900D7AB83 /* STAdvertorialsDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1AA82360599900D7AB83 /* STAdvertorialsDetailVC.m */; };
 		7C680733236297A4006A30E0 /* STHttpRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C680732236297A4006A30E0 /* STHttpRequestManager.m */; };
@@ -1143,6 +1144,8 @@
 		35F3A6872325328400F8D3AF /* DDOrderImplementationStepCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DDOrderImplementationStepCell.xib; sourceTree = "<group>"; };
 		7C0CE3152359C5BA004C3360 /* UIButton+FYCustonButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+FYCustonButton.h"; sourceTree = "<group>"; };
 		7C0CE3162359C5BA004C3360 /* UIButton+FYCustonButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+FYCustonButton.m"; sourceTree = "<group>"; };
+		7C4B59E42368A1AD001F363E /* UIColor+STColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+STColor.h"; sourceTree = "<group>"; };
+		7C4B59E52368A1AD001F363E /* UIColor+STColor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+STColor.m"; sourceTree = "<group>"; };
 		7C4F1AA4235FFA6B00D7AB83 /* STTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STTool.h; sourceTree = "<group>"; };
 		7C4F1AA5235FFA6B00D7AB83 /* STTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STTool.m; sourceTree = "<group>"; };
 		7C4F1AA72360599900D7AB83 /* STAdvertorialsDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STAdvertorialsDetailVC.h; sourceTree = "<group>"; };
@@ -2427,6 +2430,7 @@
 		7C0CE3132359C591004C3360 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				7C4B59E32368A16D001F363E /* UIColor */,
 				7C0CE3142359C591004C3360 /* UIButton */,
 			);
 			path = Category;
@@ -2439,6 +2443,15 @@
 				7C0CE3162359C5BA004C3360 /* UIButton+FYCustonButton.m */,
 			);
 			path = UIButton;
+			sourceTree = "<group>";
+		};
+		7C4B59E32368A16D001F363E /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				7C4B59E42368A1AD001F363E /* UIColor+STColor.h */,
+				7C4B59E52368A1AD001F363E /* UIColor+STColor.m */,
+			);
+			path = UIColor;
 			sourceTree = "<group>";
 		};
 		DC53CA86919DA9610BE362EC /* Frameworks */ = {
@@ -2916,6 +2929,7 @@
 				0450509F223CFFA100F0BC99 /* DDWalletVC.m in Sources */,
 				04C7E9BF2240EA8400EE9796 /* DDMoneyTopCell.m in Sources */,
 				04A9C3162252F965008F859E /* DDOrderDetailInfo.m in Sources */,
+				7C4B59E62368A1AD001F363E /* UIColor+STColor.m in Sources */,
 				04C1987C225B22DD007E4667 /* DDOrderCompanyInfoCell.m in Sources */,
 				35F37E1A232131B800AB4CA7 /* DDOrderHeaderView.m in Sources */,
 				350936AD231615B000B7FD1C /* FYSDFootprintModel.m in Sources */,
@@ -3218,7 +3232,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = FYDD/FYDD.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen 3T Technology Co., Ltd (SND4T34VUG)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: Shenzhen 3T Technology Co., Ltd (SND4T34VUG)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1.0;
 				DEFINES_MODULE = NO;
