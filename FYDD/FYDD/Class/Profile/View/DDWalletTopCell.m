@@ -27,6 +27,9 @@
     _walletMenuView.layer.cornerRadius = 10;
 }
 - (IBAction)questionButtonClick:(UIButton *)sender {
+    if (_event) {
+        _event(sender.tag);
+    }
 }
 
 - (void)layoutSubviews{

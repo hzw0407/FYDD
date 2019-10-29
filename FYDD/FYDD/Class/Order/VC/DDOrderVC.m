@@ -18,7 +18,7 @@
 #import "DDOrderCarryView.h"
 #import "DDOrderCompanyInfoView.h"
 #import "DDProductNextOrderVc.h"
-
+#import "DDJuniorVC.h"
 
 @interface DDOrderVC ()<UITableViewDelegate,UITableViewDataSource> {
     NSInteger _currentType;
@@ -52,23 +52,18 @@
 //        }];
 //    }
     
-    if (self.type == 1) {
-        self.navigationItem.title = @"订单";
-    }else if (self.type == 2) {
-        self.navigationItem.title = @"代理方";
-    }else {
-        self.navigationItem.title = @"实施方";
-    }
+    self.navigationItem.title = @"我的订单";
+    self.view.backgroundColor = UIColorHex(0xF3F4F6);
     
-    if (self.type == 2 || self.type == 3) {
-        //代理方或者实施方
+    if (self.type == 2) {
+        //代理方
         [self.view addSubview:self.carryView];
         [self.carryView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.top.mas_equalTo(@0);
             make.height.mas_equalTo(@230);
         }];
-    }else if (self.type == 1) {
-        //企业用户
+    }else if (self.type == 1 || self.type == 3) {
+        //企业用户或者实施方
         [self.view addSubview:self.companyView];
         [self.companyView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.top.mas_equalTo(@0);
@@ -87,9 +82,13 @@
     _pageDict = @{}.mutableCopy;
     _datas = @{}.mutableCopy;
     
-    
-    self.view.backgroundColor = UIColorHex(0xF3F4F6);
-        
+    if (self.type == 2) {
+        //代理方
+        [self getExtensionInfo];
+    }else if (self.type == 3) {
+        //实施方
+        [self getOnlineInfo];
+    }
     
 }
 
@@ -103,14 +102,7 @@
     [self setupNavigationBar];
     self->_pageDict[@(self->_currentType)] = @(1);
     [self getOrderListData];
-//    [self getOnlineUserInfo];
-    if (self.type == 2) {
-        //代理方
-        [self getExtensionInfo];
-    }else if (self.type == 3) {
-        //实施方
-        [self getOnlineInfo];
-    }
+//    [self getOnlineUserInfo]
     
 }
 
@@ -236,11 +228,13 @@
     if ([info.orderStatus isEqualToString:@"001"]){
         DDProductNextOrderVc * vc = [DDProductNextOrderVc new];
         vc.orderNumber = info.orderNumber;
+        vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }else {
         DDOrderDetailVc * vc = [DDOrderDetailVc new];
         vc.orderId = info.orderNumber;
         vc.title = @"订单详情";
+        vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }
 
@@ -287,9 +281,16 @@
         _carryView.event = ^(NSInteger index) {
             @strongify(self)
             if (!self) return ;
-            self->_currentType = index + 1;
-            [self.tableView reloadData];
-            [self.tableView.mj_header beginRefreshing];
+            if (index == 2) {
+                //下线
+                DDJuniorVC *vc = [[DDJuniorVC alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else {
+                self->_currentType = index + 1;
+                [self.tableView reloadData];
+                [self.tableView.mj_header beginRefreshing];
+            }
         };
     }
     return _carryView;

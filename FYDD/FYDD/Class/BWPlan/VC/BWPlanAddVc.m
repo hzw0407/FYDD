@@ -25,7 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"添加百万计划";
+    self.title = @"添加我的客户";
     [self getIndustryData];
 }
 
@@ -170,8 +170,9 @@
                            completion:^(NSInteger code,
                                         NSString *message,
                                         id data) {
-                               [DDHub hub:message view:self.view];
+//                               [DDHub hub:message view:self.view];
                                if (code  == 200) {
+                                   [DDHub hub:@"添加我的客户成功" view:self.view];
                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                                        [self.navigationController popViewControllerAnimated:YES];
                                    });

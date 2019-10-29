@@ -206,6 +206,10 @@
 
 - (void)detectIdCardFinish:(id)result image:(UIImage *)image{
     @weakify(self)
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //需要切换到主线程dissmiss
+        [self dismissViewControllerAnimated:YES completion:nil];
+    });
 //    [self.idCardVC dismissViewControllerAnimated:YES completion:nil];
      self.idCardVC = nil;
     if ([result isKindOfClass:[NSDictionary class]]) {

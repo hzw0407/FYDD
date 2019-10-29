@@ -28,8 +28,8 @@
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cons;
 
-@property (weak, nonatomic) IBOutlet UIButton *nameLb;
-@property (weak, nonatomic) IBOutlet UIButton *descLb;
+@property (weak, nonatomic) IBOutlet UIButton *nameLb;//名称
+@property (weak, nonatomic) IBOutlet UIButton *descLb;//企业认证信息
 
 @property (weak, nonatomic) IBOutlet UIButton *onelineBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *userIconView;
@@ -38,7 +38,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *iconTipView1;
 @property (weak, nonatomic) IBOutlet UIImageView *iconTipView2;
 
-@property (weak, nonatomic) IBOutlet UIButton *verifyCodeButton;
+@property (weak, nonatomic) IBOutlet UIButton *verifyCodeButton;//实施方证书
+@property (weak, nonatomic) IBOutlet UIButton *verifyCodeButton1;//代理方证书
 
 @property (weak, nonatomic) IBOutlet UIButton *studyButton;
 @end
@@ -262,12 +263,22 @@
     [_descLb setAttributedTitle:nil forState:UIControlStateNormal];
     [_descLb setTitle:user.enterpriseAuthentication == 1 ? yyTrimNullText(user.enterpriseName): @"未认证企业" forState:UIControlStateNormal];
     //证书
-    UIButton *certificatebutton = [self.view viewWithTag:9];
-    if (user.isExtensionUser == 1 || user.isAuth == 1) {
+    if (user.isExtensionUser == 1 || user.isOnlineUser == 1) {
         //代理方或者实施方认证通过
-        certificatebutton.hidden = NO;
+        self.verifyCodeButton.hidden = NO;
+        self.verifyCodeButton1.hidden = NO;
+    }else if (user.isExtensionUser == 1 && user.isOnlineUser != 1) {
+        //代理方认证通过，实施方没认证
+        self.verifyCodeButton.hidden = YES;
+        self.verifyCodeButton1.hidden = NO;
+    }else if (user.isExtensionUser != 1 && user.isOnlineUser == 1) {
+        //代理方没认证,实施方认证通过
+        self.verifyCodeButton.hidden = NO;
+        self.verifyCodeButton1.hidden = YES;
     }else {
-        certificatebutton.hidden = YES;
+        //代理方和实施方都没认证
+        self.verifyCodeButton.hidden = YES;
+        self.verifyCodeButton1.hidden = YES;
     }
     //代理码
     UIButton *delegateCodebutton = [self.view viewWithTag:7];

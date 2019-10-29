@@ -118,7 +118,10 @@
 
 - (void)detectIdCardFinish:(id)result image:(UIImage *)image{
     @weakify(self)
-//    [self.idCardVC dismissViewControllerAnimated:YES completion:nil];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //需要切换到主线程dissmiss
+        [self dismissViewControllerAnimated:YES completion:nil];
+    });
     self.idCardVC = nil;
     if ([result isKindOfClass:[NSDictionary class]]) {
         if(self.currentIdCard == 0) {
@@ -127,7 +130,6 @@
             self.sex = [result valueForKeyPath:@"words_result.性别.words"];
             self.address = [result valueForKeyPath:@"words_result.地址.words"];
         }else {
-//            self->_expiryDate = [result valueForKeyPath:@"words_result.失效日期.words"];
             self.expiryDate = [result valueForKeyPath:@"words_result.失效日期.words"];
         }
     }

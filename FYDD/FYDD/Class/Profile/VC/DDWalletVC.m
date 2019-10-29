@@ -26,11 +26,15 @@
     double _amountFrozen;
     DDWalletTopCell * _topCell;
 }
+
 @property (nonatomic,strong) UITableView * tableView;
+@property (nonatomic, strong) UIView *balanceBackgroundView;//余额背景view
+@property (nonatomic, strong) UIView *cashBackgroundView;//可提现背景view
+
 @end
 
 @implementation DDWalletVC
-
+#pragma mark - lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"钱包";
@@ -43,87 +47,6 @@
     _balance = 0;
     _pageDict = @{}.mutableCopy;
     _dataDict = @{}.mutableCopy;
-}
-
-- (void)setupNavigationBar{
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.barTintColor = [DDAppManager share].appTintColor;
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{
-                                                                      NSForegroundColorAttributeName : [UIColor whiteColor],
-                                                                      }];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:true];
-}
-
-
-- (UITableView *)tableView{
-    if (!_tableView){
-        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        _tableView.showsVerticalScrollIndicator = NO;
-        _tableView.backgroundColor = UIColorHex(0xefefef);
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [_tableView registerNib:[UINib nibWithNibName:@"DDWalletTopCell" bundle:nil] forCellReuseIdentifier:@"DDWalletTopCellId"];
-        [_tableView registerNib:[UINib nibWithNibName:@"DDWalletMoneyCell" bundle:nil] forCellReuseIdentifier:@"DDWalletMoneyCellId"];
-        @weakify(self)
-        _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-            @strongify(self)
-            if (!self) return ;
-            [self getWalletList];
-            [self getWalletMoney];
-            [self->_pageDict setObject:@(1) forKey:@(self->_currentType)];
-        }];
-        _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-            @strongify(self)
-            if (!self) return ;
-            NSInteger page = 1;
-            if (self->_pageDict[@(self->_currentType)]) {
-                page = [self->_pageDict[@(self->_currentType)] integerValue];
-            }
-            page = page + 1;
-            [self->_pageDict setObject:@(page) forKey:@(self->_currentType)];
-            [self getWalletList];
-        }];
-    }
-    return _tableView;
-}
-
-- (void)topMenuView:(NSInteger)type{
-    // 充值
-    if (type == 3) {
-        DDRechargeVC * vc = [DDRechargeVC new];
-        [self.navigationController pushViewController:vc animated:true];
-    // tixian
-    }else if (type == 4) {
-        @weakify(self)
-        [DDHub hub:self.view];
-        [[DDUserManager share] getUserPayPasswordStateCompletion:^(BOOL suc) {
-            @strongify(self)
-            if (!self) return ;
-            // 判断是否这是支付密码
-            [DDHub dismiss:self.view];
-            if (!suc) {
-                [DDAlertView showTitle:@"温馨提示"
-                              subTitle:@"您未设置支付密码！"
-                           actionName1:@"去设置"
-                           actionName2:@"取消" sureEvent:^{
-                               DDPayPasswordVC * vc = [DDPayPasswordVC new];
-                               [self.navigationController pushViewController:vc animated:YES];
-                           } cancelEvent:^{
-                               
-                           }];
-            }else {
-                
-                DDGetMoneyToBank * vc = [DDGetMoneyToBank new];
-                vc.banlance = self->_balance;
-                [self.navigationController pushViewController:vc animated:true];
-            }
-        }];
-    }else {
-        _currentType = type;
-        [self.tableView.mj_header beginRefreshing];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -145,7 +68,16 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:true];
 }
 
-
+#pragma mark - CustomMethod
+- (void)setupNavigationBar{
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.barTintColor = [DDAppManager share].appTintColor;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+                                                                      NSForegroundColorAttributeName : [UIColor whiteColor],
+                                                                      }];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:true];
+}
 
 // 获取钱包余额
 - (void)getWalletMoney{
@@ -211,6 +143,61 @@
     return dataList;
 }
 
+- (void)topMenuView:(NSInteger)type{
+    if (type == 3) {
+        //充值
+        DDRechargeVC * vc = [DDRechargeVC new];
+        [self.navigationController pushViewController:vc animated:true];
+    }else if (type == 4) {
+        //提现
+        @weakify(self)
+        [DDHub hub:self.view];
+        [[DDUserManager share] getUserPayPasswordStateCompletion:^(BOOL suc) {
+            @strongify(self)
+            if (!self) return ;
+            // 判断是否这是支付密码
+            [DDHub dismiss:self.view];
+            if (!suc) {
+                [DDAlertView showTitle:@"温馨提示"
+                              subTitle:@"您未设置支付密码！"
+                           actionName1:@"去设置"
+                           actionName2:@"取消" sureEvent:^{
+                               DDPayPasswordVC * vc = [DDPayPasswordVC new];
+                               [self.navigationController pushViewController:vc animated:YES];
+                           } cancelEvent:^{
+                               
+                           }];
+            }else {
+                
+                DDGetMoneyToBank * vc = [DDGetMoneyToBank new];
+                vc.banlance = self->_balance;
+                [self.navigationController pushViewController:vc animated:true];
+            }
+        }];
+    }else if (type == 5) {
+        //账户余额提示
+        [[UIApplication sharedApplication].keyWindow addSubview:self.balanceBackgroundView];
+    }else if (type == 6) {
+        //可提现金额提示
+        [[UIApplication sharedApplication].keyWindow addSubview:self.cashBackgroundView];
+    }else {
+        //切换类型
+        _currentType = type;
+        [self.tableView.mj_header beginRefreshing];
+    }
+}
+
+#pragma mark - ClickMethod
+- (void)banlanceTap {
+    [self.balanceBackgroundView removeFromSuperview];
+}
+
+- (void)cashTap {
+    [self.cashBackgroundView removeFromSuperview];
+}
+
+#pragma mark - SystemDelegate
+
 #pragma mark - UITableViewDelegate,UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
@@ -264,6 +251,135 @@
     }
 }
 
+#pragma mark - CustomDelegate
 
+#pragma mark - GetterAndSetter
+- (UITableView *)tableView{
+    if (!_tableView){
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.backgroundColor = UIColorHex(0xefefef);
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [_tableView registerNib:[UINib nibWithNibName:@"DDWalletTopCell" bundle:nil] forCellReuseIdentifier:@"DDWalletTopCellId"];
+        [_tableView registerNib:[UINib nibWithNibName:@"DDWalletMoneyCell" bundle:nil] forCellReuseIdentifier:@"DDWalletMoneyCellId"];
+        @weakify(self)
+        _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+            @strongify(self)
+            if (!self) return ;
+            [self getWalletList];
+            [self getWalletMoney];
+            [self->_pageDict setObject:@(1) forKey:@(self->_currentType)];
+        }];
+        _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+            @strongify(self)
+            if (!self) return ;
+            NSInteger page = 1;
+            if (self->_pageDict[@(self->_currentType)]) {
+                page = [self->_pageDict[@(self->_currentType)] integerValue];
+            }
+            page = page + 1;
+            [self->_pageDict setObject:@(page) forKey:@(self->_currentType)];
+            [self getWalletList];
+        }];
+    }
+    return _tableView;
+}
+
+- (UIView *)balanceBackgroundView {
+    if (!_balanceBackgroundView) {
+        _balanceBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+        _balanceBackgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+        _balanceBackgroundView.userInteractionEnabled = YES;
+        
+        UIView *banlanceView = [[UIView alloc] init];
+        banlanceView.backgroundColor = [UIColor whiteColor];
+        [_balanceBackgroundView addSubview:banlanceView];
+        [banlanceView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_balanceBackgroundView).offset(20);
+            make.right.equalTo(_balanceBackgroundView).offset(-20);
+            make.centerY.mas_equalTo(_balanceBackgroundView.mas_centerY);
+            make.height.equalTo(@(180));
+        }];
+        [banlanceView layoutIfNeeded];
+        banlanceView.layer.cornerRadius = 10.0;
+        
+        UILabel *tiplabelOne = [[UILabel alloc] init];
+        tiplabelOne.text = @"账户余额";
+        tiplabelOne.textColor = [UIColor blackColor];
+        tiplabelOne.font = [UIFont systemFontOfSize:15];
+        tiplabelOne.textAlignment = NSTextAlignmentCenter;
+        [banlanceView addSubview:tiplabelOne];
+        [tiplabelOne mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(banlanceView).offset(0);
+            make.top.equalTo(banlanceView).offset(50);
+            make.height.equalTo(@(20));
+        }];
+        
+        UILabel *tipLabelTwo = [[UILabel alloc] init];
+        tipLabelTwo.text = @"账户总余额,包括可用的余额以及不可用的余额";
+        tipLabelTwo.textColor = [UIColor grayColor];
+        tipLabelTwo.font = [UIFont systemFontOfSize:13];
+        tipLabelTwo.textAlignment = NSTextAlignmentCenter;
+        [banlanceView addSubview:tipLabelTwo];
+        [tipLabelTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(banlanceView).offset(0);
+            make.bottom.equalTo(banlanceView).offset(-40);
+            make.height.equalTo(@(20));
+        }];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(banlanceTap)];
+        [_balanceBackgroundView addGestureRecognizer:tap];
+        
+    }
+    return _balanceBackgroundView;
+}
+
+- (UIView *)cashBackgroundView {
+    if (!_cashBackgroundView) {
+        _cashBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+        _cashBackgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+        _cashBackgroundView.userInteractionEnabled = YES;
+        
+        UIView *cashView = [[UIView alloc] init];
+        cashView.backgroundColor = [UIColor whiteColor];
+        [_cashBackgroundView addSubview:cashView];
+        [cashView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_cashBackgroundView).offset(20);
+            make.right.equalTo(_cashBackgroundView).offset(-20);
+            make.centerY.mas_equalTo(_cashBackgroundView.mas_centerY);
+            make.height.equalTo(@(180));
+        }];
+        
+        UILabel *tipLabelOne = [[UILabel alloc] init];
+        tipLabelOne.text = @"可提现余额";
+        tipLabelOne.textColor = [UIColor blackColor];
+        tipLabelOne.font = [UIFont systemFontOfSize:15];
+        tipLabelOne.textAlignment = NSTextAlignmentCenter;
+        [cashView addSubview:tipLabelOne];
+        [tipLabelOne mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(cashView).offset(0);
+            make.top.equalTo(cashView).offset(50);
+            make.height.equalTo(@(20));
+        }];
+        
+        UILabel *tipLabelTwo = [[UILabel alloc] init];
+        tipLabelTwo.text = @"可提现以及使用支付余额";
+        tipLabelTwo.textColor = [UIColor grayColor];
+        tipLabelTwo.font = [UIFont systemFontOfSize:13];
+        tipLabelTwo.textAlignment = NSTextAlignmentCenter;
+        [cashView addSubview:tipLabelTwo];
+        [tipLabelTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(cashView).offset(0);
+            make.bottom.equalTo(cashView).offset(-40);
+            make.height.equalTo(@(20));
+        }];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cashTap)];
+        [_cashBackgroundView addGestureRecognizer:tap];
+    }
+    return _cashBackgroundView;
+}
 
 @end

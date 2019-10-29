@@ -115,7 +115,8 @@
                                       if(suc) {
                                           [DDHub hub:@"申请成功" view:self.view];
                                           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                              [[NSNotificationCenter defaultCenter] postNotificationName:DD_GOTO_MAIN object:nil];
+//                                              [[NSNotificationCenter defaultCenter] postNotificationName:DD_GOTO_MAIN object:nil];
+                                              [self.navigationController popViewControllerAnimated:YES];
                                           });
                                       }else {
                                           [DDHub hub:message view:self.view];
