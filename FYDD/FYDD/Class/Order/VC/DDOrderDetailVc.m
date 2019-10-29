@@ -239,17 +239,25 @@
                 hiddenBar = NO;
             }else if (_order.orderStatusType == DDOrderStatusFinish) {
                 hiddenBar = YES;
-            }else if (_order.orderStatusType == DDOrderStatusService ||
-                      _order.orderStatusType == DDOrderStatusLeaflets) {
-                if (!_order.isCompanyFirst && _order.orderStatusType ==  DDOrderStatusLeaflets) {
-                    return;
-                }
+            }else if (_order.orderStatusType == DDOrderWaitReceipt) {
+                //待接单
                 hiddenBar = NO;
                 _orderMenuButton1.tag = 1000;
                 _orderMenuButton2.tag = 5;
                 [_orderMenuButton1 setTitle:@"试用期间免费" forState:UIControlStateNormal];
                 [_orderMenuButton2 setTitle:@"取消订单" forState:UIControlStateNormal];
             }
+//            else if (_order.orderStatusType == DDOrderStatusService ||
+//                      _order.orderStatusType == DDOrderStatusLeaflets) {
+//                if (!_order.isCompanyFirst && _order.orderStatusType ==  DDOrderStatusLeaflets) {
+//                    return;
+//                }
+//                hiddenBar = NO;
+//                _orderMenuButton1.tag = 1000;
+//                _orderMenuButton2.tag = 5;
+//                [_orderMenuButton1 setTitle:@"试用期间免费" forState:UIControlStateNormal];
+//                [_orderMenuButton2 setTitle:@"取消订单" forState:UIControlStateNormal];
+//            }
 
             break;
             // 实施员
@@ -325,7 +333,7 @@
     }else if (sender.tag == 2) {
         DDCommentVC * vc = [DDCommentVC new];
         vc.orderNumber = _order.orderNumber;
-        vc.name = _order.extensionName;;
+        vc.name = _order.extensionName;
         vc.name1 = _order.implementName;
         vc.orderId = _order.orderId;
         [self.navigationController pushViewController:vc animated:YES];

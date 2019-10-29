@@ -10,6 +10,6 @@
 
 @implementation DDOrderDetailObj
 - (DDOrderStatus)orderStatusType {
-    return convertOrderStatus(_orderStatus);
+    return convertOrderStatus(_orderStatus,_isCompanyFirst);
 }
 @end

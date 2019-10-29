@@ -189,7 +189,7 @@ NSString * yyTrimNullText(NSString *text){
     }
 }
 // 订单状态转换
-DDOrderStatus convertOrderStatus(NSString *status) {
+DDOrderStatus convertOrderStatus(NSString *status,NSInteger isCompanyFirst) {
     DDOrderStatus type =  DDOrderStatusCancel;
     if ([status isEqualToString:@"001"]) {
         type =  DDOrderStatusWaitCommit;
@@ -217,6 +217,14 @@ DDOrderStatus convertOrderStatus(NSString *status) {
         type =  DDOrderStatusWaitPay;
     }else if ([status isEqualToString:@"070"]) {
         type =  DDOrderStatusFinish;
+    }else {
+        if (isCompanyFirst == 1) {
+            //首次下单
+            type = DDOrderWaitReceipt;
+        }else {
+            //非首次
+            type = DDOrderStatusWaitPay;
+        }
     }
     return type;
     

@@ -69,6 +69,7 @@
         @strongify(self)
         if (!self) return ;
         if (index == 0) {
+            [weak_stepView removeFromSuperview];
             if (self.removeBlock) self.removeBlock(weak_stepView.tag);
         }else {
             if (weak_stepView.tag == self->_urls.count) {

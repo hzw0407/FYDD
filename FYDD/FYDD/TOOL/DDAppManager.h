@@ -42,4 +42,4 @@
 
 
 extern NSString * yyTrimNullText(NSString *text);
-extern DDOrderStatus convertOrderStatus(NSString *status);
+extern DDOrderStatus convertOrderStatus(NSString *status,NSInteger isCompanyFirst);

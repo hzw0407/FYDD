@@ -69,7 +69,8 @@ typedef NS_ENUM(NSUInteger,DDOrderStatus){
     DDOrderStatusChangeCarryUser, // 更换实施中
     DDOrderStatusWaitComment, // 待评价
     DDOrderStatusWaitPay,
-    DDOrderStatusFinish
+    DDOrderStatusFinish,
+    DDOrderWaitReceipt //待接单
 };
 
 

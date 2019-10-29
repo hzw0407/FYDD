@@ -99,6 +99,7 @@
         cell.removeBlock = ^(NSInteger index) {
             @strongify(self)
             [self->_urls removeObjectAtIndex:index];
+            cell.urls = self->_urls;
         };
         cell.addBlock = ^{
             @strongify(self)
