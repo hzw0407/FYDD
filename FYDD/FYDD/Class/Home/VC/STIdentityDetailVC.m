@@ -95,7 +95,9 @@ STIdentityDetailFunctionCellDelegate>
             NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
             if ([app_Version isEqualToString:version] && downLoadURL && ![SRUserDefaults boolForKey:Identity_FirstClick]) {
                 //和最新的版本一致并且是第一次点击
-                [SRUserDefaults setBool:YES forKey:Identity_FirstClick];
+                if (self.type == 2) {
+                    [SRUserDefaults setBool:YES forKey:Identity_FirstClick];
+                }
                 [[UIApplication sharedApplication].keyWindow addSubview:self.guideBackgroundView];
                 if (self.type == 1) {
                     [self.guideBackgroundView addSubview:self.agentGuideView];

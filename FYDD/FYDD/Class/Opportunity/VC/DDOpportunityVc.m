@@ -139,35 +139,40 @@
                                       minDate:[NSDate date] maxDate:nil
                                  isAutoSelect:NO
                                    themeColor:nil resultBlock:^(NSString *selectValue) {
-                                       @strongify(self)
-                                       NSString * url = [NSString stringWithFormat:@"%@/business/userOnline/claim?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
-                                       if ([DDUserManager share].user.userType == DDUserTypePromoter) {
-                                           url = [NSString stringWithFormat:@"%@/business/userExtension/claim?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
-                                       }
-                                       [DDHub hub:self.view];
-                                       NSDictionary * dic = @{@"id" : opportunity.planId , @"busType" : [DDUserManager share].user.userType == DDUserTypePromoter ? @(1) : @(2),@"dateStr" : selectValue};
-                                       [[DDAppNetwork share] get:NO
-                                                             url:url
-                                                            body:[dic modelToJSONString]
-                                                      completion:^(NSInteger code,
-                                                                   NSString *message,
-                                                                   id data) {
-                                                          @strongify(self)
-                                                          if(!self) return ;
-                                                          if (code == 200) {
-                                                              [DDHub hub:@"认领成功" view:self.view];
-                                                              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                                                  DDOrderDetailVc  * vc = [DDOrderDetailVc new];
-                                                                  vc.type = 3;
-                                                                  vc.orderId  = opportunity.orderNumber;
-                                                                  vc.hidesBottomBarWhenPushed = YES;
-                                                                  [self.navigationController pushViewController:vc animated:YES];
-                                                              });
-                                                              [self.tableView.mj_header beginRefreshing];
-                                                          }else {
-                                                              [DDHub hub:message view:self.view];
-                                                          }
-                                                      }];
+        if ([DDUserManager share].user.isOnlineUser != 1) {
+            //实施方未认证
+            [DDHub hub:@"请先通过实施方认证" view:self.view];
+        }else {
+            @strongify(self)
+            NSString * url = [NSString stringWithFormat:@"%@/business/userOnline/claim?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
+//            if ([DDUserManager share].user.userType == DDUserTypePromoter) {
+//                url = [NSString stringWithFormat:@"%@/business/userExtension/claim?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
+//            }
+            [DDHub hub:self.view];
+            NSDictionary * dic = @{@"id" : opportunity.planId , @"busType" : [DDUserManager share].user.userType == DDUserTypePromoter ? @(1) : @(2),@"dateStr" : selectValue};
+            [[DDAppNetwork share] get:NO
+                                  url:url
+                                 body:[dic modelToJSONString]
+                           completion:^(NSInteger code,
+                                        NSString *message,
+                                        id data) {
+                               @strongify(self)
+                               if(!self) return ;
+                               if (code == 200) {
+                                   [DDHub hub:@"认领成功" view:self.view];
+                                   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                       DDOrderDetailVc  * vc = [DDOrderDetailVc new];
+                                       vc.type = 3;
+                                       vc.orderId  = opportunity.orderNumber;
+                                       vc.hidesBottomBarWhenPushed = YES;
+                                       [self.navigationController pushViewController:vc animated:YES];
+                                   });
+                                   [self.tableView.mj_header beginRefreshing];
+                               }else {
+                                   [DDHub hub:message view:self.view];
+                               }
+                           }];
+        }
                                    }];
     
     
