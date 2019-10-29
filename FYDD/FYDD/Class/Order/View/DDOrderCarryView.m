@@ -43,13 +43,16 @@
     self.rateView.progress = [checkUser.totlaScore doubleValue];
     _moneyLb.text = [NSString stringWithFormat:@"¥%@",checkUser.totalIncome];
     _statusLB.backgroundColor = UIColorHex(0x9A9A9A);
+    [self.ingButton setTitle:@"进行中" forState:UIControlStateNormal];
+    [self.finishButton setTitle:@"已完成" forState:UIControlStateNormal];
     if([DDUserManager share].user.isOnlineUser == 0) {
         _statusLB.text = @"未申请";
     }else if([DDUserManager share].user.isOnlineUser == 1) {
         _statusLB.text = @"已认证";
+        _statusLB.backgroundColor = UIColorHex(0x2996EB);
     }else if([DDUserManager share].user.isOnlineUser == 2) {
         _statusLB.text = @"未认证";
-        _statusLB.backgroundColor = UIColorHex(0x2996EB);
+//        _statusLB.backgroundColor = UIColorHex(0x2996EB);
     }else if([DDUserManager share].user.isOnlineUser == 3) {
         _statusLB.text = @"未通过";
     }
@@ -68,6 +71,8 @@
     self.scoreLb.text = [NSString stringWithFormat:@"%.2f",[extensionUser.totalScore doubleValue]];
     self.rateView.progress = [extensionUser.totalScore doubleValue];
     _statusLB.backgroundColor = UIColorHex(0x9A9A9A);
+    [self.ingButton setTitle:@"我的订单" forState:UIControlStateNormal];
+    [self.finishButton setTitle:@"下线订单" forState:UIControlStateNormal];
     if([DDUserManager share].user.isExtensionUser == 0) {
         _statusLB.text = @"未申请";
     }else if([DDUserManager share].user.isExtensionUser == 1) {

@@ -60,7 +60,13 @@
 - (IBAction)verifyCodeButtonDidClick:(UIButton *)sender {
     DDLADetailVc * vc = [DDLADetailVc new];
     vc.hidesBottomBarWhenPushed = YES;
-    vc.userType = [DDUserManager share].user.userType;
+    if (sender.tag == 9) {
+        //实施方
+        vc.userType = DDUserTypeOnline;
+    }else {
+        //代理方
+        vc.userType = DDUserTypePromoter;
+    }
     [self cw_pushViewController:vc];
 }
 
@@ -89,18 +95,9 @@
             });
             [self cw_pushViewController:vc];
         }else {
-            if ([DDUserManager share].user.isAuth == 1) {
-                //已企业认证
-                DDLADetailVc * vc = [DDLADetailVc new];
-                vc.userType = DDUserTypeOnline;
-                vc.hidesBottomBarWhenPushed = YES;
-                [self cw_pushViewController:vc];
-            }else {
-                //未企业认证
-                DDAuthenVc * vc = [DDAuthenVc new];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self cw_pushViewController:vc];
-            }
+            DDUserComanyInfoVC *vc = [[DDUserComanyInfoVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self cw_pushViewController:vc];
         }
 //        switch ([DDUserManager share].user.userType) {
 //            case DDUserTypeOnline:{
@@ -263,7 +260,7 @@
     [manager addParameterWithKey:@"change" withValue:@"chat"];
     [manager requestDataWithUrl:[NSString stringWithFormat:@"%@:%@//fps/wallet/getHavChange",DDAPP_URL,DDPort7001] withType:RequestGet withSuccess:^(NSDictionary * _Nonnull dict) {
         if (dict && [dict[@"code"] integerValue] == 200) {
-            self.iconTipView1.hidden = ![yyTrimNullText(dict[@"data"][@"chat"]) boolValue];
+            self.iconTipView2.hidden = ![yyTrimNullText(dict[@"data"][@"chat"]) boolValue];
         }
     } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
         [DDHub hub:error.domain view:self.view];
@@ -311,15 +308,15 @@
     [_descLb setAttributedTitle:nil forState:UIControlStateNormal];
     [_descLb setTitle:user.enterpriseAuthentication == 1 ? yyTrimNullText(user.enterpriseName): @"未认证企业" forState:UIControlStateNormal];
     //证书
-    if (user.qualificationNoEx.length > 0 || user.isOnlineUser == 1) {
+    if (user.qualificationNoEx && user.isOnlineUser == 1) {
         //代理方或者实施方认证通过
         self.verifyCodeButton.hidden = NO;
         self.verifyCodeButton1.hidden = NO;
-    }else if (user.qualificationNoEx.length > 0 && user.isOnlineUser != 1) {
+    }else if (user.qualificationNoEx && user.isOnlineUser != 1) {
         //代理方认证通过，实施方没认证
         self.verifyCodeButton.hidden = YES;
         self.verifyCodeButton1.hidden = NO;
-    }else if (user.qualificationNoEx.length <= 0 && user.isOnlineUser == 1) {
+    }else if (!user.qualificationNoEx && user.isOnlineUser == 1) {
         //代理方没认证,实施方认证通过
         self.verifyCodeButton.hidden = NO;
         self.verifyCodeButton1.hidden = YES;

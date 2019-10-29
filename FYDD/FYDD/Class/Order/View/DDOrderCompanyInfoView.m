@@ -18,7 +18,7 @@
     _menuView.layer.shadowRadius = 6;
     _menuView.layer.shadowOpacity = 1;
     _menuView.layer.cornerRadius = 10;
-    _lineView.centerX =  kScreenSize.width / 6 ;
+//    _lineView.centerX =  kScreenSize.width / 6 ;
     _statusLb.text = [DDUserManager share].user.realAuthentication ? @"已认证" : @"未认证";
     _statusLb.backgroundColor =[DDUserManager share].user.realAuthentication ?  UIColorHex(0x2996EB) :  UIColorHex(0x9A9A9A);
     _companyIndustryLb.text = yyTrimNullText([DDUserManager share].user.industry);

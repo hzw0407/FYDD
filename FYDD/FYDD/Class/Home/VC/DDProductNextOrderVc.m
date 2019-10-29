@@ -142,6 +142,7 @@
                        if (code == 200) {
                            [DDHub dismiss:self.view];
                            DDOrderDetailVc * vc = [DDOrderDetailVc new];
+                           vc.type = 1;
                            vc.hidesBottomBarWhenPushed = NO;
                            vc.orderId = self.orderNumber;
                            vc.title = @"订单详情";

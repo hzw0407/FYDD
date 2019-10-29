@@ -39,7 +39,7 @@
                             <rect key="frame" x="106.5" y="0.0" width="107" height="50"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <state key="normal" title="我的订单">
+                            <state key="normal">
                                 <color key="titleColor" red="0.074509803920000006" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <state key="selected">
@@ -53,7 +53,7 @@
                             <rect key="frame" x="213.5" y="0.0" width="106.5" height="50"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <state key="normal" title="下线订单">
+                            <state key="normal">
                                 <color key="titleColor" red="0.074509803920000006" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <state key="selected">
@@ -183,7 +183,9 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="allButton" destination="BHw-Hz-h5V" id="BVH-U5-JYD"/>
+                <outlet property="finishButton" destination="b8L-C7-W8Z" id="3rH-fT-JfQ"/>
                 <outlet property="iconView" destination="Akf-yt-gfi" id="rtW-ax-6ud"/>
+                <outlet property="ingButton" destination="2ij-Mv-MjB" id="Yvl-0f-Msa"/>
                 <outlet property="lineView" destination="2Pi-Q3-EqG" id="fcM-Y8-jKk"/>
                 <outlet property="menuView" destination="P84-xG-uFI" id="rwa-ap-cFZ"/>
                 <outlet property="moneyLb" destination="PRI-fU-M2K" id="aeW-yc-gLg"/>

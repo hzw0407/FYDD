@@ -58,7 +58,9 @@ STIdentityDetailFunctionCellDelegate>
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self getAdvertorialsLisy];
+    [[DDUserManager share] getUserInfo:^{
+        [self getAdvertorialsLisy];
+    }];
 }
 
 #pragma mark - CustomMethod

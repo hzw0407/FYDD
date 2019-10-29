@@ -88,6 +88,7 @@
             [DDAppManager gotoVC:vc navigtor:self.navigationController];
         }else {
             DDOrderDetailVc * vc = [DDOrderDetailVc new];
+            vc.type = 1;
             vc.orderId = _orderId;
             vc.title = @"订单详情";
             [DDAppManager gotoVC:vc navigtor:self.navigationController];

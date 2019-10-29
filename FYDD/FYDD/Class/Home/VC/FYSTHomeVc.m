@@ -25,7 +25,6 @@
 #import "DDProductExampleVC.h"
 #import "DDMessageModel.h"
 #import "DDWalletVC.h"
-#import "DDOrderDetailVc.h"
 #import "DDMessageDetailVc.h"
 #import "DDContactListVC.h"
 #import "DDBannerModel.h"

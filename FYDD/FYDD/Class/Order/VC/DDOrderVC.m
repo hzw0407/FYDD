@@ -22,14 +22,16 @@
 
 @interface DDOrderVC ()<UITableViewDelegate,UITableViewDataSource> {
     NSInteger _currentType;
-    NSMutableDictionary* _pageDict;
+//    NSMutableDictionary* _pageDict;
     NSMutableDictionary * _datas;
     DDOrderCheckUser * _user;
     DDOrderExtensionUser * _extensionUser;
 }
+
 @property (nonatomic,strong) UITableView * tableView;
 @property (nonatomic,strong) DDOrderCarryView * carryView;
 @property (nonatomic,strong) DDOrderCompanyInfoView * companyView;
+
 @end
 
 @implementation DDOrderVC
@@ -37,33 +39,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
-//    if ([DDUserManager share].user.userType == DDUserTypeOnline
-//        || [DDUserManager share].user.userType == DDUserTypePromoter) {
-//        [self.view addSubview:self.carryView];
-//        [self.carryView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.right.top.mas_equalTo(@0);
-//            make.height.mas_equalTo(@230);
-//        }];
-//    }else if ([DDUserManager share].user.userType == DDUserTypeSystem) {
-//        [self.view addSubview:self.companyView];
-//        [self.companyView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.right.top.mas_equalTo(@0);
-//            make.height.mas_equalTo(@230);
-//        }];
-//    }
     
     self.navigationItem.title = @"我的订单";
     self.view.backgroundColor = UIColorHex(0xF3F4F6);
     
-    if (self.type == 2) {
-        //代理方
+    if (self.type == 2 || self.type == 3) {
+        //代理方、实施方
         [self.view addSubview:self.carryView];
         [self.carryView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.top.mas_equalTo(@0);
             make.height.mas_equalTo(@230);
         }];
-    }else if (self.type == 1 || self.type == 3) {
-        //企业用户或者实施方
+    }else if (self.type == 1) {
+        //企业用户
         [self.view addSubview:self.companyView];
         [self.companyView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.top.mas_equalTo(@0);
@@ -79,7 +67,7 @@
     }];
     
     _currentType = 1;
-    _pageDict = @{}.mutableCopy;
+//    _pageDict = @{}.mutableCopy;
     _datas = @{}.mutableCopy;
     
     if (self.type == 2) {
@@ -102,9 +90,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self setupNavigationBar];
-    self->_pageDict[@(self->_currentType)] = @(1);
+//    self->_pageDict[@(self->_currentType)] = @(1);
     [self getOrderListData];
-//    [self getOnlineUserInfo]
     
 }
 
@@ -146,26 +133,34 @@
 
 //获取订单列表数据
 - (void)getOrderListData{
-    id pageObject = _pageDict[@(_currentType)];
-    if (!pageObject) {
-        pageObject = @(1);
-    }
+//    id pageObject = _pageDict[@(_currentType)];
+//    if (!pageObject) {
+//        pageObject = @(1);
+//    }
     @weakify(self)
+    NSInteger userType;
+    if (self.type == 1) {
+        userType = 1;
+    }else if (self.type == 2) {
+        userType = 3;
+    }else {
+        userType = 2;
+    }
     [[DDAppNetwork share] get:YES
-                         path:[NSString stringWithFormat:@"/tss/orders/findOrderByType?token=%@&page=%@&state=%@", [DDUserManager share].user.token,pageObject,@(_currentType)]
+                         path:[NSString stringWithFormat:@"/tss/orders/findOrderByType?token=%@&state=%@&userType=%zd", [DDUserManager share].user.token,@(_currentType),userType]
                          body:@""
                    completion:^(NSInteger code, NSString *message, NSDictionary * data) {
                        @strongify(self)
                        if (!self) return ;
-                       [self.tableView.mj_header endRefreshing];
-                       [self.tableView.mj_footer endRefreshing];
+//                       [self.tableView.mj_header endRefreshing];
+//                       [self.tableView.mj_footer endRefreshing];
                        NSMutableArray * datas = @[].mutableCopy;
-                       if ([pageObject integerValue] != 1) {
-                           NSArray * cacheList = self->_datas[@(self->_currentType)];
-                           if (cacheList) {
-                               datas = [NSMutableArray arrayWithArray:cacheList];
-                           }
-                       }
+//                       if ([pageObject integerValue] != 1) {
+//                           NSArray * cacheList = self->_datas[@(self->_currentType)];
+//                           if (cacheList) {
+//                               datas = [NSMutableArray arrayWithArray:cacheList];
+//                           }
+//                       }
                        if (code == 200) {
                            NSArray * dataList = data[@"list"];
                            if ([dataList isKindOfClass:[NSArray class]]) {
@@ -176,10 +171,6 @@
                            }
                            [self->_datas setObject:datas forKey:@(self->_currentType)];
                            [self.tableView reloadData];
-                       }
-                       NSInteger total  = [data[@"total"] integerValue];
-                       if (total <= datas.count) {
-//                           [self.tableView.mj_footer endRefreshingWithNoMoreData];
                        }
                    }];
 }
@@ -249,6 +240,7 @@
         [self.navigationController pushViewController:vc animated:YES];
     }else {
         DDOrderDetailVc * vc = [DDOrderDetailVc new];
+        vc.type = self.type;
         vc.orderId = info.orderNumber;
         vc.title = @"订单详情";
         vc.hidesBottomBarWhenPushed = YES;
@@ -269,23 +261,23 @@
         _tableView.backgroundColor = UIColorHex(0xF3F4F6);
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_tableView registerNib:[UINib nibWithNibName:@"DDClerkOrderCell" bundle:nil] forCellReuseIdentifier:@"DDClerkOrderCellId"];
-        @weakify(self)
-        _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-            @strongify(self)
-            if (!self) return ;
-            self->_pageDict[@(self->_currentType)] = @(1);
-            [self getOrderListData];
-        }];
-        _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-            @strongify(self)
-            if (!self) return ;
-            id pageObjc = self->_pageDict[@(self->_currentType)];
-            if (!pageObjc) {
-                pageObjc = @(1);
-            }
-            self->_pageDict[@(self->_currentType)] = @([pageObjc integerValue] + 1);
-            [self getOrderListData];
-        }];
+//        @weakify(self)
+//        _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+//            @strongify(self)
+//            if (!self) return ;
+//            self->_pageDict[@(self->_currentType)] = @(1);
+//            [self getOrderListData];
+//        }];
+//        _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+//            @strongify(self)
+//            if (!self) return ;
+//            id pageObjc = self->_pageDict[@(self->_currentType)];
+//            if (!pageObjc) {
+//                pageObjc = @(1);
+//            }
+//            self->_pageDict[@(self->_currentType)] = @([pageObjc integerValue] + 1);
+//            [self getOrderListData];
+//        }];
     }
     return _tableView;
 }
@@ -298,15 +290,16 @@
         _carryView.event = ^(NSInteger index) {
             @strongify(self)
             if (!self) return ;
-            if (index == 2) {
+            if (self.type == 2 && index == 2) {
                 //下线
                 DDJuniorVC *vc = [[DDJuniorVC alloc] init];
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             }else {
                 self->_currentType = index + 1;
-                [self.tableView reloadData];
-                [self.tableView.mj_header beginRefreshing];
+                [self getOrderListData];
+//                [self.tableView reloadData];
+//                [self.tableView.mj_header beginRefreshing];
             }
         };
     }
@@ -321,8 +314,9 @@
             @strongify(self)
             if (!self) return ;
             self->_currentType = index + 1;
-            [self.tableView reloadData];
-            [self.tableView.mj_header beginRefreshing];
+            [self getOrderListData];
+//            [self.tableView reloadData];
+//            [self.tableView.mj_header beginRefreshing];
         };
     }
     return _companyView;

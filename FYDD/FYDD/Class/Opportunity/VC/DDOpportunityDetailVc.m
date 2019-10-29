@@ -84,6 +84,7 @@
     cell.orderBtnBlock = ^{
         @strongify(self)
         DDOrderDetailVc  * vc = [DDOrderDetailVc new];
+        vc.type = 3;
         vc.orderId  = self->_opportunityModel.orderNumber;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
@@ -123,6 +124,7 @@
                                                               [self.tableView.mj_header beginRefreshing];
                                                               dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                                                                   DDOrderDetailVc  * vc = [DDOrderDetailVc new];
+                                                                  vc.type = 3;
                                                                   vc.orderId  = self->_opportunityModel.orderNumber;
                                                                   vc.hidesBottomBarWhenPushed = YES;
                                                                   [self.navigationController pushViewController:vc animated:YES];

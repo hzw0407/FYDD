@@ -78,7 +78,7 @@
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_back"] style:UIBarButtonItemStylePlain target:self action:@selector(dismissVc)];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_back"] style:UIBarButtonItemStylePlain target:self action:@selector(dismissVc)];
     
 }
 
@@ -194,11 +194,11 @@
     }
     
     BOOL hiddenBar = YES;
-    switch ([DDUserManager share].user.userType) {
+    switch (self.type) {
             
-        case DDUserTypePromoter:
+        case 2:
             break;
-        case DDUserTypeSystem:
+        case 1:
             // 待评价
             if (_order.orderStatusType == DDOrderStatusWaitComment){
                 hiddenBar = NO;
@@ -253,7 +253,7 @@
 
             break;
             // 实施员
-        case DDUserTypeOnline:{
+        case 3:{
             // 当前待接单状态
             if (_order.orderStatusType == DDOrderStatusOrderTaking ||
                 _order.orderStatusType == DDOrderStatusLeaflets ||

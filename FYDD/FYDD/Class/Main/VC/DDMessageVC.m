@@ -195,6 +195,13 @@
             [self.navigationController pushViewController:vc animated:YES];
         }else if (jumpURL && [jumpURL rangeOfString:@"fy3tzz://sante/orderDetail?orderID="].location != NSNotFound) {
             DDOrderDetailVc * vc = [DDOrderDetailVc new];
+            if (item.userIdType == 1) {
+                vc.type = 1;
+            }else if (item.userIdType == 2) {
+                vc.type = 3;
+            }else {
+                vc.type = 2;
+            }
             vc.title = @"订单详情";
             vc.orderId = [jumpURL stringByReplacingOccurrencesOfString:@"fy3tzz://sante/orderDetail?orderID=" withString:@""];
             [self.navigationController pushViewController:vc animated:YES];

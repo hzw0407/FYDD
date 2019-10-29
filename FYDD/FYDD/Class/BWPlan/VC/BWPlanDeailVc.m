@@ -83,6 +83,7 @@
     cell.orderDidClick = ^{
         @strongify(self)
         DDOrderDetailVc * vc = [DDOrderDetailVc new];
+        vc.type = 2;
         vc.orderId = self->_planModel.orderNumber;
         vc.title = @"订单详情";
         [self.navigationController pushViewController:vc animated:YES];

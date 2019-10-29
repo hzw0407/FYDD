@@ -15,6 +15,7 @@
 #import "DDSequentialExercisesVc.h"
 #import "DDSequentialTypeChooseVc.h"
 #import "DDLADetailVc.h"
+#import "DDAuthenticationIdCardVcView.h"
 
 @interface DDAuthenVc ()<UITableViewDelegate,UITableViewDataSource> {
     BOOL _hasRecordOnlineUser;
@@ -137,10 +138,17 @@
             [self.navigationController pushViewController:vc animated:YES];
         }else {
             //开始考试
-            DDAuthenMoniVc * vc = [DDAuthenMoniVc new];
-            vc.isSilmimator = NO;
-            vc.userType = userType;
-            [self.navigationController pushViewController:vc animated:YES];
+            if ([DDUserManager share].user.realAuthentication != 1) {
+                //未实名认证
+                DDAuthenticationIdCardVcView * vc = [DDAuthenticationIdCardVcView new];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else {
+                DDAuthenMoniVc * vc = [DDAuthenMoniVc new];
+                vc.isSilmimator = NO;
+                vc.userType = userType;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
         }
     };
     return cell;

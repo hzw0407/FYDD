@@ -59,6 +59,13 @@
     _cons.constant = 0;
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self->_timer invalidate];
+    self->_timer = nil;
+}
+
 - (void)setCurrentObj:(DDRequestMainObj *)currentObj{
     _currentObj = currentObj;
     if (_currentObj.sumNo == _currentObj.currentNo) {

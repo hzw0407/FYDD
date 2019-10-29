@@ -60,11 +60,12 @@
     _circleView.layer.borderWidth = 1;
 }
 
+//回到资格认证
 - (IBAction)dismissVc{
     [DDAppManager popVc:@"DDAuthenVc" navigtor:self.navigationController];
 }
 
-
+//再来一次
 - (IBAction)aginButtonDidClick:(id)sender {
     DDAuthenMoniVc * vc = [DDAuthenMoniVc new];
     vc.isSilmimator = _isSilmimator;

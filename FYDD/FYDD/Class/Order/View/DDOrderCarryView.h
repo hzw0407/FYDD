@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *statusLB;
 @property (weak, nonatomic) IBOutlet UILabel *moneyLb;
 @property (weak, nonatomic) IBOutlet UIButton *allButton;
+@property (weak, nonatomic) IBOutlet UIButton *ingButton;
+@property (weak, nonatomic) IBOutlet UIButton *finishButton;
 @property (weak, nonatomic)  UIButton *tempButton;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
 

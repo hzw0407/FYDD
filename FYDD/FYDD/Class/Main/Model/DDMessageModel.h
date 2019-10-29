@@ -18,6 +18,7 @@
 @property (nonatomic,copy) NSString * createTime;
 @property (nonatomic,copy) NSString * messageId;
 @property (nonatomic,assign)NSInteger state;
+//1企业用户 2实施方 3代理方
 @property (nonatomic,assign)NSInteger userIdType;
 - (void)layout;
 @end

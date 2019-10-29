@@ -85,14 +85,12 @@
         
         NSArray * titles = @[@"修改登录密码",
                              @"支付密码",
-//                             @"自动续费",
-                             @"绑定/解绑微信",
+                             @"绑定、解绑微信",
                              @"关于我们",
                              @"用户协议",
-                             @"帮助",
                              @"清除缓存",
-                             @"版本更新",
-                             @"退出当前账号"];
+                             @"帮助",
+                             @"版本更新"];
         
         title = titles[indexPath.row];
         content = @"";
@@ -100,9 +98,9 @@
         cell.dictView.hidden = NO;
         cell.clipsToBounds = YES;
         cell.contentLb.textColor = UIColorHex(0x6C6969);
-        if (indexPath.row == 3) {
+        if (indexPath.row == 2) {
             content = [DDUserManager share].user.wechatOpenid.length ? @"已绑定" : @"未绑定";
-        }else if (indexPath.row == 7){
+        }else if (indexPath.row == 5){
             // 计算缓存大小
              double kb = [[SDImageCache sharedImageCache] totalDiskSize] / 1024;
             if (kb > 1024) {
@@ -145,8 +143,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 2) return 0.001;
-    return indexPath.row == 9 ? 175 : 52;
+    return 52;
 }
 
 
@@ -185,14 +182,14 @@
         title = @"用户协议";
         
 
-    }else if(indexPath.row == 6) {
+    }else if(indexPath.row == 5) {
         @weakify(self)
         [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
             @strongify(self)
             [DDHub hub:@"缓存清除成功" view:self.view];
             [self.tableView reloadData];
         }];
-    }else if(indexPath.row == 5) {
+    }else if(indexPath.row == 6) {
         DDHelpVC * help = [DDHelpVC new];
         [self.navigationController pushViewController:help animated:YES];
     }else if(indexPath.row == 7) {
