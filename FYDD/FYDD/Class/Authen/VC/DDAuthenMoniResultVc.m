@@ -97,6 +97,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:true];
 }
 
+//提交考试答案
 - (void)getData{
     [DDHub hub:self.view];
     @weakify(self)

@@ -176,6 +176,7 @@
 //点击引导
 - (void)guideTap {
     [self.guideBackgroundView removeFromSuperview];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - SystemDelegate

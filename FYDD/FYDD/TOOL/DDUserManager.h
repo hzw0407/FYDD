@@ -18,6 +18,7 @@
 @property (nonatomic,copy) NSString * qualificationNoEx;
 @property (nonatomic,assign) BOOL  isCompanyUser;
 @property (nonatomic,assign) NSInteger isFinishInfo;
+//实施方认证状态 0未认证 1已认证 2认证中
 @property (nonatomic,assign) NSInteger isOnlineUser;
 @property (nonatomic,copy) NSString * name;
 @property (nonatomic,copy) NSString * nickname;

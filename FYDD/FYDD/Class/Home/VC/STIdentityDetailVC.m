@@ -112,11 +112,15 @@ STIdentityDetailFunctionCellDelegate>
 //点击代理方引导
 - (void)agentGuidetap {
     [self.guideBackgroundView removeFromSuperview];
+    BWPlanVc *vc = [[BWPlanVc alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 //点击实施方引导
 - (void)implementerGuideTap {
     [self.guideBackgroundView removeFromSuperview];
+    DDOpportunityVc *vc = [[DDOpportunityVc alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - SystemDelegate
@@ -234,7 +238,7 @@ STIdentityDetailFunctionCellDelegate>
         if (self.type == 1) {
             //代理流程
             DDWebVC * vc = [DDWebVC new];
-            vc.title = @"实施步骤";
+            vc.title = @"代理流程";
             vc.hidesBottomBarWhenPushed = YES;
             vc.url = [NSString stringWithFormat:@"%@:%@%@",DDAPP_URL,DDPort8003,@"/supervisor/manager/extensionFlowDetail"];
             [self.navigationController pushViewController:vc animated:YES];

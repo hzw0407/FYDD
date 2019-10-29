@@ -307,6 +307,10 @@ FYSTBannerCellDelegate> {
 //点击身份引导
 - (void)identityGuideTap {
     [self.guideBackgroundView removeFromSuperview];
+    STIdentityDetailVC *vc = [[STIdentityDetailVC alloc] init];
+    vc.type = 1;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - SystemDelegate

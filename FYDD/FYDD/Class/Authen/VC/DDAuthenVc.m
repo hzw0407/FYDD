@@ -115,12 +115,8 @@
     
     cell.menuBlock = ^(DDUserType userType, NSInteger index) {
         @strongify(self)
-        if (index == 0) {
-            DDOnlineStudyVc * vc = [DDOnlineStudyVc new];
-            vc.userType = userType;
-            [self.navigationController pushViewController:vc animated:YES];
+        if (index == 1) {
             // 顺序练习
-        }else if (index == 1) {
             if ((  userType == DDUserTypeOnline   &&   !self->_hasRecordOnlineUser)
                 ||(userType == DDUserTypePromoter && !self->_hasRecordPromoter)) {
                 DDSequentialExercisesVc * vc = [DDSequentialExercisesVc new];
@@ -134,11 +130,13 @@
             }
             
         }else if (index == 2) {
+            //模拟考试
             DDAuthenMoniVc * vc = [DDAuthenMoniVc new];
             vc.isSilmimator = YES;
             vc.userType = userType;
             [self.navigationController pushViewController:vc animated:YES];
         }else {
+            //开始考试
             DDAuthenMoniVc * vc = [DDAuthenMoniVc new];
             vc.isSilmimator = NO;
             vc.userType = userType;

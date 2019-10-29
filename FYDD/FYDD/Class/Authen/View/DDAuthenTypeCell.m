@@ -29,6 +29,7 @@
     }];
 }
 
+//点击开始内容
 - (IBAction)menuButtonDidClick:(UIButton *)sender {
     if (_menuBlock) {
         _menuBlock(_userType,sender.tag);
@@ -56,7 +57,7 @@
     _examinationView.hidden = YES;
     _verifyView.hidden = YES;
     _startExaminationButton.userInteractionEnabled = NO;
-    UIView * exSView = _exmaViews[1];
+    UIView * exSView = _exmaViews[0];
     exSView.backgroundColor = [UIColor whiteColor];
     switch (userType) {
         case DDUserTypeOnline: {
@@ -65,10 +66,10 @@
             _textLb1.text = @"软件实施工程师，制造业IT人员";
             _textLb2.text = @"完成订单可取的实施佣金";
             _iconView.image = [UIImage imageNamed:@"icon_user_type3"];
-            if ([DDUserManager share].user.isAuth == -10){
+            if ([DDUserManager share].user.isOnlineUser == 0){
                 _applyButton.hidden = NO;
                 [_applyButton setTitle:@"申请成为实施方" forState:UIControlStateNormal];
-            }else if ([DDUserManager share].user.isAuth == 1) {
+            }else if ([DDUserManager share].user.isOnlineUser == 1) {
                 _examinationView.hidden = NO;
                        [_verifyView setBackgroundImage:[UIImage imageNamed:@"icon_change_user3"] forState:UIControlStateNormal];
                 exSView.backgroundColor = UIColorHex(0xf0f0f0);

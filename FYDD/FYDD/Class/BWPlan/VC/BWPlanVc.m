@@ -13,6 +13,7 @@
 #import <MJRefresh.h>
 #import "BWPlanModel.h"
 #import "DDAuthenticationIdCardVcView.h"
+#import "STIdentityDetailVC.h"
 
 @interface BWPlanVc () <UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate> {
     NSString * _status;
@@ -27,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *allButton;
 @property (weak, nonatomic)  UIButton *tempButton;
 @property (nonatomic, strong) UIView *guideBackgroundView;//引导view
+@property (nonatomic, strong) UILabel *noDataLabel;//没有数据时的提示语
 
 @end
 
@@ -135,6 +137,16 @@
                            }else {
                                [self.tableView.mj_footer resetNoMoreData];
                            }
+                           if (list.count == 0) {
+                               [self.view addSubview:self.noDataLabel];
+                               [self.noDataLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                                   make.left.right.equalTo(self.view).offset(0);
+                                   make.centerY.mas_equalTo(self.view.mas_centerY);
+                                   make.height.equalTo(@(20));
+                               }];
+                           }else {
+                               [self.noDataLabel removeFromSuperview];
+                           }
                            [self.tableView reloadData];
                        }else {
                            [self updateDataList:@[]];
@@ -217,6 +229,9 @@
 //点击引导
 - (void)guideTap {
     [self.guideBackgroundView removeFromSuperview];
+    STIdentityDetailVC *vc = [[STIdentityDetailVC alloc] init];
+    vc.type = 2;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - SystemDelegate
@@ -307,6 +322,17 @@
         [_guideBackgroundView addGestureRecognizer:tap];
     }
     return _guideBackgroundView;
+}
+
+- (UILabel *)noDataLabel {
+    if (!_noDataLabel) {
+        _noDataLabel = [[UILabel alloc] init];
+        _noDataLabel.text = @"您现在还没有客户订单,快去添加吧!";
+        _noDataLabel.textColor = [UIColor grayColor];
+        _noDataLabel.font = [UIFont systemFontOfSize:13];
+        _noDataLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    return _noDataLabel;
 }
 
 @end

@@ -155,23 +155,23 @@
 //            [self.navigationController pushViewController:vc animated:YES];
 //            return;
 //        }
-        // 如果没有上线，填入上线
-        if (_detailObj.extensionName.length == 0) {
-            [self bindingRewartCode];
-            return;
-        }
-        if([DDUserManager share].user.userType != DDUserTypeSystem) {
-            [DDAlertView showTitle:@""
-                          subTitle:@"请切换至企业用户身份下单"
-                         sureEvent:^{
-                             DDChangeUserTypeVC * vc = [DDChangeUserTypeVC new];
-                             vc.hidesBottomBarWhenPushed = YES;
-                             [self.navigationController pushViewController:vc animated:YES];
-            } cancelEvent:^{
-                
-            } autoSize:YES];
-            return;
-        }
+//        // 如果没有上线，填入上线
+//        if (_detailObj.extensionName.length == 0) {
+//            [self bindingRewartCode];
+//            return;
+//        }
+//        if([DDUserManager share].user.userType != DDUserTypeSystem) {
+//            [DDAlertView showTitle:@""
+//                          subTitle:@"请切换至企业用户身份下单"
+//                         sureEvent:^{
+//                             DDChangeUserTypeVC * vc = [DDChangeUserTypeVC new];
+//                             vc.hidesBottomBarWhenPushed = YES;
+//                             [self.navigationController pushViewController:vc animated:YES];
+//            } cancelEvent:^{
+//
+//            } autoSize:YES];
+//            return;
+//        }
         DDProductCreateOrderVc * vc = [DDProductCreateOrderVc new];
         vc.detailObj = self->_detailObj;
         vc.isFree = _isFree;

@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DDAuthenMoniVc : UIViewController
 @property (nonatomic,assign) DDUserType userType;
-@property (nonatomic,assign) BOOL isSilmimator;
+@property (nonatomic,assign) BOOL isSilmimator;//是否是模拟考试
 @end
 
 NS_ASSUME_NONNULL_END
