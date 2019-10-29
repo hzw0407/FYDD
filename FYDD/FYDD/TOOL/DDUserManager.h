@@ -15,6 +15,7 @@
 @property (nonatomic,copy) NSString * email;
 @property (nonatomic,assign) NSInteger enterprise;
 @property (nonatomic,copy) NSString * enterpriseName;
+//授权码
 @property (nonatomic,copy) NSString * qualificationNoEx;
 @property (nonatomic,assign) BOOL  isCompanyUser;
 @property (nonatomic,assign) NSInteger isFinishInfo;
@@ -72,6 +73,7 @@
 @property (nonatomic,assign) NSInteger isExtensionUser;
 
 @property (nonatomic,copy) NSString * promoteOnline;
+
 @end
 
 

@@ -85,7 +85,7 @@
     NSString * userName = [self getTextFieldFromText:0];
     NSString * soialCode = [self getTextFieldFromText:1];
     if (userName.length == 0) {
-        [DDHub hub:@"请输入客户名称" view:self.view];
+        [DDHub hub:@"请输入企业名称" view:self.view];
         return;
     }
     if (soialCode.length != 18) {

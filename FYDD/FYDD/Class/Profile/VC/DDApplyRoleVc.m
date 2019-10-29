@@ -45,6 +45,8 @@
     
     _descLb1.attributedText = [self getAttText:@"请详细阅读" textLas:@"《保密协议》"];
     _descLb2.attributedText = [self getAttText:@"请详细阅读" textLas:@"《服务承诺》"];
+    _isSecrecy = NO;
+    _isPromise = NO;
 }
 
 - (NSAttributedString * )getAttText:(NSString *)text textLas:(NSString *)last{
@@ -54,37 +56,56 @@
     return string;
 }
 
+//点击提交申请
 - (IBAction)commitApplyRoleClick:(id)sender {
-    // 判断是不是有上线
-    if ([DDUserManager share].user.promoteOnline.length == 0 &&
-        _applyType == DDUserTypePromoter) {
-        @weakify(self)
-        [DDAlertInputView showEvent:^(NSString *text) {
-            [DDHub hub:self.view];
-            [[DDAppNetwork share] get:YES
-                                 path:[NSString stringWithFormat:@"/uas/user/extension/setOrdersExtension?token=%@&extensionCode=%@",[DDUserManager share].user.token,text]
-                                 body:@""
-                           completion:^(NSInteger code, NSString *message, id data) {
-                               @strongify(self)
-                               if (!self) return ;
-                               [DDHub dismiss:self.view];
-                               if (code == 200) {
-                                   [self commitAply];
-                               }else {
-                                   [DDHub hub:message view:self.view];
-                               }
-                           }];
-            
-        } cancelEvent:^{
-            [self.navigationController popViewControllerAnimated:YES];
-        }];
+    if (!_isSecrecy) {
+        [DDHub hub:@"请先阅读保密协议" view:self.view];
         return;
+    }
+    
+    if (!_isPromise) {
+        [DDHub hub:@"请先阅读服务承诺" view:self.view];
+        return;
+    }
+    if (_applyType == DDUserTypePromoter) {
+        //代理方
+        if ([DDUserManager share].user.promoteOnline.length == 0) {
+            //没有上线
+            @weakify(self)
+            [DDAlertInputView showEvent:^(NSString *text) {
+                [DDHub hub:self.view];
+                [[DDAppNetwork share] get:YES
+                                     path:[NSString stringWithFormat:@"/uas/user/extension/setOrdersExtension?token=%@&extensionCode=%@",[DDUserManager share].user.token,text]
+                                     body:@""
+                               completion:^(NSInteger code, NSString *message, id data) {
+                                   @strongify(self)
+                                   if (!self) return ;
+                                   [DDHub dismiss:self.view];
+                                   if (code == 200) {
+                                       [self commitAply];
+                                   }else {
+                                       [DDHub hub:message view:self.view];
+                                   }
+                               }];
+                
+            } cancelEvent:^{
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+        }else {
+            //已上线
+            [self commitAply];
+        }
+        
     }else if (_applyType == DDUserTypeOnline) {
+        //实施方直接申请
         STHttpRequestManager *manager = [STHttpRequestManager shareManager];
         [manager requestDataWithUrl:[NSString stringWithFormat:@"%@:%@/uas/user/online/applyForAsUserOnline?token=%@",DDAPP_URL,DDPort7001,[DDUserManager share].user.token] withType:RequestPost withSuccess:^(NSDictionary * _Nonnull dict) {
             [DDHub dismiss:self.view];
             if (dict && [dict[@"code"] integerValue] == 200) {
-                [self commitAply];
+                [DDHub hub:@"申请成功" view:self.view];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
             }else {
                 [DDHub hub:dict[@"message"] view:self.view];
             }
@@ -96,32 +117,39 @@
 //    [self commitAply];
 }
 
+//代理方提交申请
 - (void)commitAply{
-    if (!_isSecrecy) {
-        [DDHub hub:@"请先阅读保密协议" view:self.view];
-        return;
-    }
-    
-    if (!_isPromise) {
-        [DDHub hub:@"请先阅读服务承诺" view:self.view];
-        return;
-    }
     [DDHub hub:self.view];
     @weakify(self)
-    [[DDUserManager share] setCurrenUserType:self.applyType
-                                  completion:^(BOOL suc , NSString * message) {
-                                      @strongify(self)
-                                      if (!self) return ;
-                                      if(suc) {
-                                          [DDHub hub:@"申请成功" view:self.view];
-                                          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                                              [[NSNotificationCenter defaultCenter] postNotificationName:DD_GOTO_MAIN object:nil];
-                                              [self.navigationController popViewControllerAnimated:YES];
-                                          });
-                                      }else {
-                                          [DDHub hub:message view:self.view];
-                                      }
-                                  }];
+    STHttpRequestManager *manager = [STHttpRequestManager shareManager];
+    [manager requestDataWithUrl:[NSString stringWithFormat:@"%@:%@/uas/user/extension/applyForAsUserExtension?token=%@",DDAPP_URL,DDPort7001,[DDUserManager share].user.token] withType:RequestPost withSuccess:^(NSDictionary * _Nonnull dict) {
+        [DDHub dismiss:self.view];
+        if (dict && [dict[@"code"] integerValue] == 200) {
+            [DDHub hub:@"申请成功" view:self.view];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else {
+            [DDHub hub:dict[@"message"] view:self.view];
+        }
+    } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+        [DDHub dismiss:self.view];
+        [DDHub hub:error.domain view:self.view];
+    }];
+//    }
+//    [[DDUserManager share] setCurrenUserType:self.applyType
+//                                  completion:^(BOOL suc , NSString * message) {
+//                                      @strongify(self)
+//                                      if (!self) return ;
+//                                      if(suc) {
+//                                          [DDHub hub:@"申请成功" view:self.view];
+//                                          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+////                                              [[NSNotificationCenter defaultCenter] postNotificationName:DD_GOTO_MAIN object:nil];
+//                                              [self.navigationController popViewControllerAnimated:YES];
+//                                          });
+//                                      }else {
+//                                          [DDHub hub:message view:self.view];
+//                                      }
 }
 
 - (IBAction)agreeButtonDidClick:(UIButton *)sender {

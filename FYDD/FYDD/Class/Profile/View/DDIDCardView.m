@@ -12,6 +12,7 @@
 
 @interface DDIDCardView()
 
+@property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIView *topView;//上半部view
 @property (nonatomic, strong) UIView *bottomview;//下半部view
 
@@ -22,27 +23,39 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self == [super initWithFrame:frame]) {
         
-        self.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.2];
-        [self creatUI];
+//        self.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.2];
+        self.backgroundColor = [UIColor whiteColor];
         
     }
     return self;
 }
 
+- (void)layoutSubviews {
+    [self layoutIfNeeded];
+    self.scrollView.frame = CGRectMake(0, 0, self.size.width, self.size.height);
+    [self creatUI];
+}
+
 #pragma mark - CustomMethod
 - (void)creatUI {
-    [self addSubview:self.topView];
-    [self.topView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.top.equalTo(self).offset(0);
-        make.height.equalTo(@(215));
-    }];
+    [self addSubview:self.scrollView];
     
-    [self addSubview:self.bottomview];
-    [self.bottomview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self).offset(0);
-        make.top.mas_equalTo(self.topView.mas_bottom).offset(10);
-        make.bottom.equalTo(self).offset(0);
-    }];
+    [self.scrollView addSubview:self.topView];
+//    [self.topView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.right.top.equalTo(self.scrollView).offset(0);
+//        make.height.equalTo(@(215));
+//    }];
+//    [self.topView layoutIfNeeded];
+    
+    [self.scrollView addSubview:self.bottomview];
+//    [self.bottomview mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.right.equalTo(self).offset(0);
+//        make.top.mas_equalTo(self.topView.mas_bottom).offset(10);
+//        make.bottom.equalTo(self).offset(0);
+//    }];
+//    [self.bottomview layoutIfNeeded];
+    
+    self.scrollView.contentSize = CGSizeMake(kScreenWidth, 630);
 }
 
 //刷新数据
@@ -81,190 +94,198 @@
 #pragma mark - CustomDelegate
 
 #pragma mark - GetterAndSetter
+- (UIScrollView *)scrollView {
+    if (!_scrollView) {
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+//        _scrollView.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.2];
+    }
+    return _scrollView;
+}
 - (UIView *)topView {
     if (!_topView) {
-        _topView = [[UIView alloc] init];
+        _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.size.width, 225)];
         _topView.backgroundColor = [UIColor whiteColor];
         
         //标题
-        UILabel *titleLabel = [[UILabel alloc] init];
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 20, _topView.width - 30, 20)];
         titleLabel.text = @"实名认证";
         titleLabel.textColor = [UIColor blackColor];
         titleLabel.font = [UIFont systemFontOfSize:17];
         [_topView addSubview:titleLabel];
-        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_topView).offset(15);
-            make.right.equalTo(_topView).offset(-15);
-            make.top.equalTo(_topView).offset(20);
-            make.height.equalTo(@(20));
-        }];
+//        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(_topView).offset(15);
+//            make.right.equalTo(_topView).offset(-15);
+//            make.width.equalTo(@(kScreenWidth - 30));
+//            make.top.equalTo(_topView).offset(20);
+//            make.height.equalTo(@(20));
+//        }];
         
         //姓名
-        UILabel *nameLabel = [[UILabel alloc] init];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 80, _topView.width - 30, 20)];
         nameLabel.text = @"姓名";
         nameLabel.textColor = [UIColor blackColor];
         nameLabel.font = [UIFont systemFontOfSize:15];
         nameLabel.tag = 100;
         [_topView addSubview:nameLabel];
-        [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(titleLabel.mas_left);
-            make.right.mas_equalTo(titleLabel.mas_right);
-            make.top.mas_equalTo(titleLabel.mas_bottom).offset(30);
-            make.height.mas_equalTo(titleLabel.mas_height);
-        }];
+//        [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.mas_equalTo(titleLabel.mas_left);
+//            make.right.mas_equalTo(titleLabel.mas_right);
+//            make.top.mas_equalTo(titleLabel.mas_bottom).offset(30);
+//            make.height.mas_equalTo(titleLabel.mas_height);
+//        }];
         
         //线
-        UIView *lineViewOne = [[UIView alloc] init];
+        UIView *lineViewOne = [[UIView alloc] initWithFrame:CGRectMake(0, 115, _topView.width, 1)];
         lineViewOne.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.2];
         [_topView addSubview:lineViewOne];
-        [lineViewOne mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(_topView).offset(0);
-            make.top.mas_equalTo(nameLabel.mas_bottom).offset(15);
-            make.height.equalTo(@(1));
-        }];
+//        [lineViewOne mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.right.equalTo(_topView).offset(0);
+//            make.top.mas_equalTo(nameLabel.mas_bottom).offset(15);
+//            make.height.equalTo(@(1));
+//        }];
         
         //身份证号码
-        UILabel *numberLabel = [[UILabel alloc] init];
+        UILabel *numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 135, _topView.width - 30, 20)];
         numberLabel.text = @"身份证号码";
         numberLabel.textColor = [UIColor blackColor];
         numberLabel.font = [UIFont systemFontOfSize:15];
         numberLabel.tag = 101;
         [_topView addSubview:numberLabel];
-        [numberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(nameLabel.mas_left);
-            make.right.mas_equalTo(nameLabel.mas_right);
-            make.top.mas_equalTo(nameLabel.mas_bottom).offset(35);
-            make.height.mas_equalTo(nameLabel.mas_height);
-        }];
+//        [numberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.mas_equalTo(nameLabel.mas_left);
+//            make.right.mas_equalTo(nameLabel.mas_right);
+//            make.top.mas_equalTo(nameLabel.mas_bottom).offset(35);
+//            make.height.mas_equalTo(nameLabel.mas_height);
+//        }];
         
         //线
-        UIView *lineViewTwo = [[UIView alloc] init];
+        UIView *lineViewTwo = [[UIView alloc] initWithFrame:CGRectMake(0, 170, _topView.width, 1)];
         lineViewTwo.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.2];
         [_topView addSubview:lineViewTwo];
-        [lineViewTwo mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(_topView).offset(0);
-            make.top.mas_equalTo(numberLabel.mas_bottom).offset(15);
-            make.height.equalTo(@(1));
-        }];
+//        [lineViewTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.right.equalTo(_topView).offset(0);
+//            make.top.mas_equalTo(numberLabel.mas_bottom).offset(15);
+//            make.height.equalTo(@(1));
+//        }];
         
         //有效期
-        UILabel *expiryDateLabel = [[UILabel alloc] init];
+        UILabel *expiryDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 190, _topView.width - 30, 20)];
         expiryDateLabel.text = @"有效期";
         expiryDateLabel.textColor = [UIColor blackColor];
         expiryDateLabel.font = [UIFont systemFontOfSize:15];
         expiryDateLabel.tag = 102;
         [_topView addSubview:expiryDateLabel];
-        [expiryDateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(numberLabel.mas_left);
-            make.right.mas_equalTo(numberLabel.mas_right);
-            make.top.mas_equalTo(numberLabel.mas_bottom).offset(35);
-            make.height.mas_equalTo(numberLabel.mas_height);
-        }];
+//        [expiryDateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.mas_equalTo(numberLabel.mas_left);
+//            make.right.mas_equalTo(numberLabel.mas_right);
+//            make.top.mas_equalTo(numberLabel.mas_bottom).offset(35);
+//            make.height.mas_equalTo(numberLabel.mas_height);
+//        }];
     }
     return _topView;
 }
 
 - (UIView *)bottomview {
     if (!_bottomview) {
-        _bottomview  = [[UIView alloc] init];
+        _bottomview  = [[UIView alloc] initWithFrame:CGRectMake(0, 235, self.scrollView.width, 370)];
         _bottomview.backgroundColor = [UIColor whiteColor];
         
         //tip1
-        UILabel *tipLabelOne = [[UILabel alloc] init];
+        UILabel *tipLabelOne = [[UILabel alloc] initWithFrame:CGRectMake(15, 20, _bottomview.width - 30, 20)];
         tipLabelOne.text = @"身份证照片";
         tipLabelOne.textColor = [UIColor blackColor];
         tipLabelOne.font = [UIFont systemFontOfSize:17];
         [_bottomview addSubview:tipLabelOne];
-        [tipLabelOne mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_bottomview).offset(15);
-            make.right.equalTo(_bottomview).offset(-15);
-            make.top.equalTo(_bottomview).offset(20);
-            make.height.equalTo(@(20));
-        }];
+//        [tipLabelOne mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(_bottomview).offset(15);
+//            make.right.equalTo(_bottomview).offset(-15);
+//            make.top.equalTo(_bottomview).offset(20);
+//            make.height.equalTo(@(20));
+//        }];
         
         //tip2
-        UILabel *tipLabelTwo = [[UILabel alloc] init];
+        UILabel *tipLabelTwo = [[UILabel alloc] initWithFrame:CGRectMake(15, 70, _bottomview.width - 30, 20)];
         tipLabelTwo.text = @"1.拍照时请确保边框完整、图像清晰、光线均匀";
         tipLabelTwo.textColor = [UIColor grayColor];
         tipLabelTwo.font = [UIFont systemFontOfSize:15];
         [_bottomview addSubview:tipLabelTwo];
-        [tipLabelTwo mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(tipLabelOne.mas_left).offset(0);
-            make.right.mas_equalTo(tipLabelOne.mas_right).offset(0);
-            make.top.mas_equalTo(tipLabelOne.mas_bottom).offset(30);
-            make.height.mas_equalTo(tipLabelOne.mas_height);
-        }];
+//        [tipLabelTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.mas_equalTo(tipLabelOne.mas_left).offset(0);
+//            make.right.mas_equalTo(tipLabelOne.mas_right).offset(0);
+//            make.top.mas_equalTo(tipLabelOne.mas_bottom).offset(30);
+//            make.height.mas_equalTo(tipLabelOne.mas_height);
+//        }];
         
         //tip3
-        UILabel *tipLabelThree = [[UILabel alloc] init];
+        UILabel *tipLabelThree = [[UILabel alloc] initWithFrame:CGRectMake(15, 100, _bottomview.width - 30, 20)];
         tipLabelThree.text = @"2.请上传该账户本人身份证照片";
         tipLabelThree.textColor = [UIColor grayColor];
         tipLabelThree.font = [UIFont systemFontOfSize:15];
         [_bottomview addSubview:tipLabelThree];
-        [tipLabelThree mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(tipLabelTwo.mas_left);
-            make.right.mas_equalTo(tipLabelTwo.mas_right);
-            make.top.mas_equalTo(tipLabelTwo.mas_bottom).offset(10);
-            make.height.mas_equalTo(tipLabelTwo.mas_height);
-        }];
+//        [tipLabelThree mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.mas_equalTo(tipLabelTwo.mas_left);
+//            make.right.mas_equalTo(tipLabelTwo.mas_right);
+//            make.top.mas_equalTo(tipLabelTwo.mas_bottom).offset(10);
+//            make.height.mas_equalTo(tipLabelTwo.mas_height);
+//        }];
         
         //正面照按钮
         CGFloat spaceWidth = (kScreenWidth - 260) / 2;
-        UIButton *portraitButton = [[UIButton alloc] init];
+        UIButton *portraitButton = [[UIButton alloc] initWithFrame:CGRectMake(spaceWidth, 150, 120, 80)];
         [portraitButton setBackgroundImage:[UIImage imageNamed:@"Authen_Portrait"] forState:UIControlStateNormal];
         [portraitButton setImage:[UIImage imageNamed:@"Authen_Camera"] forState:UIControlStateNormal];
         portraitButton.tag = 200;
         [portraitButton addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [_bottomview addSubview:portraitButton];
-        [portraitButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_bottomview).offset(spaceWidth);
-            make.width.equalTo(@(120));
-            make.top.mas_equalTo(tipLabelThree.mas_bottom).offset(30);
-            make.height.equalTo(@(80));
-        }];
+//        [portraitButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(_bottomview).offset(spaceWidth);
+//            make.width.equalTo(@(120));
+//            make.top.mas_equalTo(tipLabelThree.mas_bottom).offset(30);
+//            make.height.equalTo(@(80));
+//        }];
         
         //国徽按钮
-        UIButton *emblemButton = [[UIButton alloc] init];
+        UIButton *emblemButton = [[UIButton alloc] initWithFrame:CGRectMake(self.scrollView.width - spaceWidth - 120, 150, 120, 80)];
         [emblemButton setBackgroundImage:[UIImage imageNamed:@"Authen_Emblem"] forState:UIControlStateNormal];
         [emblemButton setImage:[UIImage imageNamed:@"Authen_Camera"] forState:UIControlStateNormal];
         emblemButton.tag = 201;
         [emblemButton addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [_bottomview addSubview:emblemButton];
-        [emblemButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(_bottomview).offset(-spaceWidth);
-            make.width.mas_equalTo(portraitButton.mas_width);
-            make.top.mas_equalTo(portraitButton.mas_top);
-            make.height.mas_equalTo(portraitButton.mas_height);
-        }];
+//        [emblemButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.right.equalTo(_bottomview).offset(-spaceWidth);
+//            make.width.mas_equalTo(portraitButton.mas_width);
+//            make.top.mas_equalTo(portraitButton.mas_top);
+//            make.height.mas_equalTo(portraitButton.mas_height);
+//        }];
         
-        UILabel *tipLabelFour = [[UILabel alloc] init];
+        UILabel *tipLabelFour = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth, 250, 120, 20)];
         tipLabelFour.text = @"人像正面照";
         tipLabelFour.textColor = [UIColor blackColor];
         tipLabelFour.font = [UIFont systemFontOfSize:15];
         tipLabelFour.textAlignment = NSTextAlignmentCenter;
         [_bottomview addSubview:tipLabelFour];
-        [tipLabelFour mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(portraitButton.mas_left);
-            make.width.mas_equalTo(portraitButton.mas_width);
-            make.top.mas_equalTo(portraitButton.mas_bottom).offset(20);
-            make.height.equalTo(@(20));
-        }];
+//        [tipLabelFour mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.mas_equalTo(portraitButton.mas_left);
+//            make.width.mas_equalTo(portraitButton.mas_width);
+//            make.top.mas_equalTo(portraitButton.mas_bottom).offset(20);
+//            make.height.equalTo(@(20));
+//        }];
         
-        UILabel *tipLabelFive = [[UILabel alloc] init];
+        UILabel *tipLabelFive = [[UILabel alloc] initWithFrame:CGRectMake(self.scrollView.width - spaceWidth - 120, 250, 120, 20)];
         tipLabelFive.text = @"国徽面照片";
         tipLabelFive.textColor = [UIColor blackColor];
         tipLabelFive.font = [UIFont systemFontOfSize:15];
         tipLabelFive.textAlignment = NSTextAlignmentCenter;
         [_bottomview addSubview:tipLabelFive];
-        [tipLabelFive mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(emblemButton.mas_right);
-            make.width.mas_equalTo(emblemButton.mas_width);
-            make.top.mas_equalTo(tipLabelFour.mas_top);
-            make.height.mas_equalTo(tipLabelFour.mas_height);
-        }];
+//        [tipLabelFive mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.right.mas_equalTo(emblemButton.mas_right);
+//            make.width.mas_equalTo(emblemButton.mas_width);
+//            make.top.mas_equalTo(tipLabelFour.mas_top);
+//            make.height.mas_equalTo(tipLabelFour.mas_height);
+//        }];
         
         //申请认证
-        UIButton *applyButton = [[UIButton alloc] init];
+        UIButton *applyButton = [[UIButton alloc] initWithFrame:CGRectMake((self.scrollView.width - 200) / 2, 300, 200, 45)];
         applyButton.backgroundColor = [UIColor colorWithRed:41 / 255.0 green:150 / 255.0 blue:235 /255.0 alpha:1.0];
         [applyButton setTitle:@"申请认证" forState:UIControlStateNormal];
         [applyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -272,12 +293,12 @@
         applyButton.tag = 202;
         [applyButton addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [_bottomview addSubview:applyButton];
-        [applyButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.mas_equalTo(_bottomview.mas_centerX);
-            make.width.equalTo(@(200));
-            make.top.mas_equalTo(tipLabelFive.mas_bottom).offset(30);
-            make.height.equalTo(@(45));
-        }];
+//        [applyButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.centerX.mas_equalTo(_bottomview.mas_centerX);
+//            make.width.equalTo(@(200));
+//            make.top.mas_equalTo(tipLabelFive.mas_bottom).offset(30);
+//            make.height.equalTo(@(45));
+//        }];
         [applyButton layoutIfNeeded];
         applyButton.layer.cornerRadius = applyButton.size.height / 2;
     }

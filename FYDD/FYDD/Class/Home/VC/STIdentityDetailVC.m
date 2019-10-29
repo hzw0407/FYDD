@@ -52,9 +52,13 @@ STIdentityDetailFunctionCellDelegate>
         [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     }
     
-    [self getAdvertorialsLisy];
     [self loadGuide];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getAdvertorialsLisy];
 }
 
 #pragma mark - CustomMethod
@@ -64,6 +68,7 @@ STIdentityDetailFunctionCellDelegate>
     [manager addParameterWithKey:@"type" withValue:self.type == 1 ? @"2" : @"3"];
     [manager requestDataWithUrl:[NSString stringWithFormat:@"%@:%@%@",DDAPP_URL,DDPort7001,ADVERTORIALSLIST] withType:RequestGet withSuccess:^(NSDictionary * _Nonnull dict) {
         if (dict && [dict[@"code"] integerValue] == 200) {
+            [self.listArray removeAllObjects];
             NSArray * lists = dict[@"data"][@"list"];
             if (lists && [lists isKindOfClass:[NSArray class]]) {
                 for (NSDictionary * dic in lists) {

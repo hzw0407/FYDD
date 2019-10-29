@@ -42,9 +42,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.idCardView];
-    [self.idCardView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.top.bottom.equalTo(self.view).offset(0);
-    }];
+//    [self.idCardView mas_makeConstraints:^(MASConstraintMaker *make) {
+////        make.left.right.top.bottom.equalTo(self.view).offset(0);
+//        make.left.right.top.equalTo(self.view).offset(0);
+//        make.bottom.equalTo(self.view).offset(-200);
+//    }];
     self.title = @"个人认证";
     self.view.backgroundColor = UIColorHex(0xf5f5f5);
 }
@@ -222,7 +224,8 @@
 #pragma mark - GetterAndSetter
 - (DDIDCardView *)idCardView {
     if (!_idCardView) {
-        _idCardView = [[DDIDCardView alloc] initWithFrame:CGRectZero];
+        _idCardView = [[DDIDCardView alloc] initWithFrame:
+                       CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
         _idCardView.delegate = self;
     }
     return _idCardView;

@@ -263,15 +263,15 @@
     [_descLb setAttributedTitle:nil forState:UIControlStateNormal];
     [_descLb setTitle:user.enterpriseAuthentication == 1 ? yyTrimNullText(user.enterpriseName): @"未认证企业" forState:UIControlStateNormal];
     //证书
-    if (user.isExtensionUser == 1 || user.isOnlineUser == 1) {
+    if (user.qualificationNoEx.length > 0 || user.isOnlineUser == 1) {
         //代理方或者实施方认证通过
         self.verifyCodeButton.hidden = NO;
         self.verifyCodeButton1.hidden = NO;
-    }else if (user.isExtensionUser == 1 && user.isOnlineUser != 1) {
+    }else if (user.qualificationNoEx.length > 0 && user.isOnlineUser != 1) {
         //代理方认证通过，实施方没认证
         self.verifyCodeButton.hidden = YES;
         self.verifyCodeButton1.hidden = NO;
-    }else if (user.isExtensionUser != 1 && user.isOnlineUser == 1) {
+    }else if (user.qualificationNoEx.length <= 0 && user.isOnlineUser == 1) {
         //代理方没认证,实施方认证通过
         self.verifyCodeButton.hidden = NO;
         self.verifyCodeButton1.hidden = YES;
