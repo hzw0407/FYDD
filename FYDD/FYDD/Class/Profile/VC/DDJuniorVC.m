@@ -175,7 +175,7 @@
 
 - (void)startDate:(NSInteger)index{
     [BRDatePickerView showDatePickerWithTitle:index == 0 ? @"开始时间" : @"结束时间"
-                                     dateType:BRDatePickerModeYM
+                                     dateType:BRDatePickerModeYMD
                               defaultSelValue:@""
                                       minDate:[NSDate dateWithTimeIntervalSince1970:1554091920]
                                       maxDate:nil

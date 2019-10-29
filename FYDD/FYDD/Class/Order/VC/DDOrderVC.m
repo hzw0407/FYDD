@@ -90,6 +90,8 @@
         [self getOnlineInfo];
     }
     
+    [self destructionRed];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -125,6 +127,21 @@
                                                                       NSForegroundColorAttributeName : [UIColor whiteColor],
                                                                       }];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:true];
+}
+
+//销毁订单红点
+- (void)destructionRed {
+    STHttpRequestManager *manager = [STHttpRequestManager shareManager];
+    [manager addParameterWithKey:@"token" withValue:[DDUserManager share].user.token];
+    [manager addParameterWithKey:@"type" withValue:@"1"];
+    [manager addParameterWithKey:@"change" withValue:@"order"];
+    [manager requestDataWithUrl:[NSString stringWithFormat:@"%@:%@//fps/wallet/getHavChange",DDAPP_URL,DDPort7001] withType:RequestGet withSuccess:^(NSDictionary * _Nonnull dict) {
+        if (dict && [dict[@"code"] integerValue] == 200) {
+            
+        }
+    } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+        [DDHub hub:error.domain view:self.view];
+    }];
 }
 
 //获取订单列表数据

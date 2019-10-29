@@ -92,10 +92,10 @@
 
 - (DDIDCardView *)idCardView {
     if (!_idCardView) {
-        CGFloat topHeight = kScreenHeight - 580 - 64 > 0 ? kScreenHeight - 580 - 64 : 0;
-        CGFloat height = kScreenHeight > 580 ? 580 : kScreenHeight - 64;
-        _idCardView = [[DDIDCardView alloc] initWithFrame:CGRectMake(0, topHeight, kScreenWidth, height)];
-//        _idCardView = [[DDIDCardView alloc] initWithFrame:CGRectZero];
+//        CGFloat topHeight = kScreenHeight - 580 - 64 > 0 ? kScreenHeight - 580 - 64 : 0;
+//        CGFloat height = kScreenHeight > 580 ? 580 : kScreenHeight - 64;
+//        _idCardView = [[DDIDCardView alloc] initWithFrame:CGRectMake(0, topHeight, kScreenWidth, height)];
+        _idCardView = [[DDIDCardView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
         _idCardView.delegate = self;
     }
     return _idCardView;
@@ -357,11 +357,6 @@
     [UIView animateWithDuration:0.5 animations:^{
         [self.view addSubview:self.backgroundView];
         [self.view addSubview:self.idCardView];
-//        [self.idCardView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.right.equalTo(self.view).offset(0);
-//            make.bottom.equalTo(self.view).offset(0);
-//            make.height.equalTo(@(580));
-//        }];
     }];
 }
 

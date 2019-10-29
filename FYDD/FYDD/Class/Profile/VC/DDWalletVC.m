@@ -54,6 +54,7 @@
     [self getWalletMoney];
     [self getWalletList];
     [self getWalletMoney];
+    [self destructionRed];
     [self->_pageDict setObject:@(1) forKey:@(self->_currentType)];
     [self setupNavigationBar];
 }
@@ -77,6 +78,22 @@
                                                                       NSForegroundColorAttributeName : [UIColor whiteColor],
                                                                       }];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:true];
+}
+
+//销毁钱包红点
+- (void)destructionRed {
+    STHttpRequestManager *manager = [STHttpRequestManager shareManager];
+    [manager addParameterWithKey:@"token" withValue:[DDUserManager share].user.token];
+    [manager addParameterWithKey:@"type" withValue:@"1"];
+    [manager addParameterWithKey:@"change" withValue:@"wallet"];
+    [manager requestDataWithUrl:[NSString stringWithFormat:@"%@:%@//fps/wallet/getHavChange",DDAPP_URL,DDPort7001] withType:RequestGet withSuccess:^(NSDictionary * _Nonnull dict) {
+        if (dict && [dict[@"code"] integerValue] == 200) {
+            
+        }
+    } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+        [DDHub hub:error.domain view:self.view];
+    }];
+
 }
 
 // 获取钱包余额

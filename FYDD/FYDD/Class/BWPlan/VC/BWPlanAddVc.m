@@ -88,10 +88,10 @@
         [DDHub hub:@"请输入企业名称" view:self.view];
         return;
     }
-    if (soialCode.length != 18) {
-        [DDHub hub:@"请输入18位社会信用代码" view:self.view];
-        return;
-    }
+//    if (soialCode.length != 18) {
+//        [DDHub hub:@"请输入18位社会信用代码" view:self.view];
+//        return;
+//    }
     @weakify(self)
     [DDHub hub:self.view];
     [[DDAppNetwork share] get:YES
@@ -134,10 +134,10 @@
                 [DDHub hub:@"请输入行业" view:self.view];
                 return;
             }
-            if (soialCode.length == 0) {
-                [DDHub hub:@"请输入18位社会信用代码" view:self.view];
-                return;
-            }
+//            if (soialCode.length == 0) {
+//                [DDHub hub:@"请输入18位社会信用代码" view:self.view];
+//                return;
+//            }
             if (number.length == 0) {
                 [DDHub hub:@"请输入人数" view:self.view];
                 return;
@@ -171,6 +171,7 @@
                                         NSString *message,
                                         id data) {
 //                               [DDHub hub:message view:self.view];
+                                 [DDHub dismiss:self.view];
                                if (code  == 200) {
                                    [DDHub hub:@"添加我的客户成功" view:self.view];
                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

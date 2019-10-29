@@ -74,6 +74,8 @@
                            [self.contactPhoneButton setTitle:[NSString stringWithFormat:@"客服热线: %@",self->_contactPhone] forState:UIControlStateNormal];
                        }
     }];
+    
+    [self destructionRed];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -81,6 +83,20 @@
     [[IQKeyboardManager sharedManager] setEnable:NO];
 }
 
+//销毁客服红点
+- (void)destructionRed {
+    STHttpRequestManager *manager = [STHttpRequestManager shareManager];
+    [manager addParameterWithKey:@"token" withValue:[DDUserManager share].user.token];
+    [manager addParameterWithKey:@"type" withValue:@"1"];
+    [manager addParameterWithKey:@"change" withValue:@"chat"];
+    [manager requestDataWithUrl:[NSString stringWithFormat:@"%@:%@//fps/wallet/getHavChange",DDAPP_URL,DDPort7001] withType:RequestGet withSuccess:^(NSDictionary * _Nonnull dict) {
+        if (dict && [dict[@"code"] integerValue] == 200) {
+            
+        }
+    } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+        [DDHub hub:error.domain view:self.view];
+    }];
+}
 
 -(void)keyboardWillChangeFrameNotify:(NSNotification*)notify {
     

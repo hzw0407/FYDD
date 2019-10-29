@@ -207,19 +207,67 @@
         [self updateUI];
     }];
     
-    [[DDAppNetwork share] get:YES
-                         path:YYFormat(@"/fps/wallet/getHavChange?token=", [DDUserManager share].user.token)
-                         body:@""
-                   completion:^(NSInteger code, NSString *message, id data) {
-                       @strongify(self)
-                       if (!self) return ;
-                       if (code == 200) {
-                           self.iconTipView.hidden = ![yyTrimNullText(data[@"order"]) boolValue];
-                           self.iconTipView1.hidden = ![yyTrimNullText(data[@"wallet"]) boolValue];
-                           self.iconTipView2.hidden = ![yyTrimNullText(data[@"chat"]) boolValue];
-                       }
-                   }];
+//    [[DDAppNetwork share] get:YES
+//                         path:YYFormat(@"/fps/wallet/getHavChange?token=", [DDUserManager share].user.token)
+//                         body:@""
+//                   completion:^(NSInteger code, NSString *message, id data) {
+//                       @strongify(self)
+//                       if (!self) return ;
+//                       if (code == 200) {
+//                           self.iconTipView.hidden = ![yyTrimNullText(data[@"order"]) boolValue];
+//                           self.iconTipView1.hidden = ![yyTrimNullText(data[@"wallet"]) boolValue];
+//                           self.iconTipView2.hidden = ![yyTrimNullText(data[@"chat"]) boolValue];
+//                       }
+//                   }];
+    [self checkOrderRed];
+    [self checkWalletred];
+    [self checkChatRed];
 
+}
+
+//查询订单红点
+- (void)checkOrderRed {
+    STHttpRequestManager *manager = [STHttpRequestManager shareManager];
+    [manager addParameterWithKey:@"token" withValue:[DDUserManager share].user.token];
+    [manager addParameterWithKey:@"type" withValue:@"0"];
+    [manager addParameterWithKey:@"change" withValue:@"order"];
+    [manager requestDataWithUrl:[NSString stringWithFormat:@"%@:%@//fps/wallet/getHavChange",DDAPP_URL,DDPort7001] withType:RequestGet withSuccess:^(NSDictionary * _Nonnull dict) {
+        if (dict && [dict[@"code"] integerValue] == 200) {
+            self.iconTipView.hidden = ![yyTrimNullText(dict[@"data"][@"order"]) boolValue];
+        }
+    } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+        [DDHub hub:error.domain view:self.view];
+    }];
+}
+
+//查询钱包红点
+- (void)checkWalletred {
+    STHttpRequestManager *manager = [STHttpRequestManager shareManager];
+    [manager addParameterWithKey:@"token" withValue:[DDUserManager share].user.token];
+    [manager addParameterWithKey:@"type" withValue:@"0"];
+    [manager addParameterWithKey:@"change" withValue:@"wallet"];
+    [manager requestDataWithUrl:[NSString stringWithFormat:@"%@:%@//fps/wallet/getHavChange",DDAPP_URL,DDPort7001] withType:RequestGet withSuccess:^(NSDictionary * _Nonnull dict) {
+        if (dict && [dict[@"code"] integerValue] == 200) {
+            self.iconTipView1.hidden = ![yyTrimNullText(dict[@"data"][@"wallet"]) boolValue];
+        }
+    } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+        [DDHub hub:error.domain view:self.view];
+    }];
+}
+
+//查询客服红点
+- (void)checkChatRed {
+    STHttpRequestManager *manager = [STHttpRequestManager shareManager];
+    [manager addParameterWithKey:@"token" withValue:[DDUserManager share].user.token];
+    [manager addParameterWithKey:@"type" withValue:@"0"];
+    [manager addParameterWithKey:@"change" withValue:@"chat"];
+    [manager requestDataWithUrl:[NSString stringWithFormat:@"%@:%@//fps/wallet/getHavChange",DDAPP_URL,DDPort7001] withType:RequestGet withSuccess:^(NSDictionary * _Nonnull dict) {
+        if (dict && [dict[@"code"] integerValue] == 200) {
+            self.iconTipView1.hidden = ![yyTrimNullText(dict[@"data"][@"chat"]) boolValue];
+        }
+    } withFail:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+        [DDHub hub:error.domain view:self.view];
+    }];
 }
 
 - (void)updateUI{

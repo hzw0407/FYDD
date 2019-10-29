@@ -42,11 +42,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.idCardView];
-//    [self.idCardView mas_makeConstraints:^(MASConstraintMaker *make) {
-////        make.left.right.top.bottom.equalTo(self.view).offset(0);
-//        make.left.right.top.equalTo(self.view).offset(0);
-//        make.bottom.equalTo(self.view).offset(-200);
-//    }];
     self.title = @"个人认证";
     self.view.backgroundColor = UIColorHex(0xf5f5f5);
 }
