@@ -37,6 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) DDOrderPlanModel * planModel;
 @property (nonatomic,copy) void (^comfirmBlock)(void);
 @property (nonatomic,copy) void (^coverImageDidClick)(NSString * url,UIButton * fromView);
+
+- (void)refreshWithModel:(DDOrderPlanModel *)planModel withType:(NSInteger)type;
+
 @end
 
 NS_ASSUME_NONNULL_END

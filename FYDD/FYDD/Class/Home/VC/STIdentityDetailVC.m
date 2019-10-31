@@ -56,7 +56,7 @@ STIdentityDetailFunctionCellDelegate>
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[DDUserManager share] getUserInfo:^{
         [self getAdvertorialsLisy];

@@ -20,11 +20,12 @@
 @property (nonatomic,copy) NSString * extensionMember;
 @property (nonatomic,copy) NSString * extensionPhone;
 @property (nonatomic,assign) double extensionScore;
-
-@property (nonatomic,copy) NSString * implementPlanDetailSeq;
+//当前实施到第几步
+@property (nonatomic,assign) NSInteger implementPlanDetailSeq;
 @property (nonatomic,copy) NSString * implementPlanId;
 @property (nonatomic,copy) NSString * implementName;
 @property (nonatomic,assign) double implementationCost;
+//是否首次下单 1首次下单 0不是首次下单
 @property (nonatomic,assign) NSInteger isCompanyFirst;
 @property (nonatomic,assign) NSInteger isInvoice;
 @property (nonatomic,assign) NSInteger isShowInvoiceBtn;
@@ -44,6 +45,9 @@
 @property (nonatomic,copy) NSString * userLinkman;
 @property (nonatomic,copy) NSString * userLinkmanPhone;
 @property (nonatomic,assign) NSInteger userNumber;
+//限制第几步就隐藏更换实施员
+@property (nonatomic, copy) NSString *orderPlanSequence;
+
 @end
 
 

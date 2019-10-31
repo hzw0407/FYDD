@@ -70,7 +70,7 @@
             break;
         case DDOrderStatusPaySuccess:
             i = 1;
-            if (detailObj.isCompanyFirst) i = 0;
+            if (detailObj.isCompanyFirst) i = 5;
             break;
         default:
             break;
@@ -101,7 +101,7 @@
     _statusDictButton.hidden = NO;
 }
 
-- (void)setPlanModel:(DDOrderPlanModel *)planModel{
+- (void)refreshWithModel:(DDOrderPlanModel *)planModel withType:(NSInteger)type {
     _planModel = planModel;
     if (!_planModel) {
         return;
@@ -109,7 +109,7 @@
     _numberLb.text = [NSString stringWithFormat:@"%zd",planModel.step];
     _stepNameLB.text = planModel.detailTitle;
     _stepButton.userInteractionEnabled = NO;
-    if ([DDUserManager share].user.userType == DDUserTypeSystem) {
+    if (type == 1) {
         if ([yyTrimNullText(_planModel.status) isEqualToString:@"0"]) {
             [_stepButton setTitle:@"审核" forState:UIControlStateNormal];
             _stepButton.layer.borderWidth = 1;
@@ -121,7 +121,29 @@
         }
     }
     [_stepButton setTitle:planModel.statusName forState:UIControlStateNormal];
-    
 }
+
+//- (void)setPlanModel:(DDOrderPlanModel *)planModel{
+//    _planModel = planModel;
+//    if (!_planModel) {
+//        return;
+//    }
+//    _numberLb.text = [NSString stringWithFormat:@"%zd",planModel.step];
+//    _stepNameLB.text = planModel.detailTitle;
+//    _stepButton.userInteractionEnabled = NO;
+//    if ([DDUserManager share].user.userType == DDUserTypeSystem) {
+//        if ([yyTrimNullText(_planModel.status) isEqualToString:@"0"]) {
+//            [_stepButton setTitle:@"审核" forState:UIControlStateNormal];
+//            _stepButton.layer.borderWidth = 1;
+//            _stepButton.layer.borderColor = UIColorHex(0xEF8200).CGColor;
+//            _stepButton.selected = YES;
+//            _stepButton.userInteractionEnabled = YES;
+//            _stepButton.layer.cornerRadius = 15;
+//            return;
+//        }
+//    }
+//    [_stepButton setTitle:planModel.statusName forState:UIControlStateNormal];
+//    
+//}
 
 @end

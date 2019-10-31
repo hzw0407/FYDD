@@ -59,7 +59,7 @@ typedef NS_ENUM(NSUInteger,DDOrderStatus){
     DDOrderStatusCancel,
     DDOrderStatusWaitCommit,
     DDOrderStatusCreate,
-    DDOrderStatusPaySuccess,
+    DDOrderStatusPaySuccess,//支付成功
     DDOrderStatusPay, // 021支付中
     DDOrderStatusPayFail,
     DDOrderStatusLeaflets, // 030派单中

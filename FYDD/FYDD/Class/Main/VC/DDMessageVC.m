@@ -176,19 +176,19 @@
         DDUserTypePromoter, // 代理方
          */
         DDMessageModel * item = _dataList[indexPath.row -1];
-        if (item.userIdType != [DDUserManager share].user.userType) {
-            NSString * text = @"需要切换到企业身份方可查看";
-            if (item.userIdType == 2) {
-                text = @"需要切换到实施方身份方可查看";
-            }else if (item.userIdType == 3) {
-                text = @"需要切换到代理方身份方可查看";
-            }
-            [DDHub hubText:text];
-            DDChangeUserTypeVC * vc = [DDChangeUserTypeVC new];
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-            return;
-        }
+//        if (item.userIdType != [DDUserManager share].user.userType) {
+//            NSString * text = @"需要切换到企业身份方可查看";
+//            if (item.userIdType == 2) {
+//                text = @"需要切换到实施方身份方可查看";
+//            }else if (item.userIdType == 3) {
+//                text = @"需要切换到代理方身份方可查看";
+//            }
+//            [DDHub hubText:text];
+//            DDChangeUserTypeVC * vc = [DDChangeUserTypeVC new];
+//            vc.hidesBottomBarWhenPushed = YES;
+//            [self.navigationController pushViewController:vc animated:YES];
+//            return;
+//        }
         NSString * jumpURL = item.requestUrl;
         if (jumpURL && [jumpURL rangeOfString:@"fy3tzz://sante/wallet"].location != NSNotFound) {
             DDWalletVC * vc = [DDWalletVC new];

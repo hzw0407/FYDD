@@ -30,6 +30,7 @@
 @property (nonatomic,strong) UITableView * tableView;
 @property (nonatomic, strong) UIView *balanceBackgroundView;//余额背景view
 @property (nonatomic, strong) UIView *cashBackgroundView;//可提现背景view
+@property (nonatomic, assign) NSInteger totalCount;//总共多少条数据
 
 @end
 
@@ -43,6 +44,7 @@
         make.left.right.top.equalTo(@0);
         make.bottom.equalTo(@0);
     }];
+    [self.tableView.mj_header beginRefreshing];
     
     _balance = 0;
     _pageDict = @{}.mutableCopy;
@@ -52,8 +54,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self getWalletMoney];
-    [self getWalletList];
-    [self getWalletMoney];
+//    [self getWalletList];
+//    [self getWalletMoney];
     [self destructionRed];
     [self->_pageDict setObject:@(1) forKey:@(self->_currentType)];
     [self setupNavigationBar];
@@ -113,7 +115,7 @@
                    }];
 }
 
-// 获取钱包明细
+// 获取钱包列表
 -(void)getWalletList{
     NSInteger page = [_pageDict[@(self->_currentType)] integerValue];
     @weakify(self)
@@ -145,8 +147,7 @@
                            [self->_dataDict setObject:dataList forKey:@(self->_currentType)];
                            [self.tableView reloadData];
                            NSInteger total  = [data[@"total"] integerValue];
-                           if (total <= dataList.count) {
-                           }
+                           self.totalCount = total;
                        }
                        
                    }];
@@ -292,13 +293,17 @@
         _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
             @strongify(self)
             if (!self) return ;
-            NSInteger page = 1;
-            if (self->_pageDict[@(self->_currentType)]) {
-                page = [self->_pageDict[@(self->_currentType)] integerValue];
+            if (self.totalCount >= self->_dataDict.count) {
+                [DDHub hub:@"暂无更多数据" view:self.view];
+            }else {
+                NSInteger page = 1;
+                if (self->_pageDict[@(self->_currentType)]) {
+                    page = [self->_pageDict[@(self->_currentType)] integerValue];
+                }
+                page = page + 1;
+                [self->_pageDict setObject:@(page) forKey:@(self->_currentType)];
+                [self getWalletList];
             }
-            page = page + 1;
-            [self->_pageDict setObject:@(page) forKey:@(self->_currentType)];
-            [self getWalletList];
         }];
     }
     return _tableView;

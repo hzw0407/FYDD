@@ -27,6 +27,8 @@
 @property (nonatomic,strong)  DDOrderPlanModel * planModel;
 @property (nonatomic,copy) void (^explandBlock)(void);
 @property (nonatomic,copy) void (^comfirmBlock)(void);
+
+- (void)refreshWithModel:(DDOrderPlanModel *)planModel withType:(NSInteger)type;
 @end
 
 

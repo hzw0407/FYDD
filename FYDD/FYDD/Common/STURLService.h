@@ -9,7 +9,7 @@
 #ifndef STURLService_h
 #define STURLService_h
 
-#define InterfaceBaseDebug 1 //0表示正式环境，1表示测试环境
+#define InterfaceBaseDebug 0 //0表示正式环境，1表示测试环境
 
 // 1期接口地址
 #if InterfaceBaseDebug

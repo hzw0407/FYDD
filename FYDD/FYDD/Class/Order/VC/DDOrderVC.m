@@ -43,6 +43,8 @@
     self.navigationItem.title = @"我的订单";
     self.view.backgroundColor = UIColorHex(0xF3F4F6);
     
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Left_Back"] style:UIBarButtonItemStyleDone target:self action:@selector(leftClick)];
+    
     if (self.type == 2 || self.type == 3) {
         //代理方、实施方
         [self.view addSubview:self.carryView];
@@ -96,6 +98,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     self.navigationController.navigationBar.shadowImage = nil;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [DDAppManager share].navigationTintColor;
@@ -208,6 +211,9 @@
 }
 
 #pragma mark - ClickMethod
+- (void)leftClick {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 #pragma mark - SystemDelegate
 

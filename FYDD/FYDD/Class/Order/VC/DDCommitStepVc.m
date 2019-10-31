@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLb;
 @property (weak, nonatomic) IBOutlet UILabel *stepLb;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UILabel *stepYQ;//步骤要求
 
 @end
 
@@ -33,6 +34,8 @@
     _textView.delegate = self;
     _stepLb.text = [NSString stringWithFormat:@"%zd",_planModel.step];
     _nameLb.text = _planModel.detailTitle;
+    self.stepYQ.numberOfLines = 0;
+    self.stepYQ.text = self.planModel.detail;
 }
 
 - (void)textViewDidChange:(UITextView *)textView{

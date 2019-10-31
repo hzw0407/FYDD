@@ -82,8 +82,14 @@
 // 判断产品有没有购买过
 - (void)getProductShopMai{
     @weakify(self)
+    NSString *comStr;
+    if ([DDUserManager share].user.enterprise) {
+        comStr = [NSString stringWithFormat:@"%zd",[DDUserManager share].user.enterprise];
+    }else {
+        comStr = @"";
+    }
     [[DDAppNetwork share] get:YES
-                         path:[NSString stringWithFormat:@"/tss/orders/selectComOrderNumber?productId=%zd&comId=%zd&token=%@",_item.objId,[DDUserManager share].user.enterprise,[DDUserManager share].user.token]
+                         path:[NSString stringWithFormat:@"/tss/orders/selectComOrderNumber?productId=%zd&comId=%@&token=%@",_item.objId, comStr,[DDUserManager share].user.token]
                          body:@""
                    completion:^(NSInteger code, NSString *message, id data) {
                        @strongify(self)

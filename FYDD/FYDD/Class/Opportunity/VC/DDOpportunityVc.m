@@ -14,6 +14,7 @@
 #import <MJRefresh/MJRefresh.h>
 #import "BRDatePickerView.h"
 #import "DDOrderDetailVc.h"
+#import "DDAuthenVc.h"
 
 @interface DDOpportunityVc () <UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate> {
     NSInteger _opportunityPage;
@@ -133,48 +134,62 @@
 
 // 认领
 - (void)renLinButtonDidClick:(DDOpportunityModel *)opportunity{
-    @weakify(self)
-    [BRDatePickerView showDatePickerWithTitle:@"选择服务开始时间"
-                                     dateType:BRDatePickerModeYMD
-                              defaultSelValue:@""
-                                      minDate:[NSDate date] maxDate:nil
-                                 isAutoSelect:NO
-                                   themeColor:nil resultBlock:^(NSString *selectValue) {
-        if ([DDUserManager share].user.isOnlineUser != 1) {
-            //实施方未认证
-            [DDHub hub:@"请先通过实施方认证" view:self.view];
-        }else {
-            @strongify(self)
-            NSString * url = [NSString stringWithFormat:@"%@/business/userOnline/claim?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
-//            if ([DDUserManager share].user.userType == DDUserTypePromoter) {
-//                url = [NSString stringWithFormat:@"%@/business/userExtension/claim?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
-//            }
-            [DDHub hub:self.view];
-            NSDictionary * dic = @{@"id" : opportunity.planId , @"busType" : [DDUserManager share].user.userType == DDUserTypePromoter ? @(1) : @(2),@"dateStr" : selectValue};
-            [[DDAppNetwork share] get:NO
-                                  url:url
-                                 body:[dic modelToJSONString]
-                           completion:^(NSInteger code,
-                                        NSString *message,
-                                        id data) {
-                               @strongify(self)
-                               if(!self) return ;
-                               if (code == 200) {
-                                   [DDHub hub:@"认领成功" view:self.view];
-                                   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                       DDOrderDetailVc  * vc = [DDOrderDetailVc new];
-                                       vc.type = 3;
-                                       vc.orderId  = opportunity.orderNumber;
-                                       vc.hidesBottomBarWhenPushed = YES;
-                                       [self.navigationController pushViewController:vc animated:YES];
-                                   });
-                                   [self.tableView.mj_header beginRefreshing];
-                               }else {
-                                   [DDHub hub:message view:self.view];
-                               }
-                           }];
-        }
+    if ([DDUserManager share].user.isOnlineUser != 1) {
+        //实施方未认证
+        UIAlertController *alerController = [UIAlertController alertControllerWithTitle:@"请先进行实施方认证" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            DDAuthenVc *vc = [[DDAuthenVc alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
+        [alerController addAction:cancelAction];
+        [alerController addAction:sureAction];
+        [self presentViewController:alerController animated:YES completion:nil];
+    }else {
+        //实施方已认证
+        @weakify(self)
+            [BRDatePickerView showDatePickerWithTitle:@"选择服务开始时间"
+                                             dateType:BRDatePickerModeYMD
+                                      defaultSelValue:@""
+                                              minDate:[NSDate date] maxDate:nil
+                                         isAutoSelect:NO
+                                           themeColor:nil resultBlock:^(NSString *selectValue) {
+                if ([DDUserManager share].user.isOnlineUser != 1) {
+                    //实施方未认证
+                    [DDHub hub:@"请先通过实施方认证" view:self.view];
+                }else {
+                    @strongify(self)
+                    NSString * url = [NSString stringWithFormat:@"%@/business/userOnline/claim?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
+        //            if ([DDUserManager share].user.userType == DDUserTypePromoter) {
+        //                url = [NSString stringWithFormat:@"%@/business/userExtension/claim?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
+        //            }
+                    [DDHub hub:self.view];
+                    NSDictionary * dic = @{@"id" : opportunity.planId , @"busType" : [DDUserManager share].user.userType == DDUserTypePromoter ? @(1) : @(2),@"dateStr" : selectValue};
+                    [[DDAppNetwork share] get:NO
+                                          url:url
+                                         body:[dic modelToJSONString]
+                                   completion:^(NSInteger code,
+                                                NSString *message,
+                                                id data) {
+                                       @strongify(self)
+                                       if(!self) return ;
+                                       if (code == 200) {
+                                           [DDHub hub:@"认领成功" view:self.view];
+                                           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                               DDOrderDetailVc  * vc = [DDOrderDetailVc new];
+                                               vc.type = 3;
+                                               vc.orderId  = opportunity.orderNumber;
+                                               vc.hidesBottomBarWhenPushed = YES;
+                                               [self.navigationController pushViewController:vc animated:YES];
+                                           });
+                                           [self.tableView.mj_header beginRefreshing];
+                                       }else {
+                                           [DDHub hub:message view:self.view];
+                                       }
                                    }];
+                }
+                                           }];
+    }
     
     
 }

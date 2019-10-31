@@ -192,9 +192,6 @@
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Cz-nz-rge">
                         <rect key="frame" x="0.0" y="214" width="320" height="30"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                        <connections>
-                            <action selector="oderDetailDidClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="CRc-Bu-Feg"/>
-                        </connections>
                     </button>
                     <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PRS-Vs-RM8" customClass="LCStarRatingView">
                         <rect key="frame" x="124" y="584" width="120" height="28"/>
@@ -260,16 +257,16 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="查看&gt;" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jj3-rI-adW">
-                        <rect key="frame" x="251" y="70" width="52" height="16"/>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BI0-eN-3Fb">
+                        <rect key="frame" x="258" y="67" width="46" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.16078431369999999" green="0.58823529409999997" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <state key="normal" title="查看&gt;"/>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="SeeButton" destination="BI0-eN-3Fb" id="abH-Yz-t1b"/>
                 <outlet property="companyLb" destination="YPG-TK-O9v" id="XdA-zp-OkX"/>
                 <outlet property="contactLb" destination="ZQd-jX-1rF" id="TiB-s0-dzI"/>
                 <outlet property="contantPhoneLb" destination="zUe-lj-oKt" id="Dd8-rS-kvq"/>

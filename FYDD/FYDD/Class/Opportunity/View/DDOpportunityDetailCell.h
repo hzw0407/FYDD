@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) DDOpportunityModel * appModel;
 @property (weak, nonatomic) IBOutlet UILabel *contactLb;
 @property (weak, nonatomic) IBOutlet UILabel *contantPhoneLb;
+@property (weak, nonatomic) IBOutlet UIButton *SeeButton;
 @property (nonatomic,copy) void (^renlinBlock)(void);
 @property (nonatomic,copy) void (^orderBtnBlock)(void);
 @end

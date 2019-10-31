@@ -63,7 +63,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
-    [self getOrderData];
+//    [self getOrderData];
     
     _expandPlan = NO;
     _orderBarView.hidden = YES;
@@ -130,7 +130,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self getOrderData];
-    [self getImplementPlan];
+//    [self getImplementPlan];
 }
 
 
@@ -214,11 +214,15 @@
                 _orderMenuButton2.tag = 3;
                 _orderMenuButton1.hidden = YES;
                 [_orderMenuButton2 setTitle:@"支付" forState:UIControlStateNormal];
-                if (_order.isCompanyFirst) {
+                if (_order.isCompanyFirst == 1) {
+                    //首次下单
                     _payButtonView.hidden = YES;
                     _orderMenuButton1.hidden = NO;
                     [_orderMenuButton1 setTitle:@"试用期间免费" forState:UIControlStateNormal];
                     [_orderMenuButton2 setTitle:@"付款永久使用" forState:UIControlStateNormal];
+                }else {
+                    //不是首次下单 直接调起支付
+                    [self gotoPay];
                 }
             }else if (_order.orderStatusType == DDOrderStatusPay) {
                 hiddenBar = NO;
@@ -227,8 +231,27 @@
                 [_orderMenuButton1 setTitle:@"支付中" forState:UIControlStateNormal];
             }else if (_order.orderStatusType == DDOrderStatusCarry) {
                 _orderMenuButton2.tag = 4;
-                [_orderMenuButton1 setTitle:@"试用期间免费" forState:UIControlStateNormal];
-                [_orderMenuButton2 setTitle:@"更换实施员" forState:UIControlStateNormal];
+                NSArray *array = [_order.orderPlanSequence componentsSeparatedByString:@";"];
+                if (array.count > 0) {
+                    //已经开始实施
+                    if (_order.implementPlanDetailSeq > [array[0] integerValue]) {
+                        //当前步骤大于限制的步骤
+                        _orderMenuButton1.hidden = YES;
+                        _orderMenuButton2.hidden = YES;
+                    }else {
+                        //小于限制的步骤
+                        _orderMenuButton1.hidden = NO;
+                        _orderMenuButton2.hidden = NO;
+                        [_orderMenuButton1 setTitle:@"试用期间免费" forState:UIControlStateNormal];
+                        [_orderMenuButton2 setTitle:@"更换实施员" forState:UIControlStateNormal];
+                    }
+                }else {
+                    //还未实施
+                    _orderMenuButton1.hidden = NO;
+                    _orderMenuButton2.hidden = NO;
+                    [_orderMenuButton1 setTitle:@"试用期间免费" forState:UIControlStateNormal];
+                    [_orderMenuButton2 setTitle:@"更换实施员" forState:UIControlStateNormal];
+                }
                 hiddenBar = NO;
             }else if (_order.orderStatusType == DDOrderStatusChangeCarryUser) {
                 _orderMenuButton2.tag = 1000;
@@ -239,13 +262,19 @@
                 hiddenBar = NO;
             }else if (_order.orderStatusType == DDOrderStatusFinish) {
                 hiddenBar = YES;
-            }else if (_order.orderStatusType == DDOrderWaitReceipt) {
-                //待接单
-                hiddenBar = NO;
-                _orderMenuButton1.tag = 1000;
-                _orderMenuButton2.tag = 5;
-                [_orderMenuButton1 setTitle:@"试用期间免费" forState:UIControlStateNormal];
-                [_orderMenuButton2 setTitle:@"取消订单" forState:UIControlStateNormal];
+            }else if (_order.orderStatusType == DDOrderWaitReceipt || _order.orderStatusType == DDOrderStatusLeaflets) {
+                //待接单、派单中
+                if (_order.isCompanyFirst == 0) {
+                    //不是首次下单
+                    hiddenBar = YES;
+                }else {
+                    //首次下单
+                    hiddenBar = NO;
+                    _orderMenuButton1.tag = 1000;
+                    _orderMenuButton2.tag = 5;
+                    [_orderMenuButton1 setTitle:@"试用期间免费" forState:UIControlStateNormal];
+                    [_orderMenuButton2 setTitle:@"取消订单" forState:UIControlStateNormal];
+                }
             }
 //            else if (_order.orderStatusType == DDOrderStatusService ||
 //                      _order.orderStatusType == DDOrderStatusLeaflets) {
@@ -731,7 +760,8 @@
         if (indexPath.row == 0) {
             DDOrderStatusCell * cell = [tableView dequeueReusableCellWithIdentifier:@"DDOrderStatusCellId"];
             cell.detailObj = _order;
-            cell.planModel = _currentPlan;
+//            cell.planModel = _currentPlan;
+            [cell refreshWithModel:_currentPlan withType:self.type];
             cell.clipsToBounds = YES;
             @weakify(self)
             cell.explandBlock = ^{
@@ -746,7 +776,8 @@
             return cell;
         }else if (_isNeedPlan && indexPath.row <= _planModels.count && _expandPlan){
             DDOrderImplementationStepCell * cell = [tableView dequeueReusableCellWithIdentifier:@"DDOrderImplementationStepCellId"];
-            cell.planModel = _planModels[indexPath.row - 1];
+//            cell.planModel = _planModels[indexPath.row - 1];
+            [cell refreshWithModel:_planModels[indexPath.row - 1] withType:self.type];
             @weakify(self)
             cell.comfirmBlock = ^{
                 @strongify(self)
@@ -803,17 +834,17 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 2) {
-        if (_order.orderStatusType == DDOrderStatusCancel ||
-            _order.orderStatusType == DDOrderStatusPaySuccess ||
-            _order.orderStatusType == DDOrderStatusPay ||
-            _order.orderStatusType == DDOrderStatusLeaflets ||
-            _order.orderStatusType == DDOrderStatusOrderTaking ||
-            _order.orderStatusType == DDOrderStatusWaitPay) {
-            if (_order.isCompanyFirst && _order.orderStatusType == DDOrderStatusWaitPay) return 200;
-            return 0.0;
-        }
-    }
+//    if (section == 2) {
+//        if (_order.orderStatusType == DDOrderStatusCancel ||
+//            _order.orderStatusType == DDOrderStatusPaySuccess ||
+//            _order.orderStatusType == DDOrderStatusPay ||
+//            _order.orderStatusType == DDOrderStatusLeaflets ||
+//            _order.orderStatusType == DDOrderStatusOrderTaking ||
+//            _order.orderStatusType == DDOrderStatusWaitPay) {
+//            if (_order.isCompanyFirst && _order.orderStatusType == DDOrderStatusWaitPay) return 200;
+//            return 0.0;
+//        }
+//    }
     return 60.0;
 }
 
@@ -833,7 +864,7 @@
              _order.orderStatusType == DDOrderStatusLeaflets ||
              _order.orderStatusType == DDOrderStatusPaySuccess) &&
             [DDUserManager share].user.userType != DDUserTypePromoter ) {
-            return 370;
+            return 350;
         }
         if (_order.dispatchDate == 0) {
             return 280;
@@ -846,15 +877,15 @@
     }
 
     if (indexPath.section == 2) {
-        if (_order.orderStatusType == DDOrderStatusCancel ||
-            _order.orderStatusType == DDOrderStatusPaySuccess ||
-            _order.orderStatusType == DDOrderStatusPay ||
-            _order.orderStatusType == DDOrderStatusLeaflets ||
-            _order.orderStatusType == DDOrderStatusOrderTaking ||
-            _order.orderStatusType == DDOrderStatusWaitPay) {
-            if (_order.isCompanyFirst && _order.orderStatusType == DDOrderStatusWaitPay) return 200;
-            return 0.0;
-        }
+//        if (_order.orderStatusType == DDOrderStatusCancel ||
+//            _order.orderStatusType == DDOrderStatusPaySuccess ||
+//            _order.orderStatusType == DDOrderStatusPay ||
+//            _order.orderStatusType == DDOrderStatusLeaflets ||
+//            _order.orderStatusType == DDOrderStatusOrderTaking ||
+//            _order.orderStatusType == DDOrderStatusWaitPay) {
+//            if (_order.isCompanyFirst && _order.orderStatusType == DDOrderStatusWaitPay) return 200;
+//            return 0.0;
+//        }
         return 200;
     }
     if (indexPath.section == 3) {

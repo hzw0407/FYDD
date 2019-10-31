@@ -30,6 +30,7 @@
     formater.dateFormat = @"yyyy-MM-dd";
     
     if (detailObj.dispatchDate == 0) {
+        //待接单
         _dispDateNameLb.text = @"版本价格";
         _nameLb2.text = @"实施费用";
         _nameLb3.text = @"合计价格";
@@ -64,6 +65,7 @@
         }
         
     }else {
+        //已完成
         _dateLb.text = [formater stringFromDate:[NSDate dateWithTimeIntervalSince1970:detailObj.createDate / 1000]];
         _paidanLv.text = [formater stringFromDate:[NSDate dateWithTimeIntervalSince1970:detailObj.dispatchDate / 1000]];
         
@@ -80,13 +82,11 @@
             _feiyongLb.text = [NSString stringWithFormat:@"¥%.f",detailObj.implementationCost];
         }
         
-        
-        
-        if (_detailObj.productUseTime == -1 || !_detailObj.isCompanyFirst){
-            _shiyongLb.text = @"永久";
-        }else {
-            _shiyongLb.text = [NSString stringWithFormat:@"%zd天",detailObj.productUseTime];
-        }
+//        if (_detailObj.productUseTime == -1 || !_detailObj.isCompanyFirst){
+//            _shiyongLb.text = @"永久";
+//        }else {
+//            _shiyongLb.text = [NSString stringWithFormat:@"%zd天",detailObj.productUseTime];
+//        }
         
         if ([detailObj.accountNumberPrice doubleValue] + detailObj.implementationCost == 0) {
             _totalPriceLb.text = @"免费";
@@ -103,14 +103,16 @@
         _timer = nil;
     }
     if ((detailObj.orderStatusType == DDOrderStatusOrderTaking ||
-        detailObj.orderStatusType == DDOrderStatusLeaflets ||
-        detailObj.orderStatusType == DDOrderStatusPaySuccess) &&
+        detailObj.orderStatusType == DDOrderStatusLeaflets) &&
         [DDUserManager share].user.userType != DDUserTypePromoter) {
+        _remainDateLb.hidden = NO;
          _remainDateLb.text = @"00:00:00";
         NSDate * date = [NSDate dateWithTimeIntervalSince1970:_detailObj.dispatchDate / 1000];
         _timeIter =  [date timeIntervalSinceNow] - [[NSDate date] timeIntervalSinceNow] + 72 * 60 * 60;
         _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(scheduledTinwe) userInfo:nil repeats:YES];
         [self scheduledTinwe];
+    }else {
+        _remainDateLb.hidden = YES;
     }
 }
 
@@ -129,7 +131,8 @@
             _remainDateLb.text = [NSString stringWithFormat:@"请在%zd%zd: %zd%zd: %zd%zd内接单",value1,value2,value3,value4,value5,value6];
         }
     }else {
-        _remainDateLb.text = @"等待接单已经超时";
+//        _remainDateLb.text = @"等待接单已经超时";
+        _remainDateLb.text = @"";
     }
     
     

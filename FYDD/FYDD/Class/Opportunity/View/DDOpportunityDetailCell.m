@@ -14,6 +14,8 @@
     [super awakeFromNib];
     self.rateView.type = 1;
     self.rateView.progress = 0;
+    
+    [self.SeeButton addTarget:self action:@selector(seeClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setAppModel:(DDOpportunityModel *)appModel{
@@ -33,6 +35,12 @@
     _contantPhoneLb.text = yyTrimNullText(appModel.contactsTelephone);
 }
 - (IBAction)oderDetailDidClick:(UIButton *)sender {
+    if (_orderBtnBlock) {
+        _orderBtnBlock();
+    }
+}
+
+- (void)seeClick {
     if (_orderBtnBlock) {
         _orderBtnBlock();
     }
