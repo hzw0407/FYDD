@@ -101,7 +101,7 @@
     @weakify(self)
     [DDHub hub:self.view];
     [[DDAppNetwork share] get:YES
-                          url:[NSString stringWithFormat:@"%@/million/plan/checkCompony?token=%@&code=%@",DDAPP_2T_URL,[DDUserManager share].user.token,soialCode]
+                          url:[NSString stringWithFormat:@"%@/million/plan/checkCompony?token=%@&code=%@",DDAPP_URL,[DDUserManager share].user.token,soialCode]
                          body:nil
                    completion:^(NSInteger code,
                                 NSString *message,
@@ -171,7 +171,7 @@
                                    };
             [DDHub hub:self.view];
             [[DDAppNetwork share] get:NO
-                                  url:[NSString stringWithFormat:@"%@/million/plan/addMillinPlan?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token]
+                                  url:[NSString stringWithFormat:@"%@/million/plan/addMillinPlan?token=%@",DDAPP_URL,[DDUserManager share].user.token]
                                  body:[dic modelToJSONString]
                            completion:^(NSInteger code,
                                         NSString *message,

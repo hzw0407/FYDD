@@ -88,9 +88,9 @@
 
 //获取商机数据
 - (void)getOpportunityData{
-    NSString * url = [NSString stringWithFormat:@"%@/business/userOnline/list",DDAPP_2T_URL];
+    NSString * url = [NSString stringWithFormat:@"%@:%@/%@/business/userOnline/list",DDAPP_URL,DDPort7001,DDT];
 //    if ([DDUserManager share].user.userType == DDUserTypePromoter) {
-//        url = [NSString stringWithFormat:@"%@/business/userExtension/list",DDAPP_2T_URL];
+//        url = [NSString stringWithFormat:@"%@/business/userExtension/list",DDAPP_URL];
 //    }
     
     @weakify(self)
@@ -159,9 +159,9 @@
                     [DDHub hub:@"请先通过实施方认证" view:self.view];
                 }else {
                     @strongify(self)
-                    NSString * url = [NSString stringWithFormat:@"%@/business/userOnline/claim?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
+                    NSString * url = [NSString stringWithFormat:@"%@:%@/%@/business/userOnline/claim?token=%@",DDAPP_URL,DDPort7001,DDT,[DDUserManager share].user.token];
         //            if ([DDUserManager share].user.userType == DDUserTypePromoter) {
-        //                url = [NSString stringWithFormat:@"%@/business/userExtension/claim?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
+        //                url = [NSString stringWithFormat:@"%@/business/userExtension/claim?token=%@",DDAPP_URL,[DDUserManager share].user.token];
         //            }
                     [DDHub hub:self.view];
                     NSDictionary * dic = @{@"id" : opportunity.planId , @"busType" : [DDUserManager share].user.userType == DDUserTypePromoter ? @(1) : @(2),@"dateStr" : selectValue};

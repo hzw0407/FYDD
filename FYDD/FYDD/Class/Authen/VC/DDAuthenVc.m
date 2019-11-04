@@ -50,7 +50,7 @@
 - (void)getRecordData:(DDUserType )userType{
     @weakify(self)
     [DDHub hub:self.view];
-    NSString * url = [NSString stringWithFormat:@"%@/exam/question/bank/sequence/hasSequenceRecord?token=%@&identityType=%@",DDAPP_2T_URL,[DDUserManager share].user.token, userType == DDUserTypePromoter ? @"2" : @"1"];
+    NSString * url = [NSString stringWithFormat:@"%@:%@/t-phase/exam/question/bank/sequence/hasSequenceRecord?token=%@&identityType=%@",DDAPP_URL,DDPort7001,[DDUserManager share].user.token, userType == DDUserTypePromoter ? @"2" : @"1"];
     [[DDAppNetwork share] get:YES
                           url:url
                    parameters:nil

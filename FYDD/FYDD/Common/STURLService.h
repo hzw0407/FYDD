@@ -20,6 +20,7 @@
 #define DDAPP_URL @"http://app.3tmall.com"
 #endif
 
+#define DDT @"t-phase"
 #define DDPort7001 @"7001"
 #define DDPort8003 @"8003"
 

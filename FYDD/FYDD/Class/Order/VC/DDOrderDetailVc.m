@@ -138,7 +138,7 @@
     if (!self.order) return;
     @weakify(self)
     [[DDAppNetwork share] get:YES
-                          url:[NSString stringWithFormat:@"%@/onlineplan/detail/orderPlanDetail",DDAPP_2T_URL]
+                          url:[NSString stringWithFormat:@"%@/onlineplan/detail/orderPlanDetail",DDAPP_URL]
                    parameters:@{
                                 @"planId" : self.order.implementPlanId,
                                 @"orderNumber" : yyTrimNullText(_orderId),

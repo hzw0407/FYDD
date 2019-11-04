@@ -33,7 +33,7 @@
 
 - (void)getOpportunityModel{
     [DDHub hub:self.view];
-    NSString * url = [NSString stringWithFormat:@"%@/business/detail?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
+    NSString * url = [NSString stringWithFormat:@"%@:%@/%@/business/detail?token=%@",DDAPP_URL,DDPort7001,DDT,[DDUserManager share].user.token];
     @weakify(self)
     [[DDAppNetwork share] get:YES
                           url:url
@@ -105,9 +105,9 @@
                                  isAutoSelect:NO
                                    themeColor:nil resultBlock:^(NSString *selectValue) {
                                        @strongify(self)
-                                       NSString * url = [NSString stringWithFormat:@"%@/business/userOnline/claim?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
+                                       NSString * url = [NSString stringWithFormat:@"%@:%@/%@/business/userOnline/claim?token=%@",DDAPP_URL,DDPort7001,DDT,[DDUserManager share].user.token];
                                        if ([DDUserManager share].user.userType == DDUserTypePromoter) {
-                                           url = [NSString stringWithFormat:@"%@/business/userExtension/claim?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
+                                           url = [NSString stringWithFormat:@"%@:%@/%@/business/userExtension/claim?token=%@",DDAPP_URL,DDPort7001,DDT,[DDUserManager share].user.token];
                                        }
                                        [DDHub hub:self.view];
                                        NSDictionary * dic = @{@"id" : opportunity.planId , @"busType" : [DDUserManager share].user.userType == DDUserTypePromoter ? @(1) : @(2),@"dateStr" : selectValue};

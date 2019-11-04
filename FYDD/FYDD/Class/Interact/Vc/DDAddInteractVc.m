@@ -57,7 +57,7 @@
         [imageURLs appendString:@"|"];
     }
     
-    NSString * url = [NSString stringWithFormat:@"%@/helpEachOther/add?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
+    NSString * url = [NSString stringWithFormat:@"%@/helpEachOther/add?token=%@",DDAPP_URL,[DDUserManager share].user.token];
     NSDictionary * dic = @{@"title" : yyTrimNullText(_titlePlaceTd.text),
                            @"contents" : yyTrimNullText(_contenTextView.text),
                            @"showImage" : imageURLs,

@@ -54,7 +54,7 @@ UITableViewDataSource,UITextFieldDelegate> {
     // 发送评论
     if (textField.text.length > 0) {
         [DDHub hub:self.view];
-        NSString * url = [NSString stringWithFormat:@"%@/helpEachOther/replyByid?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
+        NSString * url = [NSString stringWithFormat:@"%@/helpEachOther/replyByid?token=%@",DDAPP_URL,[DDUserManager share].user.token];
         NSDictionary * dic = @{@"helpId" : @([_footstripObj.objId integerValue]) ,
                                @"commnet" : textField.text,
                                @"isPublic" : @(0)
@@ -78,7 +78,7 @@ UITableViewDataSource,UITextFieldDelegate> {
 
 
 - (void)getMoreComments{
-    NSString * url = [NSString stringWithFormat:@"%@/helpEachOther/getByid?token=%@&id=%@",DDAPP_2T_URL,[DDUserManager share].user.token,_footstripObj.objId];
+    NSString * url = [NSString stringWithFormat:@"%@/helpEachOther/getByid?token=%@&id=%@",DDAPP_URL,[DDUserManager share].user.token,_footstripObj.objId];
     
     @weakify(self)
     [[DDAppNetwork share] get:YES

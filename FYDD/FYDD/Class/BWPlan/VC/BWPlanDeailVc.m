@@ -33,7 +33,7 @@
 // 获取计划详情
 - (void)getPlanDetailData{
     NSString * urlPath = @"/million/plan/detail";
-    NSString * url = [NSString stringWithFormat:@"%@%@",DDAPP_2T_URL,urlPath];
+    NSString * url = [NSString stringWithFormat:@"%@:%@/%@%@",DDAPP_URL,DDPort7001,DDT,urlPath];
     [DDHub hub:self.view];
     @weakify(self)
     [[DDAppNetwork share] get:YES

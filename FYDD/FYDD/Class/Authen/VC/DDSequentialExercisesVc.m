@@ -80,7 +80,7 @@
 - (void)getQuestionData{
     [DDHub hub:self.view];
     @weakify(self)
-    NSString * url = [NSString stringWithFormat:@"%@/exam/question/bank/sequence/%@?identityType=%@&token=%@",DDAPP_2T_URL,_isContinue ? @"getContinueQuestion" : @"getFirstQuestion", _userType == DDUserTypePromoter ? @"2" : @"1",[DDUserManager share].user.token];
+    NSString * url = [NSString stringWithFormat:@"%@/exam/question/bank/sequence/%@?identityType=%@&token=%@",DDAPP_URL,_isContinue ? @"getContinueQuestion" : @"getFirstQuestion", _userType == DDUserTypePromoter ? @"2" : @"1",[DDUserManager share].user.token];
     
     [[DDAppNetwork share] get:YES
                           url:url
@@ -103,7 +103,7 @@
 
 - (void)getQuestionList{
     @weakify(self)
-    NSString * url = [NSString stringWithFormat:@"%@/exam/question/bank/sequence/questionRecordList?identityType=%@&token=%@",DDAPP_2T_URL, _userType == DDUserTypePromoter ? @"2" : @"1",[DDUserManager share].user.token];
+    NSString * url = [NSString stringWithFormat:@"%@:%@/%@/exam/question/bank/sequence/questionRecordList?identityType=%@&token=%@",DDAPP_URL,DDPort7001,DDT, _userType == DDUserTypePromoter ? @"2" : @"1",[DDUserManager share].user.token];
     
     [[DDAppNetwork share] get:YES
                           url:url
@@ -148,7 +148,7 @@
 - (void)getNextQuestion:(NSInteger)nextId{
     [DDHub hub:self.view];
     @weakify(self)
-    NSString * url = [NSString stringWithFormat:@"%@/exam/question/bank/sequence/getQuestionById?identityType=%@&token=%@&id=%zd",DDAPP_2T_URL, _userType == DDUserTypePromoter ? @"2" : @"1",[DDUserManager share].user.token,nextId];
+    NSString * url = [NSString stringWithFormat:@"%@:%@/%@/exam/question/bank/sequence/getQuestionById?identityType=%@&token=%@&id=%zd",DDAPP_URL,DDPort7001,DDT, _userType == DDUserTypePromoter ? @"2" : @"1",[DDUserManager share].user.token,nextId];
     
     [[DDAppNetwork share] get:YES
                           url:url
@@ -174,7 +174,7 @@
 - (void)saveQuestion:(BOOL)getNextQuestion{
     [DDHub hub:self.view];
     @weakify(self)
-    NSString * url = [NSString stringWithFormat:@"%@/exam/question/bank/sequence/saveQuestionRecord?token=%@",DDAPP_2T_URL, [DDUserManager share].user.token];
+    NSString * url = [NSString stringWithFormat:@"%@:%@/%@/exam/question/bank/sequence/saveQuestionRecord?token=%@",DDAPP_URL,DDPort7001,DDT, [DDUserManager share].user.token];
     NSMutableString * userAnswer = @"".mutableCopy;
     if (self.currentObj.isASelect == 2) [userAnswer appendString:@"a"];
     if (self.currentObj.isBSelect == 2) [userAnswer appendString:@"b"];

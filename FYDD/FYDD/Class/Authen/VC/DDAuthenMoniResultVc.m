@@ -102,9 +102,9 @@
 - (void)getData{
     [DDHub hub:self.view];
     @weakify(self)
-    NSString * url = [NSString stringWithFormat:@"%@/exam/question/bank/model/commitPaperOfModelTests?identityType=%@&token=%@",DDAPP_2T_URL, _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token];
+    NSString * url = [NSString stringWithFormat:@"%@:%@/%@/exam/question/bank/model/commitPaperOfModelTests?identityType=%@&token=%@",DDAPP_URL,DDPort7001,DDT, _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token];
     if (!_isSilmimator) {
-        url = [NSString stringWithFormat:@"%@/exam/question/bank/live/commitPaperOfLiveExam?identityType=%@&token=%@",DDAPP_2T_URL, _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token];
+        url = [NSString stringWithFormat:@"%@:%@/%@/exam/question/bank/live/commitPaperOfLiveExam?identityType=%@&token=%@",DDAPP_URL,DDPort7001,DDT, _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token];
     }
     
     [[DDAppNetwork share] get:YES

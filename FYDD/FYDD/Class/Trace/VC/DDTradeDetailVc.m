@@ -102,7 +102,7 @@ UITableViewDataSource,UITextFieldDelegate> {
     // 发送评论
     if (textField.text.length > 0) {
         [DDHub hub:self.view];
-        NSString * url = [NSString stringWithFormat:@"%@/footprint/replyByid?token=%@",DDAPP_2T_URL,[DDUserManager share].user.token];
+        NSString * url = [NSString stringWithFormat:@"%@/footprint/replyByid?token=%@",DDAPP_URL,[DDUserManager share].user.token];
         NSDictionary * dic = @{@"indexFootId" : @(_footstripObj.objId ),
                                @"commnet" : textField.text
                                };
@@ -136,7 +136,7 @@ UITableViewDataSource,UITextFieldDelegate> {
 
 
 - (void)getMoreComments{
-    NSString * url = [NSString stringWithFormat:@"%@/footprint/getIndexByid?token=%@&id=%zd&page=%zd&size=20",DDAPP_2T_URL,[DDUserManager share].user.token,_footstripObj.objId,_currentPage];
+    NSString * url = [NSString stringWithFormat:@"%@/footprint/getIndexByid?token=%@&id=%zd&page=%zd&size=20",DDAPP_URL,[DDUserManager share].user.token,_footstripObj.objId,_currentPage];
     @weakify(self)
     [[DDAppNetwork share] get:YES
                           url:url
@@ -166,7 +166,7 @@ UITableViewDataSource,UITextFieldDelegate> {
 
 }
 - (IBAction)likeButtonDidClick:(UIButton *)sender {
-    NSString * url = [NSString stringWithFormat:@"%@/footprint/likeNumberByid?token=%@&footprintId=%zd&type=%@",DDAPP_2T_URL,[DDUserManager share].user.token,_footstripObj.objId,_footstripObj.liked ? @(0) : @(1)];
+    NSString * url = [NSString stringWithFormat:@"%@/footprint/likeNumberByid?token=%@&footprintId=%zd&type=%@",DDAPP_URL,[DDUserManager share].user.token,_footstripObj.objId,_footstripObj.liked ? @(0) : @(1)];
     @weakify(self)
     [[DDAppNetwork share] get:YES
                           url:url

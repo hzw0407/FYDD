@@ -91,9 +91,9 @@
 - (void)getQuestionData{
     [DDHub hub:self.view];
     @weakify(self)
-    NSString * url = [NSString stringWithFormat:@"%@/exam/question/bank/model/modelTests?identityType=%@&token=%@",DDAPP_2T_URL , _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token];
+    NSString * url = [NSString stringWithFormat:@"%@:%@/%@/exam/question/bank/model/modelTests?identityType=%@&token=%@",DDAPP_URL,DDPort7001,DDT, _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token];
     if (!_isSilmimator) {
-        url = [NSString stringWithFormat:@"%@/exam/question/bank/live/liveExam?identityType=%@&token=%@",DDAPP_2T_URL , _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token];
+        url = [NSString stringWithFormat:@"%@:%@/%@/exam/question/bank/live/liveExam?identityType=%@&token=%@",DDAPP_URL,DDPort7001,DDT, _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token];
     }
     [[DDAppNetwork share] get:YES
                           url:url
@@ -145,9 +145,9 @@
 
 - (void)getQuestionList{
     @weakify(self)
-    NSString * url = [NSString stringWithFormat:@"%@/exam/question/bank/model/questionRecordListOfModelTests?identityType=%@&token=%@",DDAPP_2T_URL, _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token];
+    NSString * url = [NSString stringWithFormat:@"%@:%@/%@/exam/question/bank/model/questionRecordListOfModelTests?identityType=%@&token=%@",DDAPP_URL,DDPort7001,DDT, _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token];
     if (!_isSilmimator) {
-        url = [NSString stringWithFormat:@"%@/exam/question/bank/live/questionRecordListOfLiveExam?identityType=%@&token=%@",DDAPP_2T_URL, _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token];
+        url = [NSString stringWithFormat:@"%@:%@/%@/exam/question/bank/live/questionRecordListOfLiveExam?identityType=%@&token=%@",DDAPP_URL,DDPort7001,DDT, _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token];
     }
     [[DDAppNetwork share] get:YES
                           url:url
@@ -192,9 +192,9 @@
     
     [DDHub hub:self.view];
     @weakify(self)
-    NSString * url = [NSString stringWithFormat:@"%@/exam/question/bank/model/getQuestionByIdOfModelTests?identityType=%@&token=%@&id=%zd",DDAPP_2T_URL, _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token,nextId];
+    NSString * url = [NSString stringWithFormat:@"%@:%@/%@/exam/question/bank/model/getQuestionByIdOfModelTests?identityType=%@&token=%@&id=%zd",DDAPP_URL,DDPort7001,DDT, _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token,nextId];
     if (!_isSilmimator) {
-        url = [NSString stringWithFormat:@"%@/exam/question/bank/live/getQuestionByIdOfLiveExam?identityType=%@&token=%@&id=%zd",DDAPP_2T_URL, _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token,nextId];
+        url = [NSString stringWithFormat:@"%@:%@/%@/exam/question/bank/live/getQuestionByIdOfLiveExam?identityType=%@&token=%@&id=%zd",DDAPP_URL,DDPort7001,DDT, _userType == DDUserTypePromoter ? @(2) : @(1),[DDUserManager share].user.token,nextId];
     }
     [[DDAppNetwork share] get:YES
                           url:url
@@ -224,9 +224,9 @@
     }
     [DDHub hub:self.view];
     @weakify(self)
-    NSString * url = [NSString stringWithFormat:@"%@/exam/question/bank/model/saveQuestionRecordOfModelTests?token=%@",DDAPP_2T_URL, [DDUserManager share].user.token];
+    NSString * url = [NSString stringWithFormat:@"%@:%@/%@/exam/question/bank/model/saveQuestionRecordOfModelTests?token=%@",DDAPP_URL,DDPort7001,DDT, [DDUserManager share].user.token];
     if (!_isSilmimator) {
-       url =  [NSString stringWithFormat:@"%@/exam/question/bank/live/saveQuestionRecordOfLiveExam?token=%@",DDAPP_2T_URL, [DDUserManager share].user.token];
+       url =  [NSString stringWithFormat:@"%@:%@/%@/exam/question/bank/live/saveQuestionRecordOfLiveExam?token=%@",DDAPP_URL,DDPort7001,DDT, [DDUserManager share].user.token];
     }
     NSMutableString * userAnswer = @"".mutableCopy;
     if (self.currentObj.isASelect == 2) [userAnswer appendString:@"a"];

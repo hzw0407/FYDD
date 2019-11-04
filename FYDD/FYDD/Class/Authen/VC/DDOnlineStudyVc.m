@@ -51,7 +51,7 @@
 - (void)getOnlineStudyData{
     [DDHub hub:self.view];
     @weakify(self)
-    NSString * url = [NSString stringWithFormat:@"%@/exam/learn/online/getAllLearn?identityType=%zd",DDAPP_2T_URL, self.type];
+    NSString * url = [NSString stringWithFormat:@"%@:%@/%@/exam/learn/online/getAllLearn?identityType=%zd",DDAPP_URL,DDPort7001,DDT, self.type];
     [[DDAppNetwork share] get:YES
                           url:url
                    parameters:nil

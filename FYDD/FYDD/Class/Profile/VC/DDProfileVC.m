@@ -23,6 +23,7 @@
 #import "DDLADetailVc.h"
 #import "DDAuthenVc.h"
 #import "DDOnlineStudyVc.h"
+#import "BWPlanVc.h"
 
 @interface DDProfileVC ()
 @property (weak, nonatomic) IBOutlet UIView *contentView;

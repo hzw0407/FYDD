@@ -106,7 +106,7 @@
 //        urlPath = @"/million/plan/userExtension/list";
 //    }
     NSString *urlPath = @"/million/plan/userExtension/list";
-    NSString * url = [NSString stringWithFormat:@"%@%@",DDAPP_2T_URL,urlPath];
+    NSString * url = [NSString stringWithFormat:@"%@:%@/%@%@",DDAPP_URL,DDPort7001,DDT,urlPath];
     @weakify(self)
     [[DDAppNetwork share] get:YES
                           url:url

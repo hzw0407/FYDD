@@ -66,7 +66,7 @@
 - (void)getMyFootprint{
     @weakify(self)
     [DDHub hub:self.view];
-    NSString * url = [NSString stringWithFormat:@"%@/footprint/list?token=%@&size=20&page=%zd&title=%@",DDAPP_2T_URL,[DDUserManager share].user.token,_currentPage,[yyTrimNullText(_searchBarText) stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]] ];
+    NSString * url = [NSString stringWithFormat:@"%@/footprint/list?token=%@&size=20&page=%zd&title=%@",DDAPP_URL,[DDUserManager share].user.token,_currentPage,[yyTrimNullText(_searchBarText) stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]] ];
     [[DDAppNetwork share] get:YES
                           url:url
                    parameters:nil

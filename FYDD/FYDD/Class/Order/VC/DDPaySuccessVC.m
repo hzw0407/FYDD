@@ -28,7 +28,7 @@
     self.title = @"支付成功";
     
     if (_isWalletPay) {
-        [self getWalletPayCallBack];
+//        [self getWalletPayCallBack];
     }
     _count = 5;
     _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerScheduled) userInfo:nil repeats:YES];
@@ -59,17 +59,17 @@
 
 // 处理结果
 - (void)getWalletPayCallBack{
-    @weakify(self)
-    [[DDAppNetwork share] get:YES
-                         path:[NSString stringWithFormat:@"/tss/orderpay/walletPayBack?token=%@&orderNumber=%@",[DDUserManager share].user.token,_orderId]
-                         body:@""
-                   completion:^(NSInteger code, NSString *message, NSArray * data) {
-                       @strongify(self)
-                       if(!self) return ;
-                       if (code == 200) {
-                           
-                       }
-                   }];
+//    @weakify(self)
+//    [[DDAppNetwork share] get:YES
+//                         path:[NSString stringWithFormat:@"/tss/orderpay/walletPayBack?token=%@&orderNumber=%@",[DDUserManager share].user.token,_orderId]
+//                         body:@""
+//                   completion:^(NSInteger code, NSString *message, NSArray * data) {
+//                       @strongify(self)
+//                       if(!self) return ;
+//                       if (code == 200) {
+//
+//                       }
+//                   }];
 }
 
 - (void)timerScheduled{
