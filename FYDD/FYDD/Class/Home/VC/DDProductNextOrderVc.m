@@ -11,7 +11,7 @@
 #import "DDProductAgreeServiceVc.h"
 #import "DDOrderDetailVc.h"
 
-@interface DDProductNextOrderVc () {
+@interface DDProductNextOrderVc ()<UITextFieldDelegate> {
     NSString * _cityCode;
     BOOL _isAgreeService;
     BOOL _isAgreeSecrecy;
@@ -33,6 +33,8 @@
     [super viewDidLoad];
     self.title = @"申请试用";
     
+    _phoneTd.delegate = self;
+    
     _commitButton.layer.shadowColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.16].CGColor;
     _commitButton.layer.shadowOffset = CGSizeMake(0,3);
     _commitButton.layer.shadowRadius = 6;
@@ -41,6 +43,7 @@
     
     _descLb1.attributedText = [self getAttText:@"请详细阅读" textLas:@"《三特科技服务协议》"];
     _descLb2.attributedText = [self getAttText:@"请详细阅读" textLas:@"《三特科技保密协议》"];
+    
 }
 
 
@@ -151,6 +154,15 @@
                            [DDHub hub:message view:self.view];
                        }
                    }];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == _phoneTd) {
+        if (textField.text.length >= 11) {
+            textField.text = [textField.text substringToIndex:11];
+        }
+    }
+    return YES;
 }
 
 @end

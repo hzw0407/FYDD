@@ -51,8 +51,10 @@
                                         completion:^(NSInteger code, NSString *message, id data) {
                                             if (code == 200) {
                                                 [DDHub dismiss:self.view];
-                                                [[DDUserManager share] clean];
-                                                [[NSNotificationCenter defaultCenter] postNotificationName:DD_LOGIN_NOTE object:nil];
+//                                                [[DDUserManager share] clean];
+//                                                [[NSNotificationCenter defaultCenter] postNotificationName:DD_LOGIN_NOTE object:nil];
+                                                [DDUserManager share].user.wechatOpenid = @"";
+                                                [self.navigationController popViewControllerAnimated:YES];
                                                 [self updateUI];
                                             }else {
                                                 [DDHub hub:message view:self.view];
