@@ -44,8 +44,8 @@
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _currentPage = 1;
-    [self.tableView registerNib:[UINib nibWithNibName:@"DDChatSendCell" bundle:nil] forCellReuseIdentifier:@"DDChatSendCellId"];
-    [self.tableView registerNib:[UINib nibWithNibName:@"DDChatReceveCell" bundle:nil] forCellReuseIdentifier:@"DDChatReceveCellId"];
+//    [self.tableView registerNib:[UINib nibWithNibName:@"DDChatSendCell" bundle:nil] forCellReuseIdentifier:@"DDChatSendCellId"];
+//    [self.tableView registerNib:[UINib nibWithNibName:@"DDChatReceveCell" bundle:nil] forCellReuseIdentifier:@"DDChatReceveCellId"];
     [self.tableView registerNib:[UINib nibWithNibName:@"DDSenderImageCell" bundle:nil] forCellReuseIdentifier:@"DDSenderImageCellId"];
     [self getContactList];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -273,9 +273,15 @@
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     DDChatModel * item = _dataList[indexPath.row];
     if (item.type == 1) {
-        DDChatReceveCell * cell = [tableView dequeueReusableCellWithIdentifier:@"DDChatReceveCellId"];
-        cell.contentLb.text = item.message;
-        cell.dateLb.text = item.createDate;
+//        DDChatReceveCell * cell = [tableView dequeueReusableCellWithIdentifier:@"DDChatReceveCellId"];
+//        cell.contentLb.text = item.message;
+//        cell.dateLb.text = item.createDate;
+        DDChatReceveCell *cell = [tableView dequeueReusableCellWithIdentifier:@"receveCell"];
+        if (cell == nil) {
+            cell = [[DDChatReceveCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"receveCell"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        [cell refreshWithModel:item];
         return  cell;
     }else {
         if (item.replyType == 2) {
@@ -306,14 +312,20 @@
             };
             return cell;
         }else {
-            DDChatSendCell * cell = [tableView dequeueReusableCellWithIdentifier:@"DDChatSendCellId"];
-            cell.contentLb.text = item.message;
-            cell.dateLb.text = item.createDate;
-            if ([yyTrimNullText([DDUserManager share].user.userHeadImage) hasPrefix:@"http"]){
-                [cell.iconView sd_setImageWithURL:[NSURL URLWithString:[DDUserManager share].user.userHeadImage]];
-            }else {
-                [cell.iconView setImage:[UIImage imageNamed:[DDUserManager share].userPlaceImage]];
+//            DDChatSendCell * cell = [tableView dequeueReusableCellWithIdentifier:@"DDChatSendCellId"];
+//            cell.contentLb.text = item.message;
+//            cell.dateLb.text = item.createDate;
+//            if ([yyTrimNullText([DDUserManager share].user.userHeadImage) hasPrefix:@"http"]){
+//                [cell.iconView sd_setImageWithURL:[NSURL URLWithString:[DDUserManager share].user.userHeadImage]];
+//            }else {
+//                [cell.iconView setImage:[UIImage imageNamed:[DDUserManager share].userPlaceImage]];
+//            }
+            DDChatSendCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+            if (cell == nil) {
+                cell = [[DDChatSendCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
+            [cell refreshWithModel:item];
             return cell;
         }
     }

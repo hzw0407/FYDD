@@ -112,13 +112,13 @@
         
                                        dispatch_get_main_queue(), ^{
                                            @strongify(self)
-                                           if (!self.idCardVC){
+//                                           if (!self.idCardVC){
                                                @weakify(self)
                                                self.idCardVC = [AipCaptureCardVC ViewControllerWithCardType:index == 0 ? CardTypeLocalIdCardFont :CardTypeLocalIdCardBack   andImageHandler:^(UIImage *image) {
                                                    @strongify(self)
                                                    [self detectIdCardFrontFromImage:image];
                                                }];
-                                           }
+//                                           }
                                            [self presentViewController:self.idCardVC animated:YES completion:^{}];
                                        });
     }else {
@@ -212,9 +212,9 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         //需要切换到主线程dissmiss
         [self dismissViewControllerAnimated:YES completion:nil];
+        self.idCardVC = nil;
     });
 //    [self.idCardVC dismissViewControllerAnimated:YES completion:nil];
-     self.idCardVC = nil;
     if ([result isKindOfClass:[NSDictionary class]]) {
         if(self.currentIdCard == 0) {
             self.name = [result valueForKeyPath:@"words_result.姓名.words"];

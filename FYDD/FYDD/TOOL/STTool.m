@@ -74,7 +74,7 @@
 
     CGRect rect = [string boundingRectWithSize:CGSizeMake(0, height) options:NSStringDrawingUsesLineFragmentOrigin |  NSStringDrawingUsesFontLeading attributes:dic context:nil];
     
-    return ceilf(rect.size.height);;
+    return ceilf(rect.size.width);;
     
 }
 

@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
-
+#import "DDChatModel.h"
 
 @interface DDChatReceveCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *contentLb;
-@property (weak, nonatomic) IBOutlet UILabel *dateLb;
+//@property (weak, nonatomic) IBOutlet UILabel *contentLb;
+//@property (weak, nonatomic) IBOutlet UILabel *dateLb;
+
+//刷新数据
+- (void)refreshWithModel:(DDChatModel *)model;
+
 @end
 
 

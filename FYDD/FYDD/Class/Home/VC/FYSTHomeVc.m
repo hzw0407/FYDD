@@ -51,6 +51,7 @@ FYSTBannerCellDelegate> {
 @property (nonatomic, strong) UIView *messageguideView;//消息引导view
 @property (nonatomic, strong) UIView *plateGuideView;//板块引导view
 @property (nonatomic, strong) UIView *identityGuideView;//身份引导view
+@property (nonatomic, assign) BOOL isRefreshPlate;//是否刷新过板块数据
 
 @end
 
@@ -74,6 +75,7 @@ FYSTBannerCellDelegate> {
 //        [self.menuView reloadView];
 //    }];
     [[DDAppNetwork share] checkAppVersion:nil isShowAll:NO];
+    self.isRefreshPlate = NO;
     
     [self getPlateData];
     [self getBannerData];
@@ -331,7 +333,10 @@ FYSTBannerCellDelegate> {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
         [cell refreshWithArray:_banners];
-        [cell refreshPlateWithArray:_products];
+        if (!self.isRefreshPlate && _products.count > 0) {
+            [cell refreshPlateWithArray:_products];
+            self.isRefreshPlate = YES;
+        }
         [cell refreshMessageWithArray:_messages];
         @weakify(self)
         cell.bannerDidClick = ^(NSInteger index) {
